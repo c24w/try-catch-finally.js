@@ -1,0 +1,30 @@
+<!doctype html>
+<html>
+
+<head>
+	<title>Test: try-catch-finally.js</title>
+	<link rel="stylesheet" href=".\lib\mocha.css">
+	<script type="text/javascript" src=".\lib\chai.js"></script>
+	<script type="text/javascript" src=".\lib\mocha.js"></script>
+	<script type="text/javascript">
+		window.loadScript = function loadScript(src, callback) {
+			var s = document.createElement('script');
+			s.type = 'text/javascript';
+			s.src = src + '?bust=' + (new Date()).getTime();
+			document.head.appendChild(s);
+			s.onload = function () { callback() };
+		}
+		mocha.setup('bdd');
+		window.onload = function () {
+			loadScript('..\\src\\try-catch-finally.js', function () {
+				loadScript('.\\test.js', mocha.run);
+			});
+		};
+	</script>
+</head>
+
+<body>
+	<div id="mocha"></div>
+</body>
+
+</html>
