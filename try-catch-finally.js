@@ -29,7 +29,7 @@
 		function errorWasCaught() { return !isUndefined(actual); }
 		function caughtErrorIsType(expected) {
 			return actual instanceof expected
-			|| actual.constructor.name === expected.name;
+				|| actual.constructor.name === expected.name;
 		}
 	}
 

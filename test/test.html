@@ -7,6 +7,7 @@
 	<script type="text/javascript" src=".\lib\chai.js"></script>
 	<script type="text/javascript" src=".\lib\mocha.js"></script>
 	<script type="text/javascript">
+		mocha.setup('bdd');
 		window.loadScript = function loadScript(src, callback) {
 			var s = document.createElement('script');
 			s.type = 'text/javascript';
@@ -14,7 +15,6 @@
 			document.head.appendChild(s);
 			s.onload = function () { callback() };
 		}
-		mocha.setup('bdd');
 		window.onload = function () {
 			loadScript('..\\src\\try-catch-finally.js', function () {
 				loadScript('.\\test.js', mocha.run);
