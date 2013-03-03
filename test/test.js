@@ -40,7 +40,7 @@ describe('catch', function () {
 	});
 
 
-	describe('catch any', function () {
+	describe('any', function () {
 
 		it('should catch literal object', function (done) {
 			function tryBlock() { throw 'blah'; }
@@ -62,9 +62,9 @@ describe('catch', function () {
 
 	});
 
-	describe('catch by constructor', function () {
+	describe('by constructor', function () {
 
-		it('should catch literal object when catch is a specific constructor', function (done) {
+		it('should catch literal object', function (done) {
 			function tryBlock() { throw 12345; }
 			_try(tryBlock)
 			.catch(Number, function (e) {
@@ -73,11 +73,33 @@ describe('catch', function () {
 			});
 		});
 
-		it('should catch constructed object when catch is a specific constructor', function (done) {
+		it('should catch constructed object', function (done) {
 			function tryBlock() { throw new RegExp(); }
 			_try(tryBlock)
 			.catch(function (e) {
 				expect(e).to.be.a('regexp');
+				done();
+			});
+		});
+
+	});
+
+	describe('by name', function () {
+
+		it('should catch literal object', function (done) {
+			function tryBlock() { throw [1,2,3]; }
+			_try(tryBlock)
+			.catch('Array', function (e) {
+				expect(e).to.be.an('array');
+				done();
+			});
+		});
+
+		it('should catch constructed object', function (done) {
+			function tryBlock() { throw new Number(12345); }
+			_try(tryBlock)
+			.catch('Number', function (e) {
+				expect(e).to.be.a('number');
 				done();
 			});
 		});

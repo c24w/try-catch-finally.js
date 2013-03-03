@@ -31,6 +31,9 @@
 		function isUndefined(subject) { return typeof subject === 'undefined'; }
 		function errorNotHandled() { return !isUndefined(errorToHandle); }
 		function errorToBeHandledIsType(errorType) {
+			if (typeof errorType === 'string') {
+				return errorToHandle.constructor.name === errorType;
+			}
 			return errorToHandle instanceof errorType
 				|| errorToHandle.constructor.name === errorType.name;
 		}
