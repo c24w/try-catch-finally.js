@@ -1,35 +1,38 @@
 (function (c24w) {
 
 	function TryCatch(tryBlock) {
-		var actual, errorHandled;
+		var errorToHandle;
 		try {
 			tryBlock();
 		}
 		catch (e) {
-			actual = e;
+			errorToHandle = e;
 		}
-		this['catch'] = function (expected, callback) {
-			if (errorWasCaught() && !errorHandled) {
-				if (isUndefined(callback)) {
-					callback = expected;
-					expected = undefined;
+		this['catch'] = function (errorType, handleError) {
+			if (errorNotHandled() && arguments.length > 0) {
+				if (isUndefined(handleError)) {
+					handleError = errorType;
+					errorType = undefined;
+					handleError(errorToHandle);
+					setErrorHandled();
 				}
-				if (isUndefined(expected) || caughtErrorIsType(expected)) {
-					callback(actual);
-					errorHandled = true;
+				else if (errorToBeHandledIsType(errorType)) {
+					handleError(errorToHandle);
+					setErrorHandled();
 				}
 			}
 			return this;
 		};
 		this['finally'] = function (callback) {
 			if(callback) callback();
-			if (errorWasCaught() && !errorHandled) throw actual;
+			if (errorNotHandled()) throw errorToHandle;
 		};
+		function setErrorHandled() { errorToHandle = undefined; }
 		function isUndefined(subject) { return typeof subject === 'undefined'; }
-		function errorWasCaught() { return !isUndefined(actual); }
-		function caughtErrorIsType(expected) {
-			return actual instanceof expected
-				|| actual.constructor.name === expected.name;
+		function errorNotHandled() { return !isUndefined(errorToHandle); }
+		function errorToBeHandledIsType(errorType) {
+			return errorToHandle instanceof errorType
+				|| errorToHandle.constructor.name === errorType.name;
 		}
 	}
 
