@@ -40,9 +40,9 @@ describe('catch', function () {
 	});
 
 
-	describe('any', function () {
+	describe('literal object', function () {
 
-		it('should catch literal object', function (done) {
+		it('with indiscrimiate catch', function (done) {
 			function tryBlock() { throw 'blah'; }
 			_try(tryBlock)
 			.catch(function (e) {
@@ -51,20 +51,7 @@ describe('catch', function () {
 			});
 		});
 
-		it('should catch constructed object', function (done) {
-			function tryBlock() { throw new Error(); }
-			_try(tryBlock)
-			.catch(function (e) {
-				expect(e.name).to.equal('Error');
-				done();
-			});
-		});
-
-	});
-
-	describe('by constructor', function () {
-
-		it('should catch literal object', function (done) {
+		it('by constructor', function (done) {
 			function tryBlock() { throw 12345; }
 			_try(tryBlock)
 			.catch(Number, function (e) {
@@ -73,20 +60,7 @@ describe('catch', function () {
 			});
 		});
 
-		it('should catch constructed object', function (done) {
-			function tryBlock() { throw new RegExp(); }
-			_try(tryBlock)
-			.catch(function (e) {
-				expect(e).to.be.a('regexp');
-				done();
-			});
-		});
-
-	});
-
-	describe('by name', function () {
-
-		it('should catch literal object', function (done) {
+		it('by name', function (done) {
 			function tryBlock() { throw [1,2,3]; }
 			_try(tryBlock)
 			.catch('Array', function (e) {
@@ -95,7 +69,29 @@ describe('catch', function () {
 			});
 		});
 
-		it('should catch constructed object', function (done) {
+	});
+
+	describe('constucted object', function () {
+
+		it('with indiscrimiate catch', function (done) {
+			function tryBlock() { throw new Error(); }
+			_try(tryBlock)
+			.catch(function (e) {
+				expect(e.name).to.equal('Error');
+				done();
+			});
+		});
+
+		it('by constructor', function (done) {
+			function tryBlock() { throw new RegExp(); }
+			_try(tryBlock)
+			.catch(RegExp, function (e) {
+				expect(e).to.be.a('regexp');
+				done();
+			});
+		});
+
+		it('by name', function (done) {
 			function tryBlock() { throw new Number(12345); }
 			_try(tryBlock)
 			.catch('Number', function (e) {
