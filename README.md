@@ -1,7 +1,9 @@
 try-catch-finally.js
 ====================
 
-	c24w.try(function () {
+	var _try = c24w.try;
+
+	_try(function () {
 	    throw new Error('error message');
 	})
 	.catch(String, function (e) {
