@@ -1,7 +1,7 @@
 try-catch-finally.js
 ====================
 
-**See the [./wiki](wiki) for more details.**
+**See the [wiki](./wiki) for more details.**
 
 Example
 -------
