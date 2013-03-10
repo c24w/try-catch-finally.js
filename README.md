@@ -1,5 +1,5 @@
-try-catch-finally.js
-====================
+`try-catch-finally.js`
+======================
 
 **See the [wiki](../../wiki) for more details.**
 
