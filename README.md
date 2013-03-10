@@ -1,6 +1,11 @@
 try-catch-finally.js
 ====================
 
+**See the [./wiki](wiki) for more details.**
+
+Example
+-------
+
 	var _try = c24w.try;
 
 	_try(function () {
