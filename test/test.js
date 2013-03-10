@@ -7,12 +7,12 @@ describe('try', function () {
 		expect(_try).to.be.a('function');
 	});
 
-	it('should execute the function passed to try', function (done) {
-		_try(done);
-	});
-
 	it('should be chainable', function () {
 		expect(_try()).to.be.an('object');
+	});
+
+	it('should execute the function passed to try', function (done) {
+		_try(done);
 	});
 
 });
@@ -23,10 +23,14 @@ describe('catch', function () {
 		expect(_try().catch).to.be.a('function');
 	});
 
+	it('should be chainable', function () {
+		expect(_try().catch(Object, function () {})).to.be.an('object');
+	});
+
 	it('should catch TypeError if try block is undefined', function (done) {
 		_try()
 		.catch(TypeError, function (e) {
-			expect(e.message).to.equal('undefined is not a function');
+			expect(e.message).to.match(/'?undefined'?|'tryBlock' is not a function|Object expected/); // '?Safari'? ... Chrome | 'Opera' | IE
 			done();
 		});
 	});
@@ -35,14 +39,9 @@ describe('catch', function () {
 		expect(_try().catch());
 	});
 
-	it('should be chainable', function () {
-		expect(_try().catch(Object, function () {})).to.be.an('object');
-	});
-
-
 	describe('literal object', function () {
 
-		it('with indiscrimiate catch', function (done) {
+		it('with indiscriminate catch', function (done) {
 			function tryBlock() { throw 'blah'; }
 			_try(tryBlock)
 			.catch(function (e) {
@@ -73,7 +72,7 @@ describe('catch', function () {
 
 	describe('constucted object', function () {
 
-		it('with indiscrimiate catch', function (done) {
+		it('with indiscriminate catch', function (done) {
 			function tryBlock() { throw new Error(); }
 			_try(tryBlock)
 			.catch(function (e) {
@@ -103,3 +102,5 @@ describe('catch', function () {
 	});
 
 });
+
+// check catch callback only expecting one argument?
