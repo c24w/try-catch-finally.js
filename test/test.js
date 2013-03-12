@@ -30,7 +30,7 @@ describe('catch', function () {
 	it('should catch TypeError if try block is undefined', function (done) {
 		_try()
 		.catch(TypeError, function (e) {
-			expect(e.message).to.match(/'?undefined'?|'tryBlock' is not a function|Object expected/); // '?Safari'? ... Chrome | 'Opera' | IE
+			expect(e.message).to.match(/'?undefined'?|'?tryBlock'? is not a function|Object expected/); // 'Safari' Chrome | 'Opera' Firefox | IE
 			done();
 		});
 	});
