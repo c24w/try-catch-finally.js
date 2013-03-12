@@ -3,6 +3,8 @@
 
 **See the [wiki](../../wiki) for more details.**
 
+Tested in the latest versions of Chrome, Firefox, Internet Explorer, Opera, Safari.  (Test coverage is ongoing.)
+
 Example
 -------
 
