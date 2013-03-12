@@ -10,6 +10,10 @@
 <body>
 	<div id="mocha"></div>
 	<script type="text/javascript">
+		require.config({
+			urlArgs: "bust=" +  (new Date()).getTime()
+		});
+		
 		require(['./lib/chai', './lib/mocha'], function libsReady(chai){
 
 			window.chai = chai;
@@ -19,12 +23,8 @@
 				globals: [ 'LiveReload' ],
 			});
 
-			require.config({
-				urlArgs: "bust=" +  (new Date()).getTime()
-			});
-
 			require(
-				['../src/try-catch-finally', './test'],
+				['./test'],
 				function modulesLoaded() {
 					mocha.run();
 				}
