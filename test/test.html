@@ -14,21 +14,14 @@
 			urlArgs: "bust=" +  (new Date()).getTime()
 		});
 		
-		require(['./lib/chai', './lib/mocha'], function libsReady(chai){
-
-			window.chai = chai;
+		require(['./lib/mocha'], function setupMochaAndLoadTests(){
 
 			mocha.setup({
 				ui: 'bdd',
 				globals: [ 'LiveReload' ],
 			});
 
-			require(
-				['./test'],
-				function modulesLoaded() {
-					mocha.run();
-				}
-			);
+			require(['./test'], mocha.run);
 
 		});
 	</script>
