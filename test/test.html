@@ -4,53 +4,34 @@
 <head>
 	<title>Test: try-catch-finally.js</title>
 	<link rel="stylesheet" href="./lib/mocha.css">
-	<script type="text/javascript">
-		function loadScript(scriptUrl, afterCallback) {
-			var firstScriptElement = document.getElementsByTagName('script')[0]; 
-			var scriptElement = document.createElement('script');
-					scriptElement.type = 'text/javascript';
-					scriptElement.async = false;
-					scriptElement.src = scriptUrl + '?bust=' + (new Date()).getTime();
-
-			var ieLoadBugFix = function (scriptElement, callback) {
-				if ( scriptElement.readyState === 'loaded' || scriptElement.readyState === 'complete' ) {
-					callback();
-				} else {
-					setTimeout(function() { ieLoadBugFix(scriptElement, callback); }, 100);
-				}
-			}
-
-			if ( typeof afterCallback === "function" ) {
-				if ( typeof scriptElement.addEventListener !== "undefined" ) {
-					scriptElement.addEventListener("load", afterCallback, false)
-				} else {
-					scriptElement.onreadystatechange = function(){
-						scriptElement.onreadystatechange = null;
-						ieLoadBugFix(scriptElement, afterCallback);
-					}
-				}
-			}
-			firstScriptElement.parentNode.insertBefore(scriptElement, firstScriptElement);
-		}
-
-		window.onload = function () {
-			loadScript('./lib/mocha.js', function () {
-				mocha.setup('bdd');
-				loadScript('./lib/chai.js', function () {
-					loadScript('../src/try-catch-finally.js', function () {
-						loadScript('./test.js', function () {
-							window.LiveReload = null; // prevent LiveReload appearing as a global leak
-							mocha.run();
-						});
-					})
-				});
-			});
-		};
-	</script>
+	<script type="text/javascript" src="./lib/require.js"></script>
 </head>
 
 <body>
 	<div id="mocha"></div>
+	<script type="text/javascript">
+		require(['./lib/chai', './lib/mocha'], function libsReady(chai){
+
+			window.chai = chai;
+
+			mocha.setup({
+				ui: 'bdd',
+				globals: [ 'LiveReload' ],
+			});
+
+			require.config({
+				urlArgs: "bust=" +  (new Date()).getTime()
+			});
+
+			require(
+				['../src/try-catch-finally', './test'],
+				function modulesLoaded() {
+					mocha.run();
+				}
+			);
+
+		});
+	</script>
 </body>
 
 </html>
