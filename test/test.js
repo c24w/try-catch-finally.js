@@ -1,4 +1,4 @@
-define(['./lib/chai', '../src/try-catch-finally'], function tryCatchFinallyTests(chai, _try) {
+define(['../node_modules/chai/chai', '../src/try-catch-finally'], function tryCatchFinallyTests(chai, _try) {
 
 	var expect = chai.expect;
 

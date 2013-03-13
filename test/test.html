@@ -3,8 +3,8 @@
 
 <head>
 	<title>Test: try-catch-finally.js</title>
-	<link rel="stylesheet" href="./lib/mocha.css">
-	<script type="text/javascript" src="./lib/require.js"></script>
+	<link rel="stylesheet" href="../node_modules/mocha/mocha.css">
+	<script type="text/javascript" src="../node_modules/requirejs/require.js"></script>
 </head>
 
 <body>
@@ -14,7 +14,7 @@
 			urlArgs: "bust=" +  (new Date()).getTime()
 		});
 		
-		require(['./lib/mocha'], function setupMochaAndLoadTests(){
+		require(['../node_modules/mocha/mocha'], function setupMochaAndLoadTests(){
 
 			mocha.setup({
 				ui: 'bdd',
