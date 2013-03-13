@@ -14,7 +14,7 @@ files = [
 	REQUIRE_ADAPTER,
 	{pattern: 'node_modules/chai/chai.js', included: false},
 	{pattern: 'src/try-catch-finally.js', included: false},
-	{pattern: 'test/test.js', included: false},
+	{pattern: 'test/*.test.js', included: false},
 	'test/test-runner.js',
 ];
 

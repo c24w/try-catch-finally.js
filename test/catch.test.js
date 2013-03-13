@@ -2,18 +2,6 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 
 	var expect = chai.expect;
 
-	describe('try', function () {
-
-		it('should exist', function () {
-			expect(_try).to.be.a('function');
-		});
-
-		it('should execute the function passed to try', function (done) {
-			_try(done);
-		});
-
-	});
-
 	describe('catch', function () {
 
 		it('should exist', function () {
@@ -218,23 +206,6 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 				);
 			});
 
-		});
-
-	});
-
-	describe('finally', function () {
-
-		it('should exist', function () {
-			expect(_try().catch().finally).to.be.a('function');
-			expect(_try().finally).to.be.a('function');
-		});
-
-		it('should do nothing if arguments are undefined', function () {
-			expect(_try(function () {}).catch().finally());
-		});
-
-		it('should rethrow TypeError if try block is undefined', function () {
-			expect(_try().finally).to.throw(TypeError);
 		});
 
 	});

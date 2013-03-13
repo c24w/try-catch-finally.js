@@ -1,5 +1,5 @@
 var tests = Object.keys(window.__testacular__.files).filter(function (file) {
-    return /test\.js$/.test(file);
+    return /\.test\.js$/.test(file);
 });
 
 require(
