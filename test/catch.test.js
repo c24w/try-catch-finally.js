@@ -4,6 +4,17 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 
 	describe('catch', function () {
 
+
+		it('...should not catch anything when error is not thrown in try block', function () {
+			function doesNotThrow(){}
+
+			function handleError(e) {
+				throw 'wtf';
+			}
+
+			_try(doesNotThrow).catch(handleError).finally();
+		});
+
 		it('should exist', function () {
 			expect(_try().catch).to.be.a('function');
 		});
