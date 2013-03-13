@@ -39,6 +39,8 @@ define(function defineTryCatchFinally() {
 		function errorNotHandled() { return !isUndefined(errorToHandle); }
 
 		function errorToBeHandledIsType(errorType) {
+		// convert func to only use strings, and pass Obj.name + move instanceof out
+		// remove case sensitivity
 
 			if (typeof errorType === 'string') {
 				return errorToHandle.constructor.name === errorType
