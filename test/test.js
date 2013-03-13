@@ -8,10 +8,6 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 			expect(_try).to.be.a('function');
 		});
 
-		it('should be chainable', function () {
-			expect(_try()).to.be.an('object');
-		});
-
 		it('should execute the function passed to try', function (done) {
 			_try(done);
 		});
@@ -25,7 +21,7 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 		});
 
 		it('should be chainable', function () {
-			expect(_try().catch()).to.be.an('object');
+			expect(_try().catch().catch).to.be.a('function');
 		});
 
 		it('should do nothing if arguments are undefined', function () {
@@ -104,14 +100,30 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 			});
 
 			it('by name', function (done) {
-				function tryBlock() { throw new Number(12345); }
+				function tryBlock() { throw new Array(); }
 				_try(tryBlock)
-				.catch('Number', function (e) {
-					expect(e).to.be.a('number');
+				.catch('Array', function (e) {
+					expect(e).to.be.an('array');
 					done();
 				});
 			});
 
+		});
+
+	});
+
+	describe('finally', function () {
+
+		it('should exist', function () {
+			expect(_try().catch().finally).to.be.a('function');
+		});
+
+		it('should do nothing if arguments are undefined', function () {
+			expect(_try().catch());
+		});
+
+		it('should rethrow TypeError if try block is undefined', function () {
+			expect(_try().catch().finally).to.throw(TypeError);
 		});
 
 	});

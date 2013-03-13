@@ -27,8 +27,8 @@ define(function defineTryCatchFinally() {
 			return this;
 		};
 
-		this['finally'] = function (callback) {
-			if(callback) callback();
+		this['finally'] = function (finallyBlock) {
+			if (finallyBlock) finallyBlock();
 			if (errorNotHandled()) throw errorToHandle;
 		};
 
