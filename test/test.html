@@ -11,7 +11,11 @@
 	<div id="mocha"></div>
 	<script type="text/javascript">
 		require.config({
-			urlArgs: "bust=" +  (new Date()).getTime()
+			urlArgs: "bust=" +  (new Date()).getTime(),
+			paths: {
+				tcf: '../src/try-catch-finally',
+				chai: '../node_modules/chai/chai'
+			}
 		});
 		
 		require(['../node_modules/mocha/mocha'], function setupMochaAndLoadTests(){

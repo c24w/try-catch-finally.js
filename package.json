@@ -1,0 +1,23 @@
+{
+	"name": "try-catch-finally.js",
+	"version": "1.0.0",
+	"description": "",
+	"main": "src\\try-catch-finally.js",
+	"scripts": {
+		"testhtml": "test\\test.html",
+		"testall" : "testacular start"
+	},
+	"repository": {
+		"type": "git",
+		"url": "git@github.com:c24w/try-catch-finally.js.git"
+	},
+	"author": "Chris Watson",
+	"license": "BSD",
+	"readmeFilename": "README.md",
+	"devDependencies": {
+		"testacular" : "~0.6.0",
+		"requirejs": "~2.1.5",
+		"mocha": "~1.8.2",
+		"chai": "~1.5.0"
+	}
+}
