@@ -1,6 +1,6 @@
 define(function defineTryCatchFinally() {
 
-	function TryCatch(tryBlock) {
+	function TryCatchFinally(tryBlock) {
 
 		var errorToHandle;
 
@@ -49,11 +49,11 @@ define(function defineTryCatchFinally() {
 				|| errorToHandle.constructor.name === errorType.name;
 
 		}
-		
+
 	}
 
 	return function _try(tryBlock) {
-		return new TryCatch(tryBlock);
+		return new TryCatchFinally(tryBlock);
 	};
 
 });
