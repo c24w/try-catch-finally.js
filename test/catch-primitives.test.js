@@ -230,6 +230,55 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 
 		});
 
+		describe('boolean', function () {
+
+			var toThrow = true;
+
+			it('with indiscriminate catch', function (done) {
+				assert_catch_any(
+					{
+						throw: toThrow,
+						assertIsType: 'Boolean'
+					},
+					done
+				);
+			});
+
+			it('by constructor', function (done) {
+				assert_catch_specific(
+					{
+						throw: toThrow,
+						catch: Boolean,
+						assertIsType: 'Boolean'
+					},
+					done
+				);
+			});
+
+			it('by name', function (done) {
+				assert_catch_specific(
+					{
+						throw: toThrow,
+						catch: 'Boolean',
+						assertIsType: 'Boolean'
+					},
+					done
+				);
+			});
+
+			it('by parent constructor', function (done) {
+				assert_catch_specific(
+					{
+						throw: toThrow,
+						catch: Object,
+						assertIsType: 'Boolean'
+					},
+					done
+				);
+			});
+
+		});
+
 	});
 
 });
