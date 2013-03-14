@@ -1,0 +1,6 @@
+to do:
+
+throw and catch:
+{}
+[]
+other constructed objects

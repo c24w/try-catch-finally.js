@@ -4,25 +4,25 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 
 	describe('catch primitives', function () {
 
-		function assert_catch_specific(options, done) {
+		function assert_catch_specific(toThrow, toCatch, done) {
 
-			function tryBlock() { throw options.throw; }
+			function tryBlock() { throw toThrow; }
 
 			function handleError(e) {
-				expect(e).to.be.a(options.assertIsType);
+				expect(e).to.equal(toThrow);
 				done();
 			}
 
-			_try(tryBlock).catch(options.catch, handleError).finally();
+			_try(tryBlock).catch(toCatch, handleError).finally();
 
 		}
 
-		function assert_catch_any(options, done) {
+		function assert_catch_any(toThrow, done) {
 
-			function tryBlock() { throw options.throw; }
+			function tryBlock() { throw toThrow; }
 
 			function handleError(e) {
-				expect(e).to.be.a(options.assertIsType);
+				expect(e).to.equal(toThrow);
 				done();
 			}
 
@@ -33,101 +33,49 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 		describe('undefined', function () {
 
 			var toThrow = undefined;
+			var assert_catch_undefined_as = assert_catch_specific.bind(null, toThrow);
 
 			it('with indiscriminate catch', function (done) {
-				assert_catch_any(
-					{
-						throw: toThrow,
-						assertIsType: 'Undefined'
-					},
-					done
-				);
+				assert_catch_any(toThrow, done);
 			});
 
 			// undefined does not have an object equivalent, so cannot be coerced into an object
 			// from which properties would normally be read and instance of checks made
 			it.skip('by constructor', function (done) {
-				assert_catch_specific(
-					{
-						throw: toThrow,
-						catch: '?',
-						assertIsType: 'Undefined'
-					},
-					done
-				);
+				assert_catch_undefined_as('?', done);
 			});
 
 			it.skip('by name', function (done) {
-				assert_catch_specific(
-					{
-						throw: toThrow,
-						catch: 'Undefined',
-						assertIsType: 'Undefined'
-					},
-					done
-				);
+				assert_catch_undefined_as('Undefined', done);
 			});
 
 			it.skip('by parent constructor', function (done) {
-				assert_catch_specific(
-					{
-						throw: toThrow,
-						catch: Object,
-						assertIsType: 'Undefined'
-					},
-					done
-				);
+				assert_catch_undefined_as(Object, done);
 			});
 
 		});
 
 		// null does not have an object equivalent, so cannot be coerced into an object
 		// from which properties would normally be read and instance of checks made
-		describe('null', function () {
+		xdescribe('null', function () {
 
 			var toThrow = null;
+			var assert_catch_null_as = assert_catch_specific.bind(null, toThrow);
 
-			it.skip('with indiscriminate catch', function (done) {
-				assert_catch_any(
-					{
-						throw: toThrow,
-						assertIsType: 'Object'
-					},
-					done
-				);
+			it('with indiscriminate catch', function (done) {
+				assert_catch_any(toThrow, done);
 			});
 
 			it.skip('by constructor', function (done) {
-				assert_catch_specific(
-					{
-						throw: toThrow,
-						catch: '?',
-						assertIsType: 'Object'
-					},
-					done
-				);
+				assert_catch_null_as('?', done);
 			});
 
 			it.skip('by name', function (done) {
-				assert_catch_specific(
-					{
-						throw: toThrow,
-						catch: 'Object',
-						assertIsType: 'Object'
-					},
-					done
-				);
+				assert_catch_null_as('Object', done);
 			});
 
 			it.skip('by parent constructor', function (done) {
-				assert_catch_specific(
-					{
-						throw: toThrow,
-						catch: Object,
-						assertIsType: 'Undefined'
-					},
-					done
-				);
+				assert_catch_null_as(Object, done);
 			});
 
 		});
@@ -135,48 +83,22 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 		describe('string', function () {
 
 			var toThrow = 'Literal string';
+			var assert_catch_string_as = assert_catch_specific.bind(null, toThrow);
 
 			it('with indiscriminate catch', function (done) {
-				assert_catch_any(
-					{
-						throw: toThrow,
-						assertIsType: 'String'
-					},
-					done
-				);
+				assert_catch_any(toThrow, done);
 			});
 
 			it('by constructor', function (done) {
-				assert_catch_specific(
-					{
-						throw: toThrow,
-						catch: String,
-						assertIsType: 'String'
-					},
-					done
-				);
+				assert_catch_string_as(String, done);
 			});
 
 			it('by name', function (done) {
-				assert_catch_specific(
-					{
-						throw: toThrow,
-						catch: 'String',
-						assertIsType: 'String'
-					},
-					done
-				);
+				assert_catch_string_as('String', done);
 			});
 
 			it('by parent constructor', function (done) {
-				assert_catch_specific(
-					{
-						throw: toThrow,
-						catch: Object,
-						assertIsType: 'String'
-					},
-					done
-				);
+				assert_catch_string_as(Object, done);
 			});
 
 		});
@@ -184,48 +106,22 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 		describe('number', function () {
 
 			var toThrow = 12345;
+			var assert_catch_number_as = assert_catch_specific.bind(null, toThrow);
 
 			it('with indiscriminate catch', function (done) {
-				assert_catch_any(
-					{
-						throw: toThrow,
-						assertIsType: 'Number'
-					},
-					done
-				);
+				assert_catch_any(toThrow, done);
 			});
 
 			it('by constructor', function (done) {
-				assert_catch_specific(
-					{
-						throw: toThrow,
-						catch: Number,
-						assertIsType: 'Number'
-					},
-					done
-				);
+				assert_catch_number_as(Number, done);
 			});
 
 			it('by name', function (done) {
-				assert_catch_specific(
-					{
-						throw: toThrow,
-						catch: 'Number',
-						assertIsType: 'Number'
-					},
-					done
-				);
+				assert_catch_number_as('Number', done);
 			});
 
 			it('by parent constructor', function (done) {
-				assert_catch_specific(
-					{
-						throw: toThrow,
-						catch: Object,
-						assertIsType: 'Number'
-					},
-					done
-				);
+				assert_catch_number_as(Object, done);
 			});
 
 		});
@@ -233,48 +129,22 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 		describe('boolean', function () {
 
 			var toThrow = true;
+			var assert_catch_boolean_as = assert_catch_specific.bind(null, toThrow);
 
 			it('with indiscriminate catch', function (done) {
-				assert_catch_any(
-					{
-						throw: toThrow,
-						assertIsType: 'Boolean'
-					},
-					done
-				);
+				assert_catch_any(toThrow, done);
 			});
 
 			it('by constructor', function (done) {
-				assert_catch_specific(
-					{
-						throw: toThrow,
-						catch: Boolean,
-						assertIsType: 'Boolean'
-					},
-					done
-				);
+				assert_catch_boolean_as(Boolean, done);
 			});
 
 			it('by name', function (done) {
-				assert_catch_specific(
-					{
-						throw: toThrow,
-						catch: 'Boolean',
-						assertIsType: 'Boolean'
-					},
-					done
-				);
+				assert_catch_boolean_as('Boolean', done);
 			});
 
 			it('by parent constructor', function (done) {
-				assert_catch_specific(
-					{
-						throw: toThrow,
-						catch: Object,
-						assertIsType: 'Boolean'
-					},
-					done
-				);
+				assert_catch_boolean_as(Object, done);
 			});
 
 		});

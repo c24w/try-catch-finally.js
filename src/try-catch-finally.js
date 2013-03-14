@@ -5,7 +5,13 @@ define(function defineTryCatchFinally() {
 	Boolean.prototype.coerceToObject =
 	function coerceToObject() { return this; };
 
-	function isCoerciblePrimitive(obj) { return typeof obj !== 'undefined' && obj.coerceToObject; }
+	function isUndefined(subject) { return typeof subject === 'undefined'; }
+
+	function isCoerciblePrimitive(obj) {
+		return !isUndefined(obj)
+			&& obj !== null
+			&& typeof obj.coerceToObject === 'function';
+	}
 
 	function TryCatchFinally(tryBlock) {
 
@@ -45,7 +51,9 @@ define(function defineTryCatchFinally() {
 					errorType = undefined;
 					handleSuccessfulCatch();
 				}
-				else if (errorToBeHandledIsType(errorType)) handleSuccessfulCatch();
+				else if (errorToBeHandledIsType(errorType)) {
+					handleSuccessfulCatch();
+				}
 
 			}
 
@@ -58,8 +66,6 @@ define(function defineTryCatchFinally() {
 		};
 
 		function setErrorHandled() { errorHasBeenHandled = true; }
-
-		function isUndefined(subject) { return typeof subject === 'undefined'; }
 
 		function errorToBeHandledIsType(errorType) {
 			// make type coercian an option! So primities won't always be coerced to objects
