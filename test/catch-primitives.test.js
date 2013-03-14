@@ -42,14 +42,13 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 				);
 			});
 
-			// undefined can be thrown, although it has no properties or object equivalent
-			// so operations such as instanceof and undefined.constructor.name all fail
-
+			// undefined does not have an object equivalent, so cannot be coerced into an object
+			// from which properties would normally be read and instance of checks made
 			it.skip('by constructor', function (done) {
 				assert_catch_specific(
 					{
 						throw: undefined,
-						catch: String,
+						catch: '?',
 						assertIsType: 'Undefined'
 					},
 					done
@@ -67,13 +66,24 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 				);
 			});
 
+			it.skip('by parent constructor', function (done) {
+				assert_catch_specific(
+					{
+						throw: undefined,
+						catch: Object,
+						assertIsType: 'Undefined'
+					},
+					done
+				);
+			});
+
 		});
 
-		// null has no properties or object equivalent to be constructed to
-		// so operations such as instanceof and undefined.constructor.name all fail
-		xdescribe('null', function () {
+		// null does not have an object equivalent, so cannot be coerced into an object
+		// from which properties would normally be read and instance of checks made
+		describe('null', function () {
 
-			it('with indiscriminate catch', function (done) {
+			it.skip('with indiscriminate catch', function (done) {
 				assert_catch_any(
 					{
 						throw: null,
@@ -83,23 +93,34 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 				);
 			});
 
-			it('by constructor', function (done) {
+			it.skip('by constructor', function (done) {
 				assert_catch_specific(
 					{
 						throw: null,
-						catch: Object,
+						catch: '?',
 						assertIsType: 'Object'
 					},
 					done
 				);
 			});
 
-			it('by name', function (done) {
+			it.skip('by name', function (done) {
 				assert_catch_specific(
 					{
 						throw: null,
 						catch: 'Object',
 						assertIsType: 'Object'
+					},
+					done
+				);
+			});
+
+			it.skip('by parent constructor', function (done) {
+				assert_catch_specific(
+					{
+						throw: null,
+						catch: Object,
+						assertIsType: 'Undefined'
 					},
 					done
 				);
@@ -141,14 +162,27 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 				);
 			});
 
+			it('by parent constructor', function (done) {
+				assert_catch_specific(
+					{
+						throw: 'Literal String',
+						catch: Object,
+						assertIsType: 'String'
+					},
+					done
+				);
+			});
+
 		});
 
 		describe('number', function () {
 
+			var toThrow = 12345;
+
 			it('with indiscriminate catch', function (done) {
 				assert_catch_any(
 					{
-						throw: 12345,
+						throw: toThrow,
 						assertIsType: 'Number'
 					},
 					done
@@ -158,7 +192,7 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 			it('by constructor', function (done) {
 				assert_catch_specific(
 					{
-						throw: 12345,
+						throw: toThrow,
 						catch: Number,
 						assertIsType: 'Number'
 					},
@@ -169,8 +203,19 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 			it('by name', function (done) {
 				assert_catch_specific(
 					{
-						throw: 12345,
+						throw: toThrow,
 						catch: 'Number',
+						assertIsType: 'Number'
+					},
+					done
+				);
+			});
+
+			it('by parent constructor', function (done) {
+				assert_catch_specific(
+					{
+						throw: toThrow,
+						catch: Object,
 						assertIsType: 'Number'
 					},
 					done
