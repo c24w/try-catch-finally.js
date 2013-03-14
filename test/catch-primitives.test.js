@@ -32,10 +32,12 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 
 		describe('undefined', function () {
 
+			var toThrow = undefined;
+
 			it('with indiscriminate catch', function (done) {
 				assert_catch_any(
 					{
-						throw: undefined,
+						throw: toThrow,
 						assertIsType: 'Undefined'
 					},
 					done
@@ -47,7 +49,7 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 			it.skip('by constructor', function (done) {
 				assert_catch_specific(
 					{
-						throw: undefined,
+						throw: toThrow,
 						catch: '?',
 						assertIsType: 'Undefined'
 					},
@@ -58,7 +60,7 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 			it.skip('by name', function (done) {
 				assert_catch_specific(
 					{
-						throw: undefined,
+						throw: toThrow,
 						catch: 'Undefined',
 						assertIsType: 'Undefined'
 					},
@@ -69,7 +71,7 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 			it.skip('by parent constructor', function (done) {
 				assert_catch_specific(
 					{
-						throw: undefined,
+						throw: toThrow,
 						catch: Object,
 						assertIsType: 'Undefined'
 					},
@@ -83,10 +85,12 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 		// from which properties would normally be read and instance of checks made
 		describe('null', function () {
 
+			var toThrow = null;
+
 			it.skip('with indiscriminate catch', function (done) {
 				assert_catch_any(
 					{
-						throw: null,
+						throw: toThrow,
 						assertIsType: 'Object'
 					},
 					done
@@ -96,7 +100,7 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 			it.skip('by constructor', function (done) {
 				assert_catch_specific(
 					{
-						throw: null,
+						throw: toThrow,
 						catch: '?',
 						assertIsType: 'Object'
 					},
@@ -107,7 +111,7 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 			it.skip('by name', function (done) {
 				assert_catch_specific(
 					{
-						throw: null,
+						throw: toThrow,
 						catch: 'Object',
 						assertIsType: 'Object'
 					},
@@ -118,7 +122,7 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 			it.skip('by parent constructor', function (done) {
 				assert_catch_specific(
 					{
-						throw: null,
+						throw: toThrow,
 						catch: Object,
 						assertIsType: 'Undefined'
 					},
@@ -130,10 +134,12 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 
 		describe('string', function () {
 
+			var toThrow = 'Literal string';
+
 			it('with indiscriminate catch', function (done) {
 				assert_catch_any(
 					{
-						throw: 'Literal String',
+						throw: toThrow,
 						assertIsType: 'String'
 					},
 					done
@@ -143,7 +149,7 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 			it('by constructor', function (done) {
 				assert_catch_specific(
 					{
-						throw: 'Literal String',
+						throw: toThrow,
 						catch: String,
 						assertIsType: 'String'
 					},
@@ -154,7 +160,7 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 			it('by name', function (done) {
 				assert_catch_specific(
 					{
-						throw: 'Literal String',
+						throw: toThrow,
 						catch: 'String',
 						assertIsType: 'String'
 					},
@@ -165,7 +171,7 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 			it('by parent constructor', function (done) {
 				assert_catch_specific(
 					{
-						throw: 'Literal String',
+						throw: toThrow,
 						catch: Object,
 						assertIsType: 'String'
 					},
@@ -225,8 +231,5 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 		});
 
 	});
-
-	// check catch callback only expecting one argument?
-	// configurable to only catch explicitly, i.e. catch(Object) would not catch a Number
 
 });
