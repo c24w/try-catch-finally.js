@@ -1,43 +1,29 @@
-define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
+define(['chai', 'tcf', 'catch-test-helpers'], function tryCatchFinallyTests(chai, _try, helpers) {
 
-	var expect = chai.expect;
+	var expect = chai.expect,
+		batch_test_catches_for = helpers.batch_test_catches_for;
 
 	describe('catch', function () {
 
+		it('should catch TypeError if try block is not a function', function (done) {
 
-		it('...should not catch anything when error is not thrown in try block', function () {
-			function doesNotThrow(){}
+			var tryBlocks = [undefined, null, 12345, 'string', false, []],
+				typeErrorsCaught = 0;
 
-			function handleError(e) {
-				throw 'wtf';
+			function handleTypeError(e) {
+				expect(e.name).to.equal('TypeError');
+				if (++typeErrorsCaught === tryBlocks.length) done();
 			}
 
-			_try(doesNotThrow).catch(handleError).finally();
-		});
-
-		describe('type error with bad try block', function () {
-
-			function assert_throws_and_catches_type_error(tryBlock, done) {
-				_try(tryBlock).catch(TypeError, function () { done(); });
+			function assert_try_block_throws_type_error(tryBlock) {
+				_try(tryBlock).catch(TypeError, handleTypeError);
 			}
 
-			it('should catch TypeError if try block is undefined', function (done) {
-				assert_throws_and_catches_type_error(undefined, done);
-			});
-
-			it('should catch TypeError if try block is null', function (done) {
-				assert_throws_and_catches_type_error(null, done);
-			});
-
-			it('should catch TypeError if try block is an object', function (done) {
-				assert_throws_and_catches_type_error(123, done);
-			});
-
-			it('should catch TypeError if try block is an object', function (done) {
-				assert_throws_and_catches_type_error(new RegExp(), done);
-			});
+			tryBlocks.forEach(assert_try_block_throws_type_error);
 
 		});
+
+		describe('literal array', batch_test_catches_for.bind(this, [], Array, 'Array'));
 
 	});
 

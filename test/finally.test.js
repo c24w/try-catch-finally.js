@@ -20,8 +20,11 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 		});
 
 		it('should rethrow any uncaught error', function () {
-			function tryBlock() { throw new Error('error'); }
-			expect(_try(tryBlock).finally).to.throw(Error);
+
+			function tryBlock() { throw new Error('error message'); }
+
+			expect(_try(tryBlock).finally).to.throw(Error, 'error message');
+
 		});
 
 	});

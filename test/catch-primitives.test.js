@@ -1,38 +1,15 @@
-define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
+define(['chai', 'tcf', 'catch-test-helpers'], function tryCatchFinallyTests(chai, _try, helpers) {
 
-	var expect = chai.expect;
+	var expect = chai.expect,
+		assert_catch_specific = helpers.assert_catch_specific,
+		assert_catch_any = helpers.assert_catch_any,
+		batch_test_catches_for = helpers.batch_test_catches_for;
 
 	describe('catch primitives', function () {
 
-		function assert_catch_specific(toThrow, toCatch, done) {
-
-			function tryBlock() { throw toThrow; }
-
-			function handleError(e) {
-				expect(e).to.equal(toThrow);
-				done();
-			}
-
-			_try(tryBlock).catch(toCatch, handleError).finally();
-
-		}
-
-		function assert_catch_any(toThrow, done) {
-
-			function tryBlock() { throw toThrow; }
-
-			function handleError(e) {
-				expect(e).to.equal(toThrow);
-				done();
-			}
-
-			_try(tryBlock).catch(handleError).finally();
-
-		}
-
 		describe('undefined', function () {
 
-			var toThrow = undefined;
+			var toThrow;
 			var assert_catch_undefined_as = assert_catch_specific.bind(null, toThrow);
 
 			it('with indiscriminate catch', function (done) {
@@ -55,97 +32,46 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 
 		});
 
-		// null does not have an object equivalent, so cannot be coerced into an object
-		// from which properties would normally be read and instance of checks made
-		xdescribe('null', function () {
+		describe('null', function () {
 
 			var toThrow = null;
-			var assert_catch_null_as = assert_catch_specific.bind(null, toThrow);
+			var assert_null_caught_as = assert_catch_specific.bind(null, toThrow);
 
 			it('with indiscriminate catch', function (done) {
 				assert_catch_any(toThrow, done);
 			});
 
+			// null does not have an object equivalent, so cannot be coerced into an object
+			// from which properties would normally be read and instance of checks made
 			it.skip('by constructor', function (done) {
-				assert_catch_null_as('?', done);
+				assert_null_caught_as('?', done);
 			});
 
 			it.skip('by name', function (done) {
-				assert_catch_null_as('Object', done);
+				assert_null_caught_as('Object', done);
 			});
 
 			it.skip('by parent constructor', function (done) {
-				assert_catch_null_as(Object, done);
+				assert_null_caught_as(Object, done);
 			});
 
 		});
 
 		describe('string', function () {
 
-			var toThrow = 'Literal string';
-			var assert_catch_string_as = assert_catch_specific.bind(null, toThrow);
-
-			it('with indiscriminate catch', function (done) {
-				assert_catch_any(toThrow, done);
-			});
-
-			it('by constructor', function (done) {
-				assert_catch_string_as(String, done);
-			});
-
-			it('by name', function (done) {
-				assert_catch_string_as('String', done);
-			});
-
-			it('by parent constructor', function (done) {
-				assert_catch_string_as(Object, done);
-			});
+			batch_test_catches_for('Literal string', String, 'String');
 
 		});
 
 		describe('number', function () {
 
-			var toThrow = 12345;
-			var assert_catch_number_as = assert_catch_specific.bind(null, toThrow);
-
-			it('with indiscriminate catch', function (done) {
-				assert_catch_any(toThrow, done);
-			});
-
-			it('by constructor', function (done) {
-				assert_catch_number_as(Number, done);
-			});
-
-			it('by name', function (done) {
-				assert_catch_number_as('Number', done);
-			});
-
-			it('by parent constructor', function (done) {
-				assert_catch_number_as(Object, done);
-			});
+			batch_test_catches_for(12345, Number, 'Number');
 
 		});
 
 		describe('boolean', function () {
 
-			var toThrow = true;
-			var assert_catch_boolean_as = assert_catch_specific.bind(null, toThrow);
-
-			it('with indiscriminate catch', function (done) {
-				assert_catch_any(toThrow, done);
-			});
-
-			it('by constructor', function (done) {
-				assert_catch_boolean_as(Boolean, done);
-			});
-
-			it('by name', function (done) {
-				assert_catch_boolean_as('Boolean', done);
-			});
-
-			it('by parent constructor', function (done) {
-				assert_catch_boolean_as(Object, done);
-			});
+			batch_test_catches_for(true, Boolean, 'Boolean');
 
 		});
 

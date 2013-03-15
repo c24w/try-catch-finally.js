@@ -15,6 +15,7 @@ files = [
 	{pattern: 'node_modules/chai/chai.js', included: false},
 	{pattern: 'src/try-catch-finally.js', included: false},
 	{pattern: 'test/*.test.js', included: false},
+	{pattern: 'test/catch-test-helpers.js', included: false},
 	'test/test-runner.js',
 ];
 
@@ -57,7 +58,7 @@ autoWatch = true;
 // - Safari (only Mac)
 // - PhantomJS
 // - IE (only Windows)
-browsers = ['IE', 'Chrome', 'Safari', 'Opera', 'Firefox'];
+browsers = ['Chrome', 'IE', 'Opera', 'Safari', 'Firefox'];
 
 
 // If browser does not capture in given timeout [ms], kill it

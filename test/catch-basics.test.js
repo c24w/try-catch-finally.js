@@ -19,7 +19,7 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 		it('should not call catch error handler if try block does not throw', function () {
 			function doesNotThrow(){}
 
-			function handleError(e) { throw 'this should not happen'; }
+			function handleError() { throw 'expected this not to execute'; }
 
 			_try(doesNotThrow).catch(handleError);
 		});
