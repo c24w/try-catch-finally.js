@@ -2,8 +2,14 @@ define(['chai', 'tcf', 'catch-test-helpers'], function tryCatchFinallyTests(chai
 
 	var expect = chai.expect,
 		assert_catch_specific = helpers.assert_catch_specific,
-		assert_catch_any = helpers.assert_catch_any,
-		batch_test_catches_for = helpers.batch_test_catches_for;
+		assert_catch_any = helpers.assert_catch_any;
+
+	function batch_test_catches_for() {
+		var args = arguments;
+		return function () {
+			return helpers.batch_test_catches_for.apply(this, args);
+		};
+	}
 
 	describe('catch primitives', function () {
 
@@ -57,23 +63,11 @@ define(['chai', 'tcf', 'catch-test-helpers'], function tryCatchFinallyTests(chai
 
 		});
 
-		describe('string', function () {
+		describe('string', batch_test_catches_for('Literal string', String, 'String'));
 
-			batch_test_catches_for('Literal string', String, 'String');
+		describe('number', batch_test_catches_for(12345, Number, 'Number'));
 
-		});
-
-		describe('number', function () {
-
-			batch_test_catches_for(12345, Number, 'Number');
-
-		});
-
-		describe('boolean', function () {
-
-			batch_test_catches_for(true, Boolean, 'Boolean');
-
-		});
+		describe('boolean', batch_test_catches_for(true, Boolean, 'Boolean'));
 
 	});
 
