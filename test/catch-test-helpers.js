@@ -46,6 +46,10 @@ define(['chai', 'tcf'], function (chai, _try) {
 		it('by parent constructor', function (done) {
 			assert_catch_specific_by(Object, done);
 		});
+
+		it('by value', function (done) {
+			assert_catch_specific_by(toThrow, done);
+		});
 	}
 
 	return {

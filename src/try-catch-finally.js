@@ -32,7 +32,7 @@ define(function defineTryCatchFinally() {
 
 		}
 
-		this['catch'] = function (errorType, handleError) {
+		this['catch'] = function (toCatch, handleError) {
 			// check catch callback only expecting one argument?
 			// configurable to only catch explicitly, i.e. catch(Object) would not catch a Number
 			// check arguments more strictly? throw if not function and numArgs === 1?
@@ -47,11 +47,11 @@ define(function defineTryCatchFinally() {
 			if (numArgs > 0 && isErrorToHandle && !errorHasBeenHandled) {
 
 				if (numArgs === 1) {  // catch(function (e) {})
-					handleError = errorType;
-					errorType = undefined;
+					handleError = toCatch;
+					toCatch = undefined;
 					handleSuccessfulCatch();
 				}
-				else if (errorToBeHandledIsType(errorType)) {
+				else if (errorToBeHandledIsType(toCatch)) {
 					handleSuccessfulCatch();
 				}
 
@@ -67,42 +67,49 @@ define(function defineTryCatchFinally() {
 
 		function setErrorHandled() { errorHasBeenHandled = true; }
 
-		function errorToBeHandledIsType(errorType) {
+		function errorToBeHandledIsType(toCatch) {
 			// make type coercian an option! So primities won't always be coerced to objects
 			// convert func to only use strings, and pass Obj.name + move instanceof out
 			// remove case sensitivity - what if String and string were both different classes?
 			// make work for null (uncomment tests)
 
 			// ability to do _try(function () {throw 123}).catch(123, function(e){}), i.e. catch a specific primitive
-			// easy first check of isErrorToHandle === errorType then return true
+			// easy first check of isErrorToHandle === toCatch then return true
 			// also for other literals, but not primitives, e.g. _try(function () { throw {prop:value} } ).catch({..},fn) and for regex / arrays
 
 			// test nonesense or partial match names, e.g. 'Strin'
 
 			// retry null and undefined with Object.prototype.toString.call - may fail in older ecma specs
 
-			if (typeof errorType === 'string') {
+			// by value takes presidence - e.g. throw 'String' catch 'String' will catch by value, not by Name
+
+			if (rawError === toCatch) // catch by value
+				return true;
+
+			if (typeof toCatch === 'string') { // catch by name
+
 				var caughtErrorType, errorTypeToStringPattern, rawErrorAsString;
 
-				if (errorType === 'Undefined' && isUndefined(rawError))
+				if (toCatch === 'Undefined' && isUndefined(rawError)) // special case for undefined
 					return true;
 
-				if (errorType === 'Null' && rawError === null)
+				if (toCatch === 'Null' && rawError === null) // special case for null
 					return true;
 
 				caughtErrorType = rawError.constructor.name;
 
-				if (caughtErrorType === errorType)
+				if (caughtErrorType === toCatch) // generic name match
 					return true;
 
-				errorTypeToStringPattern = new RegExp('^\\[object ' + errorType + '\\]$');
+				// workaround for no .constructor.name in IE
+				errorTypeToStringPattern = new RegExp('^\\[object ' + toCatch + '\\]$');
 				rawErrorAsString = Object.prototype.toString.call(rawError);
 
 				if (errorTypeToStringPattern.test(rawErrorAsString))
-					return true; // for IE
+					return true;
 			}
 
-			return coercedError instanceof errorType;
+			return coercedError instanceof toCatch;
 
 		}
 
