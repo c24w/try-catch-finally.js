@@ -63,13 +63,9 @@ define(function defineTryCatchFinally() {
 		var errorAsObject,
 			canCatch = new CatchChecker(caughtError);
 
-		if (canCatch.byValue(toCatch))
-			return true;
-
-		if (canCatch.byName(toCatch))
-			return true;
-
-		return canCatch.byConstructor(toCatch);
+		return canCatch.byValue(toCatch)
+			|| canCatch.byName(toCatch)
+			|| canCatch.byConstructor(toCatch);
 
 	}
 
