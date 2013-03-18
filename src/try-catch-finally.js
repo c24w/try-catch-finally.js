@@ -82,8 +82,12 @@ define(function defineTryCatchFinally() {
 			// retry null and undefined with Object.prototype.toString.call - may fail in older ecma specs
 
 			if (typeof errorType === 'string') {
-				var caughtErrorType = rawError.constructor.name,
-					errorTypeToStringPattern, rawErrorAsString;
+				var caughtErrorType, errorTypeToStringPattern, rawErrorAsString;
+
+				if (errorType === 'Undefined' && isUndefined(rawError))
+					return true;
+
+				caughtErrorType = rawError.constructor.name;
 
 				if (caughtErrorType === errorType)
 					return true;

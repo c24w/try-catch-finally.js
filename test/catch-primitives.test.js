@@ -28,7 +28,7 @@ define(['chai', 'tcf', 'catch-test-helpers'], function tryCatchFinallyTests(chai
 				assert_catch_undefined_as('?', done);
 			});
 
-			it.skip('by name', function (done) {
+			it('by name', function (done) {
 				assert_catch_undefined_as('Undefined', done);
 			});
 
