@@ -51,7 +51,7 @@ define(function defineTryCatchFinally() {
 					toCatch = undefined;
 					handleSuccessfulCatch();
 				}
-				else if (errorToBeHandledIsType(toCatch)) {
+				else if (errorToHandleShouldBeCaught(toCatch)) {
 					handleSuccessfulCatch();
 				}
 
@@ -67,13 +67,11 @@ define(function defineTryCatchFinally() {
 
 		function setErrorHandled() { errorHasBeenHandled = true; }
 
-		function errorToBeHandledIsType(toCatch) {
+		function errorToHandleShouldBeCaught(toCatch) {
 			// make type coercian an option! So primities won't always be coerced to objects
 			// remove case sensitivity - what if String and string were both different classes?
 			// add by value deep equals
 			// config option? use coercian (==) for catching by value, but use === by default
-
-			// retry null and undefined with Object.prototype.toString.call - may fail in older ecma specs
 
 			// by value takes presidence, also possible overlap:
 				// e.g. expecting:
@@ -100,6 +98,7 @@ define(function defineTryCatchFinally() {
 
 				// workaround for no .constructor.name in IE
 				errorTypeToStringPattern = new RegExp('^\\[object ' + toCatch + '\\]$');
+
 				rawErrorAsString = Object.prototype.toString.call(rawError);
 
 				if (errorTypeToStringPattern.test(rawErrorAsString))
