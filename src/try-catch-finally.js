@@ -31,17 +31,19 @@ define(function defineTryCatchFinally() {
 			&& typeof obj.__coerceToObject__ === 'function';
 	}
 
-	function CheckCatch(caughtError) {
+	function CatchChecker(caughtError) {
 		this.caughtError = caughtError;
 	}
 
-	CheckCatch.prototype.byValue = function byValue(value) {
+	CatchChecker.prototype.byValue = function byValue(value) {
 		return this.caughtError === value;
 	};
 
-	CheckCatch.prototype.byName = function byName(name) {
+	CatchChecker.prototype.byName = function byName(name) {
 
 		var typeToCatchPattern, errorAsString;
+
+		if (typeof name !== 'string') return false;
 
 		typeToCatchPattern = new RegExp('^\\[object ' + name + '\\]$');
 
@@ -50,7 +52,7 @@ define(function defineTryCatchFinally() {
 		return typeToCatchPattern.test(errorAsString);
 	};
 
-	CheckCatch.prototype.byConstructor = function byConstructor(constructor) {
+	CatchChecker.prototype.byConstructor = function byConstructor(constructor) {
 		var caughtError = this.caughtError,
 			errorAsObject = canCoerceToObject(caughtError) ? caughtError.__coerceToObject__() : caughtError;
 
@@ -59,15 +61,15 @@ define(function defineTryCatchFinally() {
 
 	function errorShouldBeCaught(caughtError, toCatch) {
 		var errorAsObject,
-			checkCatch = new CheckCatch(caughtError);
+			canCatch = new CatchChecker(caughtError);
 
-		if (checkCatch.byValue(toCatch))
+		if (canCatch.byValue(toCatch))
 			return true;
 
-		if (typeof toCatch === 'string' && checkCatch.byName(toCatch))
+		if (canCatch.byName(toCatch))
 			return true;
 
-		return checkCatch.byConstructor(toCatch);
+		return canCatch.byConstructor(toCatch);
 
 	}
 
