@@ -69,19 +69,20 @@ define(function defineTryCatchFinally() {
 
 		function errorToBeHandledIsType(toCatch) {
 			// make type coercian an option! So primities won't always be coerced to objects
-			// convert func to only use strings, and pass Obj.name + move instanceof out
 			// remove case sensitivity - what if String and string were both different classes?
-			// make work for null (uncomment tests)
-
-			// ability to do _try(function () {throw 123}).catch(123, function(e){}), i.e. catch a specific primitive
-			// easy first check of isErrorToHandle === toCatch then return true
-			// also for other literals, but not primitives, e.g. _try(function () { throw {prop:value} } ).catch({..},fn) and for regex / arrays
+			// add by value deep equals
+			// config option? use coercian for catching by value, but === by default
 
 			// test nonesense or partial match names, e.g. 'Strin'
 
 			// retry null and undefined with Object.prototype.toString.call - may fail in older ecma specs
 
-			// by value takes presidence - e.g. throw 'String' catch 'String' will catch by value, not by Name
+			// by value takes presidence, also possible overlap:
+				// e.g. expecting:
+					// { throw new MyObject() }
+				// but find:
+					// { throw 'MyObject' }
+				// catch 'MyObject' gets the string
 
 			if (rawError === toCatch) // catch by value
 				return true;
@@ -109,7 +110,10 @@ define(function defineTryCatchFinally() {
 					return true;
 			}
 
-			return coercedError instanceof toCatch;
+			if (typeof toCatch === 'function') // by constructor
+				return coercedError instanceof toCatch;
+
+			return false;
 
 		}
 

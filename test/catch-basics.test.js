@@ -24,6 +24,14 @@ define(['chai', 'tcf'], function tryCatchFinallyTests(chai, _try) {
 			_try(doesNotThrow).catch(handleError);
 		});
 
+		it('should not call catch error handler if catch doesn\'t match thrown error', function () {
+			function throwsString(){ throw 'Literal string'; }
+
+			function handleError() { throw 'expected this not to execute'; }
+
+			_try(throwsString).catch('Strin', handleError);
+		});
+
 	});
 
 });

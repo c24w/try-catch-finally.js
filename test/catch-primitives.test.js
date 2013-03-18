@@ -35,7 +35,7 @@ define(['chai', 'tcf', 'catch-test-helpers'], function tryCatchFinallyTests(chai
 			it.skip('by parent constructor', function (done) {
 				assert_catch_undefined_as(Object, done);
 			});
-
+// BY VALUE!
 		});
 
 		describe('null', function () {

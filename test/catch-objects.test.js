@@ -23,7 +23,9 @@ define(['chai', 'tcf', 'catch-test-helpers'], function tryCatchFinallyTests(chai
 
 		});
 
-		describe('literal array', batch_test_catches_for.bind(this, [], Array, 'Array'));
+		describe('literal array', function () {
+			batch_test_catches_for([], Array, 'Array');
+		});
 
 	});
 
