@@ -35,13 +35,17 @@ define(['chai', 'tcf', 'catch-test-helpers'], function tryCatchFinallyTests(chai
 			it.skip('by parent constructor', function (done) {
 				assert_catch_undefined_as(Object, done);
 			});
-// BY VALUE!
+
+			it('by value', function (done) {
+				assert_catch_undefined_as(undefined, done);
+			});
+
 		});
 
 		describe('null', function () {
 
 			var toThrow = null;
-			var assert_null_caught_as = assert_catch_specific.bind(this, toThrow);
+			var assert_catch_null_as = assert_catch_specific.bind(this, toThrow);
 
 			it('with indiscriminate catch', function (done) {
 				assert_catch_any(toThrow, done);
@@ -50,15 +54,19 @@ define(['chai', 'tcf', 'catch-test-helpers'], function tryCatchFinallyTests(chai
 			// null does not have an object equivalent, so cannot be coerced into an object
 			// from which properties would normally be read and instance of checks made
 			it.skip('by constructor', function (done) {
-				assert_null_caught_as('?', done);
+				assert_catch_null_as('?', done);
 			});
 
 			it('by name', function (done) {
-				assert_null_caught_as('Null', done);
+				assert_catch_null_as('Null', done);
 			});
 
 			it.skip('by parent constructor', function (done) {
-				assert_null_caught_as(Object, done);
+				assert_catch_null_as(Object, done);
+			});
+
+			it('by value', function (done) {
+				assert_catch_null_as(null, done);
 			});
 
 		});

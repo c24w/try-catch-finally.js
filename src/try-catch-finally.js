@@ -89,7 +89,7 @@ define(function defineTryCatchFinally() {
 
 			if (typeof toCatch === 'string') { // catch by name
 
-				var caughtErrorType, errorTypeToStringPattern, rawErrorAsString;
+				var errorTypeToStringPattern, rawErrorAsString;
 
 				if (toCatch === 'Undefined' && isUndefined(rawError)) // special case for undefined
 					return true;
@@ -97,9 +97,7 @@ define(function defineTryCatchFinally() {
 				if (toCatch === 'Null' && rawError === null) // special case for null
 					return true;
 
-				caughtErrorType = rawError.constructor.name;
-
-				if (caughtErrorType === toCatch) // generic name match
+				if (rawError.constructor.name === toCatch) // generic name match
 					return true;
 
 				// workaround for no .constructor.name in IE
