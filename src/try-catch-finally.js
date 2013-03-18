@@ -31,28 +31,43 @@ define(function defineTryCatchFinally() {
 			&& typeof obj.__coerceToObject__ === 'function';
 	}
 
+	function CheckCatch(caughtError) {
+		this.caughtError = caughtError;
+	}
 
-	function caughtErrorIsType(caughtError, typeToCatch) {
-		var errorAsObject;
+	CheckCatch.prototype.byValue = function byValue(value) {
+		return this.caughtError === value;
+	};
 
-		if (caughtError === typeToCatch) // catch by value
+	CheckCatch.prototype.byName = function byName(name) {
+
+		var typeToCatchPattern, errorAsString;
+
+		typeToCatchPattern = new RegExp('^\\[object ' + name + '\\]$');
+
+		errorAsString = Object.prototype.toString.call(this.caughtError);
+
+		return typeToCatchPattern.test(errorAsString);
+	};
+
+	CheckCatch.prototype.byConstructor = function byConstructor(constructor) {
+		var caughtError = this.caughtError,
+			errorAsObject = canCoerceToObject(caughtError) ? caughtError.__coerceToObject__() : caughtError;
+
+		return (typeof constructor === 'function') && (errorAsObject instanceof constructor);
+	};
+
+	function errorShouldBeCaught(caughtError, toCatch) {
+		var errorAsObject,
+			checkCatch = new CheckCatch(caughtError);
+
+		if (checkCatch.byValue(toCatch))
 			return true;
 
-		if (typeof typeToCatch === 'string') { // catch by name
+		if (typeof toCatch === 'string' && checkCatch.byName(toCatch))
+			return true;
 
-			var typeToCatchPattern, errorAsString;
-
-			typeToCatchPattern = new RegExp('^\\[object ' + typeToCatch + '\\]$');
-
-			errorAsString = Object.prototype.toString.call(caughtError);
-
-			if (typeToCatchPattern.test(errorAsString))
-				return true;
-		}
-
-		errorAsObject = canCoerceToObject(caughtError) ? caughtError.__coerceToObject__() : caughtError;
-
-		return (typeof typeToCatch === 'function') && (errorAsObject instanceof typeToCatch); // catch by constructor
+		return checkCatch.byConstructor(toCatch);
 
 	}
 
@@ -91,7 +106,7 @@ define(function defineTryCatchFinally() {
 					toCatch = undefined;
 					handleSuccessfulCatch();
 				}
-				else if (caughtErrorIsType(error.raw, toCatch)) { // specific catch
+				else if (errorShouldBeCaught(error.raw, toCatch)) { // specific catch
 					handleSuccessfulCatch();
 				}
 
