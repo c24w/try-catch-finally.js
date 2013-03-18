@@ -6,10 +6,17 @@ Configurables?
  - value coercian, e.g. try throw '12345' catch 12345 succeeds - default disabled
  - primitive coercian, e.g. try throw 12345 catch Number succeeds - default enabled
  - case-sensitivity - not yet implemented - also, what if there are both string and String objects... catch('string')...?
+ - hierarchical catching - not yet implemented - only catch explicitly, e.g. catch(Object) would not catch a Number
 
 ? catch(/regex-pattern/)
 
 ? by value deep equal
+
+? check catch callback only expecting one argument
+
+? check arguments more strictly? throw if not function and numArgs === 1
+
+---
 
 Notes:
 
@@ -53,6 +60,7 @@ define(function defineTryCatchFinally() {
 	};
 
 	CatchChecker.prototype.byConstructor = function byConstructor(constructor) {
+
 		var caughtError = this.caughtError,
 			errorAsObject = canCoerceToObject(caughtError) ? caughtError.__coerceToObject__() : caughtError;
 
@@ -60,8 +68,8 @@ define(function defineTryCatchFinally() {
 	};
 
 	function errorShouldBeCaught(caughtError, toCatch) {
-		var errorAsObject,
-			canCatch = new CatchChecker(caughtError);
+
+		var canCatch = new CatchChecker(caughtError);
 
 		return canCatch.byValue(toCatch)
 			|| canCatch.byName(toCatch)
@@ -86,9 +94,6 @@ define(function defineTryCatchFinally() {
 		}
 
 		this['catch'] = function (toCatch, handleError) {
-			// check catch callback only expecting one argument?
-			// configurable to only catch explicitly, i.e. catch(Object) would not catch a Number
-			// check arguments more strictly? throw if not function and numArgs === 1?
 
 			function handleSuccessfulCatch() {
 				handleError(error.raw);
