@@ -25,7 +25,7 @@ define(['chai', 'tcf', 'catch-test-helpers'], function tryCatchFinallyTests(chai
 
 		describe('literal array', function () {
 			batch_test_catches_for([], Array, 'Array');
-		});
+		});// throw date
 
 	});
 

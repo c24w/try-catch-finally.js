@@ -1,35 +1,75 @@
+/*
+
+To do:
+
+Configurables?
+ - value coercian, e.g. try throw '12345' catch 12345 succeeds - default disabled
+ - primitive coercian, e.g. try throw 12345 catch Number succeeds - default enabled
+ - case-sensitivity - not yet implemented - also, what if there are both string and String objects... catch('string')...?
+
+? catch(/regex-pattern/)
+
+? by value deep equal
+
+Notes:
+
+ - catching precedence (contrived example): {throw 12345} {throw 'Number'} {catch 'Number' gets the second}
+ - instanceof fails across frames, e.g. inside an iframe: [] instance of window.top.Array === false
+
+*/
+
 define(function defineTryCatchFinally() {
 
-	Number.prototype.coerceToObject =
-	String.prototype.coerceToObject =
-	Boolean.prototype.coerceToObject =
-	function coerceToObject() { return this; };
+	String.prototype.__coerceToObject__ =
+	Number.prototype.__coerceToObject__ =
+	Boolean.prototype.__coerceToObject__ =
+	function __coerceToObject__() { return this; };
 
-	function isUndefined(subject) { return typeof subject === 'undefined'; }
-
-	function isCoerciblePrimitive(obj) {
-		return !isUndefined(obj)
+	function canCoerceToObject(obj) {
+		return obj !== undefined
 			&& obj !== null
-			&& typeof obj.coerceToObject === 'function';
+			&& typeof obj.__coerceToObject__ === 'function';
+	}
+
+
+	function caughtErrorIsType(caughtError, typeToCatch) {
+		var errorAsObject;
+
+		if (caughtError === typeToCatch) // catch by value
+			return true;
+
+		if (typeof typeToCatch === 'string') { // catch by name
+
+			var typeToCatchPattern, errorAsString;
+
+			typeToCatchPattern = new RegExp('^\\[object ' + typeToCatch + '\\]$');
+
+			errorAsString = Object.prototype.toString.call(caughtError);
+
+			if (typeToCatchPattern.test(errorAsString))
+				return true;
+		}
+
+		errorAsObject = canCoerceToObject(caughtError) ? caughtError.__coerceToObject__() : caughtError;
+
+		return (typeof typeToCatch === 'function') && (errorAsObject instanceof typeToCatch); // catch by constructor
+
 	}
 
 	function TryCatchFinally(tryBlock) {
 
-		var rawError, coercedError, isErrorToHandle = false, errorHasBeenHandled = false;
-		// isErrorToHandle is because undefined can be thrown (and caught and assigned to rawError)
-		// so checking rawError for undefined is not a safe check to see if anything was thrown/caught
+		var error = {
+			raw: undefined,
+			exists: false, // undefined can be thrown/caught so cannot check raw for undefined for presence of error
+			handled: false
+		};
 
 		try {
 			tryBlock();
 		}
 		catch (e) {
-
-			rawError = e;
-
-			coercedError = isCoerciblePrimitive(rawError) ? rawError.coerceToObject() : rawError;
-
-			isErrorToHandle = true;
-
+			error.raw = e;
+			error.exists = true;
 		}
 
 		this['catch'] = function (toCatch, handleError) {
@@ -38,20 +78,20 @@ define(function defineTryCatchFinally() {
 			// check arguments more strictly? throw if not function and numArgs === 1?
 
 			function handleSuccessfulCatch() {
-				handleError(rawError);
+				handleError(error.raw);
 				setErrorHandled();
 			}
 
 			var numArgs = arguments.length;
 
-			if (numArgs > 0 && isErrorToHandle && !errorHasBeenHandled) {
+			if (numArgs > 0 && error.exists && !error.handled) {
 
-				if (numArgs === 1) {  // catch(function (e) {})
+				if (numArgs === 1) { // indiscriminate catch
 					handleError = toCatch;
 					toCatch = undefined;
 					handleSuccessfulCatch();
 				}
-				else if (errorToHandleShouldBeCaught(toCatch)) {
+				else if (caughtErrorIsType(error.raw, toCatch)) { // specific catch
 					handleSuccessfulCatch();
 				}
 
@@ -62,55 +102,10 @@ define(function defineTryCatchFinally() {
 
 		this['finally'] = function (finallyBlock) {
 			if (finallyBlock) finallyBlock();
-			if (isErrorToHandle && !errorHasBeenHandled) throw rawError;
+			if (error.exists && !error.handled) throw error.raw;
 		};
 
-		function setErrorHandled() { errorHasBeenHandled = true; }
-
-		function errorToHandleShouldBeCaught(toCatch) {
-			// make type coercian an option! So primities won't always be coerced to objects
-			// remove case sensitivity - what if String and string were both different classes?
-			// add by value deep equals
-			// config option? use coercian (==) for catching by value, but use === by default
-
-			// by value takes presidence, also possible overlap:
-				// e.g. expecting:
-					// { throw new MyObject() }
-				// but find:
-					// { throw 'MyObject' }
-				// catch 'MyObject' gets the string
-
-			if (rawError === toCatch) // catch by value
-				return true;
-
-			if (typeof toCatch === 'string') { // catch by name
-
-				var errorTypeToStringPattern, rawErrorAsString;
-
-				if (toCatch === 'Undefined' && isUndefined(rawError)) // special case for undefined
-					return true;
-
-				if (toCatch === 'Null' && rawError === null) // special case for null
-					return true;
-
-				if (rawError.constructor.name === toCatch) // generic name match
-					return true;
-
-				// workaround for no .constructor.name in IE
-				errorTypeToStringPattern = new RegExp('^\\[object ' + toCatch + '\\]$');
-
-				rawErrorAsString = Object.prototype.toString.call(rawError);
-
-				if (errorTypeToStringPattern.test(rawErrorAsString))
-					return true;
-			}
-
-			if (typeof toCatch === 'function') // by constructor
-				return coercedError instanceof toCatch;
-
-			return false;
-
-		}
+		function setErrorHandled() { error.handled = true; }
 
 	}
 
