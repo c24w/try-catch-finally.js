@@ -71,9 +71,7 @@ define(function defineTryCatchFinally() {
 			// make type coercian an option! So primities won't always be coerced to objects
 			// remove case sensitivity - what if String and string were both different classes?
 			// add by value deep equals
-			// config option? use coercian for catching by value, but === by default
-
-			// test nonesense or partial match names, e.g. 'Strin'
+			// config option? use coercian (==) for catching by value, but use === by default
 
 			// retry null and undefined with Object.prototype.toString.call - may fail in older ecma specs
 
