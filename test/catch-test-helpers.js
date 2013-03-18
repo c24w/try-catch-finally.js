@@ -11,7 +11,7 @@ define(['chai', 'tcf'], function (chai, _try) {
 			done();
 		}
 
-		_try(tryBlock).catch(handleError).finally();
+		_try(tryBlock).catch(handleError);
 
 	}
 
@@ -24,13 +24,12 @@ define(['chai', 'tcf'], function (chai, _try) {
 			done();
 		}
 
-		_try(tryBlock).catch(toCatch, handleError).finally();
+		_try(tryBlock).catch(toCatch, handleError);
 
 	}
 
 	function batch_test_catches_for(toThrow, constructor, name) {
-		var assert_catch_specific_by = assert_catch_specific.bind(null, toThrow),
-			parentConstructor = Object;
+		var assert_catch_specific_by = assert_catch_specific.bind(this, toThrow);
 
 		it('with indiscriminate catch', function (done) {
 			assert_catch_any(toThrow, done);
@@ -45,7 +44,7 @@ define(['chai', 'tcf'], function (chai, _try) {
 		});
 
 		it('by parent constructor', function (done) {
-			assert_catch_specific_by(parentConstructor, done);
+			assert_catch_specific_by(Object, done);
 		});
 	}
 

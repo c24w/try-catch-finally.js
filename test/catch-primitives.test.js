@@ -16,7 +16,7 @@ define(['chai', 'tcf', 'catch-test-helpers'], function tryCatchFinallyTests(chai
 		describe('undefined', function () {
 
 			var toThrow;
-			var assert_catch_undefined_as = assert_catch_specific.bind(null, toThrow);
+			var assert_catch_undefined_as = assert_catch_specific.bind(this, toThrow);
 
 			it('with indiscriminate catch', function (done) {
 				assert_catch_any(toThrow, done);
@@ -41,7 +41,7 @@ define(['chai', 'tcf', 'catch-test-helpers'], function tryCatchFinallyTests(chai
 		describe('null', function () {
 
 			var toThrow = null;
-			var assert_null_caught_as = assert_catch_specific.bind(null, toThrow);
+			var assert_null_caught_as = assert_catch_specific.bind(this, toThrow);
 
 			it('with indiscriminate catch', function (done) {
 				assert_catch_any(toThrow, done);

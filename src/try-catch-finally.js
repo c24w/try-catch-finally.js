@@ -70,16 +70,29 @@ define(function defineTryCatchFinally() {
 		function errorToBeHandledIsType(errorType) {
 			// make type coercian an option! So primities won't always be coerced to objects
 			// convert func to only use strings, and pass Obj.name + move instanceof out
-			// remove case sensitivity
+			// remove case sensitivity - what if String and string were both different classes?
 			// make work for null (uncomment tests)
 
 			// ability to do _try(function () {throw 123}).catch(123, function(e){}), i.e. catch a specific primitive
 			// easy first check of isErrorToHandle === errorType then return true
 			// also for other literals, but not primitives, e.g. _try(function () { throw {prop:value} } ).catch({..},fn) and for regex / arrays
 
+			// test nonesense or partial match names, e.g. 'Strin'
+
+			// retry null and undefined with Object.prototype.toString.call - may fail in older ecma specs
+
 			if (typeof errorType === 'string') {
-				return rawError.constructor.name === errorType
-					|| new RegExp('^\\s*function ' + errorType + '()').test(rawError.constructor.toString()); // for IE
+				var caughtErrorType = rawError.constructor.name,
+					errorTypeToStringPattern, rawErrorAsString;
+
+				if (caughtErrorType === errorType)
+					return true;
+
+				errorTypeToStringPattern = new RegExp('^\\[object ' + errorType + '\\]$');
+				rawErrorAsString = Object.prototype.toString.call(rawError);
+
+				if (errorTypeToStringPattern.test(rawErrorAsString))
+					return true; // for IE
 			}
 
 			return coercedError instanceof errorType;
