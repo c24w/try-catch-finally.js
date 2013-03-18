@@ -87,6 +87,9 @@ define(function defineTryCatchFinally() {
 				if (errorType === 'Undefined' && isUndefined(rawError))
 					return true;
 
+				if (errorType === 'Null' && rawError === null)
+					return true;
+
 				caughtErrorType = rawError.constructor.name;
 
 				if (caughtErrorType === errorType)
