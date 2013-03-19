@@ -20,3 +20,12 @@ Notes:
 
  - catching precedence (contrived example): {throw 12345} {throw 'Number'} {catch 'Number' gets the second}
  - instanceof fails across frames, e.g. inside an iframe: [] instance of window.top.Array === false
+
+---
+
+Update wiki:
+
+AMD-compatible
+ - https://github.com/amdjs/amdjs-api/wiki/require
+
+Exports to global if not AMD
