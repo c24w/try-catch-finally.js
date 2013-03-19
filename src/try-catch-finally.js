@@ -38,43 +38,40 @@ define(function defineTryCatchFinally() {
 			&& typeof obj.__coerceToObject__ === 'function';
 	}
 
-	function CatchChecker(caughtError) {
-		this.caughtError = caughtError;
-	}
+	function ObjectChecker(subject) { this.subject = subject; }
 
-	CatchChecker.prototype.byValue = function byValue(value) {
-		return this.caughtError === value;
+	ObjectChecker.prototype.valueEquals = function valueEquals(value) {
+		return this.subject === value;
 	};
 
-	CatchChecker.prototype.byName = function byName(name) {
+	ObjectChecker.prototype.nameEquals = function nameEquals(name) {
 
-		var typeToCatchPattern, errorAsString;
+		var nameMatchPattern, errorAsString;
 
 		if (typeof name !== 'string') return false;
 
-		typeToCatchPattern = new RegExp('^\\[object ' + name + '\\]$');
+		nameMatchPattern = new RegExp('^\\[object ' + name + '\\]$');
 
-		errorAsString = Object.prototype.toString.call(this.caughtError);
+		errorAsString = Object.prototype.toString.call(this.subject);
 
-		return typeToCatchPattern.test(errorAsString);
+		return nameMatchPattern.test(errorAsString);
 	};
 
-	CatchChecker.prototype.byConstructor = function byConstructor(constructor) {
+	ObjectChecker.prototype.instanceOf = function instanceOf(constructor) {
 
-		var caughtError = this.caughtError,
-			errorAsObject = canCoerceToObject(caughtError) ? caughtError.__coerceToObject__() : caughtError;
+		var subject = this.subject,
+			subjectAsObject = canCoerceToObject(subject) ? subject.__coerceToObject__() : subject;
 
-		return (typeof constructor === 'function') && (errorAsObject instanceof constructor);
+		return (typeof constructor === 'function') && (subjectAsObject instanceof constructor);
 	};
 
 	function errorShouldBeCaught(caughtError, toCatch) {
 
-		var canCatch = new CatchChecker(caughtError);
+		caughtError = new ObjectChecker(caughtError);
 
-		return canCatch.byValue(toCatch)
-			|| canCatch.byName(toCatch)
-			|| canCatch.byConstructor(toCatch);
-
+		return caughtError.valueEquals(toCatch)
+			|| caughtError.nameEquals(toCatch)
+			|| caughtError.instanceOf(toCatch);
 	}
 
 	function TryCatchFinally(tryBlock) {
