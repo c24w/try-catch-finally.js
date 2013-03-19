@@ -10,16 +10,20 @@
 <body>
 	<div id="mocha"></div>
 	<script type="text/javascript">
+		var useRaw = window.location.search === '?raw';
+
 		require.config({
 			urlArgs: "bust=" +  (new Date()).getTime(),
+			baseUrl: '../',
 			paths: {
-				tcf: '../src/try-catch-finally',
-				chai: '../node_modules/chai/chai',
-				'catch-test-helpers': './catch-test-helpers'
+				'tcf': (useRaw ? './src/' : './') + 'try-catch-finally',
+				'object-checker': './src/object-checker',
+				'chai': './node_modules/chai/chai',
+				'catch-test-helpers': './test/catch-test-helpers'
 			}
 		});
 		
-		require(['../node_modules/mocha/mocha'], function setupMochaAndLoadTests(){
+		require(['./node_modules/mocha/mocha'], function setupMochaAndLoadTests(){
 
 			mocha.setup({
 				ui: 'bdd',
@@ -27,12 +31,15 @@
 			});
 
 			require([
-				'./try.test',
-				'./catch-basics.test', './catch-primitives.test', './catch-chains.test.js', './catch-objects.test',
-				'./finally.test'
+				'./test/try.test',
+				'./test/catch-basics.test', './test/catch-primitives.test', './test/catch-objects.test',
+				'./test/finally.test'
 			], mocha.run);
 
 		});
+
+		if (useRaw) document.write('<a href="./test.html">Test using compiled source</a>');
+		else document.write('<a href="?raw">Test using raw source</a>');
 	</script>
 </body>
 

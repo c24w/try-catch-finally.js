@@ -7,9 +7,9 @@ require(
 		baseUrl: '/base/',
 		paths: {
 			'tcf': './src/try-catch-finally',
+			'object-checker': './src/object-checker'
 			'chai': './node_modules/chai/chai',
 			'catch-test-helpers': './test/catch-test-helpers',
-			'object-checker': './src/object-checker'
 		}
 	},
 	tests,
