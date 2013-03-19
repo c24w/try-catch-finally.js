@@ -11,7 +11,7 @@
 	"license": "BSD",
 	"readmeFilename": "README.md",
 	"devDependencies": {
-		"testacular" : "~0.6.0",
+		"karma" : "*",
 		"requirejs": "~2.1.5",
 		"mocha": "~1.8.2",
 		"chai": "~1.5.0"

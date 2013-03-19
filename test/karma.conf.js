@@ -13,10 +13,10 @@ files = [
 	REQUIRE,
 	REQUIRE_ADAPTER,
 	{pattern: 'node_modules/chai/chai.js', included: false},
-	{pattern: 'src/*.js', included: false}, // for testing raw source
+	{pattern: 'src/*.js', included: false}, // raw source
 	{pattern: 'test/*.test.js', included: false},
 	{pattern: 'test/catch-test-helpers.js', included: false},
-	'test/test-runner.js',
+	'test/karma-runner.js',
 ];
 
 

@@ -16,7 +16,7 @@ files = [
 	{pattern: 'try-catch-finally.min.js', included: false}, // compiled source
 	{pattern: 'test/*.test.js', included: false},
 	{pattern: 'test/catch-test-helpers.js', included: false},
-	'test/test-runner-compiled-source.js',
+	'test/karma-compiled-source-runner.js',
 ];
 
 

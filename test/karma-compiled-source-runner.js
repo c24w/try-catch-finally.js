@@ -1,4 +1,4 @@
-var tests = Object.keys(window.__testacular__.files).filter(function (file) {
+var tests = Object.keys(window.__karma__.files).filter(function (file) {
     return /\.test\.js$/.test(file);
 });
 
@@ -13,5 +13,5 @@ require(
 		}
 	},
 	tests,
-	window.__testacular__.start
+	window.__karma__.start
 );

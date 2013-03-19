@@ -1,8 +1,9 @@
 @echo off
-title Testacular try-catch-finally.js Compiled Source Runner
+title Karma try-catch-finally.js Compiled Source Runner
 set CHROME_BIN=C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
 set OPERA_BIN=C:\Program Files (x86)\Opera\opera.exe
 
 set FIREFOX_BIN=C:\Program Files (x86)\Mozilla Firefox\firefox.exe
 set SAFARI_BIN=C:\Program Files (x86)\Safari\Safari.exe
-start /B testacular start testacular-compiled-source.conf.js
+node ..\node_modules\karma\bin\karma start karma-compiled-source.conf.js
+pause
