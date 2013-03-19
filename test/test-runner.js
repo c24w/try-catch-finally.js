@@ -8,7 +8,8 @@ require(
 		paths: {
 			'tcf': './src/try-catch-finally',
 			'chai': './node_modules/chai/chai',
-			'catch-test-helpers': './test/catch-test-helpers'
+			'catch-test-helpers': './test/catch-test-helpers',
+			'object-checker': './src/object-checker'
 		}
 	},
 	tests,
