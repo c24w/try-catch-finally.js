@@ -13,7 +13,8 @@ files = [
 	REQUIRE,
 	REQUIRE_ADAPTER,
 	{pattern: 'node_modules/chai/chai.js', included: false},
-	{pattern: 'src/*.js', included: false},
+	{pattern: 'src/*.js', included: false}, // for testing raw source
+	{pattern: 'try-catch-finally.js', included: false}, // for testing compiled source
 	{pattern: 'test/*.test.js', included: false},
 	{pattern: 'test/catch-test-helpers.js', included: false},
 	'test/test-runner.js',

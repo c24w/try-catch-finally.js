@@ -1,4 +1,4 @@
-define(['chai', 'tcf'], function (chai, _try) {
+define(['chai', 'try-catch-finally'], function (chai, _try) {
 
 	var expect = chai.expect;
 

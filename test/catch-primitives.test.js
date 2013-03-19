@@ -1,4 +1,4 @@
-define(['chai', 'tcf', 'catch-test-helpers'], function tryCatchFinallyTests(chai, _try, helpers) {
+define(['chai', 'try-catch-finally', 'catch-test-helpers'], function tryCatchFinallyTests(chai, _try, helpers) {
 
 	var expect = chai.expect,
 		assert_catch_specific = helpers.assert_catch_specific,

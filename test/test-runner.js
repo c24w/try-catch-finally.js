@@ -6,10 +6,10 @@ require(
 	{
 		baseUrl: '/base/',
 		paths: {
-			'tcf': './src/try-catch-finally',
-			'object-checker': './src/object-checker'
+			'try-catch-finally': './try-catch-finally',
+			'object-checker': './src/object-checker',
 			'chai': './node_modules/chai/chai',
-			'catch-test-helpers': './test/catch-test-helpers',
+			'catch-test-helpers': './test/catch-test-helpers'
 		}
 	},
 	tests,
