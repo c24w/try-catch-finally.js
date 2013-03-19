@@ -13,10 +13,10 @@ files = [
 	REQUIRE,
 	REQUIRE_ADAPTER,
 	{pattern: 'node_modules/chai/chai.js', included: false},
-	{pattern: 'src/*.js', included: false}, // for testing raw source
+	{pattern: 'try-catch-finally.min.js', included: false}, // compiled source
 	{pattern: 'test/*.test.js', included: false},
 	{pattern: 'test/catch-test-helpers.js', included: false},
-	'test/test-runner.js',
+	'test/test-runner-compiled-source.js',
 ];
 
 
@@ -47,7 +47,7 @@ logLevel = LOG_INFO;
 
 
 // enable / disable watching file and executing tests whenever any file changes
-autoWatch = true;
+autoWatch = false;
 
 
 // Start these browsers, currently available:
@@ -67,4 +67,4 @@ captureTimeout = 60000;
 
 // Continuous Integration mode
 // if true, it capture browsers, run tests and exit
-singleRun = false;
+singleRun = true;

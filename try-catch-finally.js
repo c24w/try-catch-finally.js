@@ -1,1 +1,111 @@
-define("object-checker",[],function(){function t(e){return e!==undefined&&e!==null&&typeof e.__coerceToObject__=="function"}function n(e){this.subject=e}return String.prototype.__coerceToObject__=Number.prototype.__coerceToObject__=Boolean.prototype.__coerceToObject__=function(){return this},n.prototype.valueEquals=function(t){return this.subject===t},n.prototype.nameEquals=function(t){var n,r;return typeof t!="string"?!1:(n=new RegExp("^\\[object "+t+"\\]$"),r=Object.prototype.toString.call(this.subject),n.test(r))},n.prototype.instanceOf=function(n){var r=this.subject,i=t(r)?r.__coerceToObject__():r;return typeof n=="function"&&i instanceof n},n}),define("try-catch-finally",["object-checker"],function(t){function n(e,n){return e=new t(e),e.valueEquals(n)||e.nameEquals(n)||e.instanceOf(n)}function r(e){function i(){t.handled=!0}var t={raw:undefined,exists:!1,handled:!1};try{e()}catch(r){t.raw=r,t.exists=!0}this["catch"]=function(e,r){function s(){r(t.raw),i()}var o=arguments.length;return o>0&&t.exists&&!t.handled&&(o===1?(r=e,e=undefined,s()):n(t.raw,e)&&s()),this},this["finally"]=function(e){e&&e();if(t.exists&&!t.handled)throw t.raw}}return function(t){return new r(t)}});
+
+define('object-checker',[],function defineObjectChecker() {
+
+	String.prototype.__coerceToObject__ =
+	Number.prototype.__coerceToObject__ =
+	Boolean.prototype.__coerceToObject__ =
+	function __coerceToObject__() { return this; };
+
+	function canCoerceToObject(obj) {
+		return obj !== undefined
+			&& obj !== null
+			&& typeof obj.__coerceToObject__ === 'function';
+	}
+
+	function ObjectChecker(subject) { this.subject = subject; }
+
+	ObjectChecker.prototype.valueEquals = function valueEquals(value) {
+		return this.subject === value;
+	};
+
+	ObjectChecker.prototype.nameEquals = function nameEquals(name) {
+
+		var nameMatchPattern, errorAsString;
+
+		if (typeof name !== 'string') return false;
+
+		nameMatchPattern = new RegExp('^\\[object ' + name + '\\]$');
+
+		errorAsString = Object.prototype.toString.call(this.subject);
+
+		return nameMatchPattern.test(errorAsString);
+	};
+
+	ObjectChecker.prototype.instanceOf = function instanceOf(constructor) {
+
+		var subject = this.subject,
+			subjectAsObject = canCoerceToObject(subject) ? subject.__coerceToObject__() : subject;
+
+		return (typeof constructor === 'function') && (subjectAsObject instanceof constructor);
+	};
+
+	return ObjectChecker;
+
+});
+
+define('try-catch-finally',['object-checker'], function defineTryCatchFinally(ObjectChecker) {
+
+	function errorShouldBeCaught(caughtError, toCatch) {
+
+		caughtError = new ObjectChecker(caughtError);
+
+		return caughtError.valueEquals(toCatch)
+			|| caughtError.nameEquals(toCatch)
+			|| caughtError.instanceOf(toCatch);
+	}
+
+	function TryCatchFinally(tryBlock) {
+
+		var error = {
+			raw: undefined,
+			exists: false, // undefined can be thrown/caught so cannot check raw for undefined for presence of error
+			handled: false
+		};
+
+		try {
+			tryBlock();
+		}
+		catch (e) {
+			error.raw = e;
+			error.exists = true;
+		}
+
+		this['catch'] = function (toCatch, handleError) {
+
+			function handleSuccessfulCatch() {
+				handleError(error.raw);
+				setErrorHandled();
+			}
+
+			var numArgs = arguments.length;
+
+			if (numArgs > 0 && error.exists && !error.handled) {
+
+				if (numArgs === 1) { // indiscriminate catch
+					handleError = toCatch;
+					toCatch = undefined;
+					handleSuccessfulCatch();
+				}
+				else if (errorShouldBeCaught(error.raw, toCatch)) { // specific catch
+					handleSuccessfulCatch();
+				}
+
+			}
+
+			return this;
+		};
+
+		this['finally'] = function (finallyBlock) {
+			if (finallyBlock) finallyBlock();
+			if (error.exists && !error.handled) throw error.raw;
+		};
+
+		function setErrorHandled() { error.handled = true; }
+
+	}
+
+	return function _try(tryBlock) {
+		return new TryCatchFinally(tryBlock);
+	};
+
+});
