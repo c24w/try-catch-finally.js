@@ -1,5 +1,6 @@
 @echo off
 title Karma try-catch-finally.js Compiled Source Runner
+call ..\build.bat
 set CHROME_BIN=C:\Program Files (x86)\Google\Chrome\Application\chrome.exe
 set OPERA_BIN=C:\Program Files (x86)\Opera\opera.exe
 

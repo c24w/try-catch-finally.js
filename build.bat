@@ -1,5 +1,6 @@
 @echo off
-set r=node_modules/requirejs/bin/r.js
-node %r% -o build.js
-node %r% -o build.min.js
+set d=%~dp0
+set r=%d%/node_modules/requirejs/bin/r.js
+node %r% -o %d%/build.js
+node %r% -o %d%/build.min.js
 pause
