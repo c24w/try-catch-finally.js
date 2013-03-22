@@ -2,7 +2,7 @@ To do:
 
 Configurables?
  - value coercian, e.g. try throw '12345' catch 12345 succeeds - default disabled
- - primitive coercian, e.g. try throw 12345 catch Number succeeds - default enabled
+ - primitive coercian / use primitive object wrappers / treat primitives as objects (excluding null and undefined) e.g. try throw 12345 catch Number succeeds - default enabled
  - case-sensitivity - not yet implemented - also, what if there are both string and String objects... catch('string')...?
  - hierarchical catching - not yet implemented - only catch explicitly, e.g. catch(Object) would not catch a Number
 
@@ -29,3 +29,5 @@ AMD-compatible
  - https://github.com/amdjs/amdjs-api/wiki/require
 
 Exports to global if not AMD
+
+if error caught, other blocks ignored, even if would also catch
