@@ -13,7 +13,7 @@ define(['object-checker'], function defineTryCatchFinally(ObjectChecker) {
 
 		var error = {
 			raw: undefined,
-			exists: false, // undefined can be thrown/caught so cannot check raw for undefined for existence of error
+			exists: false, // undefined can be thrown/caught, so checking raw for undefined is not a safe check for presence of error
 			handled: false
 		};
 

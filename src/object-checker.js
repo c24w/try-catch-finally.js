@@ -1,14 +1,14 @@
 define(function defineObjectChecker() {
 
-	String.prototype.__coerceToObject__ =
-	Number.prototype.__coerceToObject__ =
-	Boolean.prototype.__coerceToObject__ =
-	function __coerceToObject__() { return this; };
+	String.prototype.__toObject__ =
+	Number.prototype.__toObject__ =
+	Boolean.prototype.__toObject__ =
+	function __toObject__() { return this; };
 
-	function canCoerceToObject(obj) {
+	function isConvertablePrimitive(obj) {
 		return obj !== undefined
 			&& obj !== null
-			&& typeof obj.__coerceToObject__ === 'function';
+			&& typeof obj.__toObject__ === 'function';
 	}
 
 	function ObjectChecker(subject) { this.subject = subject; }
@@ -33,7 +33,7 @@ define(function defineObjectChecker() {
 	ObjectChecker.prototype.instanceOf = function instanceOf(constructor) {
 
 		var subject = this.subject,
-			subjectAsObject = canCoerceToObject(subject) ? subject.__coerceToObject__() : subject;
+			subjectAsObject = isConvertablePrimitive(subject) ? subject.__toObject__() : subject;
 
 		return (typeof constructor === 'function') && (subjectAsObject instanceof constructor);
 	};

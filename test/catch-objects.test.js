@@ -25,7 +25,11 @@ define(['chai', 'try-catch-finally', 'catch-test-helpers'], function tryCatchFin
 
 		describe('literal array', function () {
 			batch_test_catches_for([], Array, 'Array');
-		});// throw date
+		});
+
+		describe('literal object', function () {
+			batch_test_catches_for({}, Object, 'Object');
+		});
 
 	});
 
