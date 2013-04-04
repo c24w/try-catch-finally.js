@@ -26,6 +26,8 @@ Notes:
 
 Update wiki:
 
+sack off MD and move to own page?
+
 AMD-compatible
  - https://github.com/amdjs/amdjs-api/wiki/require
 
