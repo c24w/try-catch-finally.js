@@ -1,15 +1,13 @@
-({
-	optimize: 'none',
-	baseUrl: './src/',
-	paths: {
-		'object-checker': './object-checker',
-		'almond': '../global-shim/almond'
-	},
-	wrap: { // add to global scope if AMD isn't being used
-		startFile: './global-shim/wrap-start',
-		endFile: './global-shim/wrap-end'
-	},
-	name: 'almond',
-	include: ['try-catch-finally'],
-	out: 'try-catch-finally.js'
-})
+var requirejs = require('requirejs'),
+	build_config = require('./build-config.js'),
+	build_min_config = require('./build-min-config.js'),
+	handleBuildResponse = console.log.bind(null),
+	handleBuildError = console.error.bind(null);
+
+function build(config) {
+	requirejs.optimize(config, handleBuildResponse, handleBuildError);
+}
+
+build(build_config);
+
+build(build_min_config);

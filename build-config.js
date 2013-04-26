@@ -1,6 +1,5 @@
-
-({
-	optimize: 'uglify2',
+module.exports = {
+	optimize: 'none',
 	baseUrl: './src/',
 	paths: {
 		'object-checker': './object-checker',
@@ -12,5 +11,5 @@
 	},
 	name: 'almond',
 	include: ['try-catch-finally'],
-	out: 'try-catch-finally.min.js'
-})
+	out: 'try-catch-finally.js'
+};
