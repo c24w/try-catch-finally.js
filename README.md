@@ -1,27 +1,41 @@
 `try-catch-finally.js`
 ======================
 
-**See the [wiki](../../wiki) for more details.**
-
 Tested in the latest versions of Chrome, Firefox, Internet Explorer, Opera, Safari.  (Test coverage is ongoing.)
 
-Example
--------
+**See the [wiki](../../wiki) for more details.**
 
-	var _try = c24w.try;
+Set-up
+------
 
-	_try(function () {
-	    throw new Error('error message');
-	})
-	.catch(String, function (e) {
-	    console.log('Caught String: ' + e);
-	})
-	.catch(Error, function (e) {
-	    console.log('Caught Error: ' + e);
-	})
-	.catch(function (e) {
-	    console.log('Caught other: ' + e);
-	})
-	.finally(function () {
-	    console.log('Error was caught explicitly');
+The _try_ function can be accessed standalone or with an AMD loader.
+
+### Standalone
+
+Namespaced to the global object.
+
+For example, when loading with a script tag:
+
+	<script type="text/javascript" src="try-catch-finally.js"></script>
+
+it is accessible via:
+
+	var _try = window.c24w.try;
+	console.log(typeof _try) // -> function
+
+### AMD loader
+
+Imported as a function, without polluting the global object.
+
+For example (as per the [AMD specification][]):
+
+	define(['try-catch-finally'], function (_try) {
+		console.log(typeof _try); // -> function
 	});
+
+
+
+
+
+
+[AMD specification]: https://github.com/amdjs/amdjs-api/wiki/AMD
