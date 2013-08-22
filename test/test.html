@@ -12,6 +12,12 @@
 	<script type="text/javascript">
 		var useRaw = window.location.search === '?raw';
 
+		var anchor = document.createElement('a');
+		anchor.href = useRaw ? './test.html' : '?raw';
+		anchor.innerHTML = 'Test ' + (useRaw ? 'built'  : 'source') + ' code';
+
+		document.body.insertBefore(anchor, document.body.firstChild);
+
 		require.config({
 			urlArgs: "bust=" +  (new Date()).getTime(),
 			baseUrl: '../',
@@ -37,9 +43,6 @@
 			], mocha.run);
 
 		});
-
-		if (useRaw) document.write('<a href="./test.html">Test using compiled source</a>');
-		else document.write('<a href="?raw">Test using raw source</a>');
 	</script>
 </body>
 

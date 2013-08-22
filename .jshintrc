@@ -29,7 +29,8 @@
 				"xit",
 				"chai",
 				"c24w",
-				"require"
+				"require",
+				"module"
 	],
 
 
