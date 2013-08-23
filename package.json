@@ -15,6 +15,10 @@
     "requirejs": "~2.1.5",
     "mocha": "~1.8.2",
     "chai": "~1.5.0",
-    "karma-mocha": "~0.1.0"
+    "karma-mocha": "~0.1.0",
+    "karma-opera-launcher": "~0.1.0",
+    "karma-ie-launcher": "~0.1.1",
+    "karma-chrome-launcher": "~0.1.0",
+    "karma-firefox-launcher": "~0.1.0"
   }
 }

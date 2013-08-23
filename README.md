@@ -1,7 +1,7 @@
 `try-catch-finally.js`
 ======================
 
-Tested in the latest versions of Chrome, Firefox, Internet Explorer, Opera, Safari.  (Test coverage is ongoing.)
+Tested in the latest versions of Chrome, Firefox, Opera & Internet Explorer.  (Test coverage is ongoing.)
 
 **See the [wiki](../../wiki) for more details.**
 
