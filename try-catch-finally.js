@@ -443,15 +443,15 @@ define('object-checker',[],function defineObjectChecker() {
 
 	ObjectChecker.prototype.nameEquals = function nameEquals(name) {
 
-		var nameMatchPattern, errorAsString;
+		var nameMatchPattern, subjectClassProperty;
 
 		if (typeof name !== 'string') return false;
 
 		nameMatchPattern = new RegExp('^\\[object ' + name + '\\]$');
 
-		errorAsString = Object.prototype.toString.call(this.subject);
+		subjectClassProperty = Object.prototype.toString.call(this.subject);
 
-		return nameMatchPattern.test(errorAsString);
+		return nameMatchPattern.test(subjectClassProperty);
 	};
 
 	ObjectChecker.prototype.instanceOf = function instanceOf(constructor) {
