@@ -3,7 +3,7 @@ define(function defineObjectChecker() {
 	String.prototype.__toObject__ =
 	Number.prototype.__toObject__ =
 	Boolean.prototype.__toObject__ =
-	function __toObject__() { return this; };
+	function () { return this; };
 
 	function isConvertablePrimitive(obj) {
 		return obj !== undefined
