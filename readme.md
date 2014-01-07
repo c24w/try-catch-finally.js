@@ -33,9 +33,8 @@ For example (as per the [AMD specification][]):
 		console.log(typeof _try); // -> function
 	});
 
+---
 
-
-
-
+[![Bitdeli Badge](https://d2weczhvl823v0.cloudfront.net/c24w/try-catch-finally.js/trend.png)](https://bitdeli.com/free "Bitdeli Badge")
 
 [AMD specification]: https://github.com/amdjs/amdjs-api/wiki/AMD
