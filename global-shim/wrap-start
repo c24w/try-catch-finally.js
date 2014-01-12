@@ -9,8 +9,7 @@
 	} else {
 		//Browser globals case. Just assign the
 		//result to a property on the global.
-		root.c24w = root.c24w || {};
-		root.c24w.try = factory();
+		root.try = root._try = factory();
 	}
 }(this, function () {
 	//almond, and your modules will be inlined here

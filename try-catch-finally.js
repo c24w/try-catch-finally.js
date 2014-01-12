@@ -9,11 +9,11 @@
 	} else {
 		//Browser globals case. Just assign the
 		//result to a property on the global.
-		root.c24w = root.c24w || {};
-		root.c24w.try = factory();
+		root.try = root._try = factory();
 	}
 }(this, function () {
 	//almond, and your modules will be inlined here
+
 /**
  * almond 0.2.5 Copyright (c) 2011-2012, The Dojo Foundation All Rights Reserved.
  * Available via the MIT or new BSD license.
@@ -427,7 +427,7 @@ define('object-checker',[],function defineObjectChecker() {
 	String.prototype.__toObject__ =
 	Number.prototype.__toObject__ =
 	Boolean.prototype.__toObject__ =
-	function __toObject__() { return this; };
+	function () { return this; };
 
 	function isConvertablePrimitive(obj) {
 		return obj !== undefined
@@ -465,6 +465,7 @@ define('object-checker',[],function defineObjectChecker() {
 	return ObjectChecker;
 
 });
+
 define('try-catch-finally',['object-checker'], function defineTryCatchFinally(ObjectChecker) {
 
 	function errorShouldBeCaught(caughtError, toCatch) {
