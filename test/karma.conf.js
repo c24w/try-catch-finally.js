@@ -10,10 +10,10 @@ module.exports = function (config) {
 		],
 
 		files: [
-			{pattern: 'node_modules/chai/chai.js', included: false},
-			{pattern: 'src/*.js', included: false}, // raw source
-			{pattern: 'test/*.test.js', included: false},
-			{pattern: 'test/catch-test-helpers.js', included: false},
+			{ pattern: 'node_modules/chai/chai.js', included: false },
+			{ pattern: 'try-catch-finally.js', included: false }, // raw source
+			{ pattern: 'test/*.tests.js', included: false },
+			{ pattern: 'test/catch-test-helpers.js', included: false },
 			'test/karma-runner.js',
 		],
 

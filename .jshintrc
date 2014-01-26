@@ -1,5 +1,3 @@
-// NOTE: I added the .js extension to this gist so it would have syntax highlighting. This file should have NO file extension
-
 {
 	// Settings
 	"passfail"      : false,  // Stop on first error.
@@ -12,25 +10,22 @@
 	"node"          : false,
 	"rhino"         : false,
 	"couch"         : false,
-	"wsh"           : true,   // Windows Scripting Host.
+	"wsh"           : false,   // Windows Scripting Host.
 
 	"jquery"        : false,
-	"ender"         : true,
+	"ender"         : false,
 	"prototypejs"   : false,
 	"mootools"      : false,
 	"dojo"          : false,
 
 	"predef"        : [  // Custom globals.
-				"mocha",
-				"expect",
-				"define",
+				"beforeEach",
 				"describe",
 				"it",
 				"xit",
 				"chai",
-				"c24w",
-				"require",
-				"module"
+				"_try",
+				"define"
 	],
 
 
@@ -41,7 +36,7 @@
 
 	// ECMAScript 5.
 	"es5"           : true,   // Allow ECMAScript 5 syntax.
-	"strict"        : false,  // Require `use strict` pragma  in every file.
+	"strict"        : true,  // Require `use strict` pragma  in every file.
 	"globalstrict"  : false,  // Allow global "use strict" (also enables 'strict').
 
 
@@ -50,7 +45,7 @@
 	"laxbreak"      : true,   // Tolerate unsafe line breaks e.g. `return [\n] x` without semicolons.
 	"bitwise"       : true,   // Prohibit bitwise operators (&, |, ^, etc.).
 	"boss"          : false,  // Tolerate assignments inside if, for & while. Usually conditions & loops are for comparison, not assignments.
-	"curly"         : false,   // Require {} for every new block or scope.
+	"curly"         : true,   // Require {} for every new block or scope.
 	"eqeqeq"        : true,   // Require triple equals i.e. `===`.
 	"eqnull"        : false,  // Tolerate use of `== null`.
 	"evil"          : false,  // Tolerate use of `eval`.

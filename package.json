@@ -7,13 +7,16 @@
     "type": "git",
     "url": "git@github.com:c24w/try-catch-finally.js.git"
   },
+  "scripts": {
+    "test": "mocha -R spec test/"
+  },
   "author": "Chris Watson",
   "license": "BSD",
   "readmeFilename": "README.md",
   "devDependencies": {
     "karma": "*",
     "requirejs": "~2.1.5",
-    "mocha": "~1.8.2",
+    "mocha": "~1.17.1",
     "chai": "~1.5.0",
     "karma-mocha": "~0.1.0",
     "karma-opera-launcher": "~0.1.0",
