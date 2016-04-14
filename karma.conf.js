@@ -17,7 +17,7 @@ module.exports = function(config) {
     files: [
       'try-catch-finally.js',
       'node_modules/chai/chai.js',
-      'test/*.js'
+      'test/*-tests.js'
     ],
 
 
