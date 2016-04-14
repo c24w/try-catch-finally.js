@@ -8,13 +8,14 @@
     "url": "git@github.com:c24w/try-catch-finally.js.git"
   },
   "scripts": {
-    "test": "mocha -R spec test/"
+    "test": "mocha test && node_modules/.bin/karma start"
   },
   "author": "Chris Watson",
   "license": "BSD",
   "readmeFilename": "README.md",
   "devDependencies": {
     "chai": "^3.5.0",
+    "jshint": "^2.9.1",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^0.2.3",
     "karma-firefox-launcher": "~0.1.0",
