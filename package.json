@@ -2,7 +2,7 @@
   "name": "try-catch-finally.js",
   "version": "1.0.0",
   "description": "",
-  "main": "src\\try-catch-finally.js",
+  "main": "try-catch-finally.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:c24w/try-catch-finally.js.git"
