@@ -1,4 +1,5 @@
-(function (root, factory) {
+(function umd(root, factory) {
+  'use strict';
     if (typeof define === 'function' && define.amd) {
         // AMD. Register as an anonymous module.
         define([], factory);
@@ -11,55 +12,21 @@
         // Browser globals (root is window)
         root.try = root._try = factory();
   }
-}(this, function tryCatchFinallyFactory() {
+}(this, (function tryCatchFinallyFactory(getBoxed) {
+  'use strict';
 
-  function add__toObject__() {
-    String.prototype.__toObject__ =
-      Number.prototype.__toObject__ =
-      Boolean.prototype.__toObject__ =
-      function __toObject__() { return this; };
+  function hasName(obj, name) {
+    if (typeof name !== 'string') { return false; }
+    var className = Object.prototype.toString.call(obj).toLowerCase();
+    return className === '[object ' + name.toLowerCase() + ']';
   }
 
-  function remove_toObject__() {
-    delete String.prototype.__toObject__;
-    delete Number.prototype.__toObject__;
-    delete Boolean.prototype.__toObject__;
-  }
-
-  function isConstructablePrimitive(obj) {
-    return obj !== undefined
-      && obj !== null
-      && typeof obj.__toObject__ === 'function';
-  }
-
-  function ObjectChecker(subject) {
-
-    this.valueEquals = function valueEquals(value) {
-      return subject === value;
-    };
-
-    this.nameEquals = function nameEquals(name) {
-      if (typeof name !== 'string') { return false; }
-
-      var classNamePattern = new RegExp('^\\[object ' + name + '\\]$', 'i');
-
-      var className = Object.prototype.toString.call(subject);
-
-      return classNamePattern.test(className);
-    };
-
-    this.instanceOf = function instanceOf(constructor) {
-      add__toObject__();
-
-      var subjectAsObject = isConstructablePrimitive(subject)
-        ? subject.__toObject__()
-        : subject;
-
-      remove_toObject__();
-
-      return (typeof constructor === 'function')
-        && (subjectAsObject instanceof constructor);
-    };
+  function instanceOf(obj, constructor) {
+    var defined = obj !== undefined && obj !== null;
+    if (defined && typeof constructor === 'function') {
+      // Get the 'boxed' value so instanceof works for primitive literals
+      return getBoxed(obj) instanceof constructor;
+    }
   }
 
   return function _try(tryBlock) {
@@ -73,11 +40,9 @@
     function setErrorHandled() { delete state.error; }
 
     function caughtErrorIs(expectedErr) {
-      var actualErr = new ObjectChecker(state.error);
-
-      return actualErr.valueEquals(expectedErr)
-        || actualErr.nameEquals(expectedErr)
-        || actualErr.instanceOf(expectedErr);
+      return state.error === expectedErr
+        || hasName(state.error, expectedErr)
+        || instanceOf(state.error, expectedErr);
     }
 
     try {
@@ -87,9 +52,8 @@
       state.error = e;
     }
 
-    return {
-
-      catch: function (expectedErr, catchBlock) {
+    var chain = {
+      catch: function _catch(expectedErr, catchBlock) {
         /*
           there is a catchBlock
           and an error was thrown
@@ -107,10 +71,9 @@
           setErrorHandled();
         }
 
-        return this;
+        return chain;
       },
-
-      finally: function (finallyBlock) {
+      finally: function _finally(finallyBlock) {
         if (finallyBlock) {
           finallyBlock();
         }
@@ -118,8 +81,13 @@
           throw state.error;
         }
       }
-
     };
-  };
 
-}));
+    return chain;
+  };
+}).bind(null, function getBoxed(obj) {
+  // Injected because boxing doesn't work in strict mode </nasty>
+  // https://developer.mozilla.org/en/docs/Web/JavaScript/Reference/Strict_mode#Securing_JavaScript
+  // jshint strict: false
+  return (function () { return this; }).call(obj);
+})));
