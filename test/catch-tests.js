@@ -1,196 +1,158 @@
+'use strict'; 
 describe('catch', function () {
-	'use strict';
-	var spy, assert = chai.assert;
-	function noop() {}
-	function throws(throwable) {
-		return function willThrow() {
-			throw throwable;
-		};
-	}
-	function Spy() {
-		function spy() {
-			spy.calls.push(arguments);
-			spy.firstCall = spy.firstCall || arguments;
-		}
-		spy.calls = [];
-		spy.firstCall;
-		return spy;
-	}
+  var spy, assert = chai.assert;
 
-	beforeEach(function () { spy = new Spy(); });
+  var objectTypes = [
+    { name: 'string', value: 'blah', ctor: String },
+    { name: 'number', value: 123, ctor: Number },
+    { name: 'boolean', value: true, ctor: Boolean },
+    { name: 'array', value: [], ctor: Array },
+    { name: 'object', value: {}, ctor: Object },
+    { name: 'Error', value: new Error(), ctor: Error }
+  ];
 
-	it('is chainable', function () {
-		assert.isFunction(_try().catch,
-			'expected to chain catch from empty try');
-		assert.isFunction(_try(noop).catch,
-			'expected to chain catch from non-emtpy try');
-		assert.isFunction(_try().catch().catch,
-			'expected to chain catch from empty catch');
-		assert.isFunction(_try().catch(noop).catch,
-			'expected to chain catch from indiscriminate catch');
-		assert.isFunction(_try().catch(123, noop).catch,
-			'expected to chain catch from catch by value');
-		assert.isFunction(_try().catch('string', noop).catch,
-			'expected to chain catch from catch by name');
-		assert.isFunction(_try().catch(Boolean, noop).catch,
-			'expected to chain catch from catch by constructor');
-	});
+  var specialTypes = [
+    { name: 'undefined', value: undefined },
+    { name: 'null', value: null }
+  ];
 
-	var testCases = [
-		{ name: 'undefined', value: undefined },
-		{ name: 'null', value: null },
-		{ name: 'string', value: 'blah', constructor: String },
-		{ name: 'number', value: 123, constructor: Number },
-		{ name: 'boolean', value: true, constructor: Boolean },
-		{ name: 'array', value: [], constructor: Array },
-		{ name: 'object', value: {}, constructor: Object },
-		{ name: 'Error', value: new Error(),  constructor: Error }
-	];
+  var allTypes = objectTypes.concat(specialTypes);
 
-	function testCase(cb) {
-		testCases.forEach(function (tc) {
-			var ctor = tc.hasOwnProperty('constructor')
-				? tc.constructor : undefined;
-			cb(tc.name, tc.value, ctor);
-		});
-	}
+  function noop() {}
 
-	describe('indiscriminately', function () {
+  function throws(throwable) {
+    return function throwThing() { throw throwable; };
+  }
 
-		it('is not called if try block does not throw', function () {
-			_try(noop).catch(spy);
-			assert.isUndefined(spy.firstCall);
-		});
+  function fail(err) { throw new Error('catch was called with: ' + err); }
 
-		it('is only called for the first match', function () {
-			_try(throws({})).catch(spy).catch(spy);
-			assert.lengthOf(spy.calls, 1, 'expected one catch');
-		});
+  beforeEach(function () {
+    spy = function spy() {
+      spy.calls.push([].slice.call(arguments));
+      spy.firstCall = spy.firstCall || arguments;
+    };
+    spy.calls = [];
+  });
 
-		testCase(function (name, value, constructor) {
+  it('is chainable', function () {
+    assert.isFunction(_try().catch,
+      'expected to chain catch from empty try');
+    assert.isFunction(_try(noop).catch,
+      'expected to chain catch from non-emtpy try');
+    assert.isFunction(_try().catch().catch,
+      'expected to chain catch from empty catch');
+    assert.isFunction(_try().catch(noop).catch,
+      'expected to chain catch from indiscriminate catch');
+    assert.isFunction(_try().catch(123, noop).catch,
+      'expected to chain catch from catch by value');
+    assert.isFunction(_try().catch('string', noop).catch,
+      'expected to chain catch from catch by name');
+    assert.isFunction(_try().catch(Boolean, noop).catch,
+      'expected to chain catch from catch by constructor');
+  });
 
-			it('is called when ' + name + ' is thrown', function () {
-				_try(throws(value)).catch(spy);
+  describe('indiscriminately', function () {
 
-				assert.lengthOf(spy.calls, 1,
-					'expected handler to be called once');
-				assert.lengthOf(spy.firstCall, 1,
-					'expected handler to be called with one argument');
-				assert.equal(spy.firstCall[0], value,
-					'expected handler to be called with thrown error');
-			});
-		});
-	});
+    allTypes.forEach(function (type) {
+      it('is called when ' + type.name + ' is thrown', function () {
+        _try(throws(type.value)).catch(spy);
+        assert.deepEqual(spy.calls, [[type.value]],
+          'expected handler to be called with thrown error');
+      });
+    });
 
-	describe('by value', function () {
+    it('is not called if try block does not throw', function () {
+      _try(noop).catch(fail);
+    });
 
-		it('is not called if try block does not throw', function () {
-			_try(noop).catch(true, spy);
-			assert.isUndefined(spy.firstCall);
-		});
+    it('is not called after the first match', function () {
+      _try(throws({})).catch(noop).catch(fail);
+    });
+  });
 
-		it('is not called if error does not match', function () {
-			_try(throws('foo')).catch('bar', spy);
-			assert.isUndefined(spy.firstCall);
-		});
+  describe('by value', function () {
 
-		it('is only called for the first match', function () {
-			_try(throws(123)).catch(123, spy).catch(123, spy);
-			assert.lengthOf(spy.calls, 1, 'expected one catch');
-		});
+    it('is not called if try block does not throw', function () {
+      _try(noop).catch(true, fail);
+    });
 
-		testCase(function (name, value, constructor) {
+    it('is not called if error does not match', function () {
+      _try(throws('foo')).catch('bar', fail);
+    });
 
-			it('is called for ' + name, function () {
-				_try(throws(value)).catch(value, spy);
-				
-				assert.lengthOf(spy.calls, 1,
-					'expected handler to be called once');
-				assert.lengthOf(spy.firstCall, 1,
-					'expected handler to be called with one argument');
-				assert.equal(spy.firstCall[0], value,
-					'expected handler to be called with thrown error');
-			});
-		});
-	});
+    it('is not called after the first match', function () {
+      _try(throws(123)).catch(123, noop).catch(123, fail);
+    });
 
-	describe('by name', function () {
+    allTypes.forEach(function (type) {
+      it('is called when ' + type.name + ' is thrown', function () {
+        _try(throws(type.value)).catch(type.value, spy);
+        assert.deepEqual(spy.calls, [[type.value]],
+          'expected handler to be called with thrown error');
+      });
+    });
+  });
 
-		it('is not called if try block does not throw',
-			function () {
-			_try(noop).catch('string', spy);
-			assert.isUndefined(spy.firstCall);
-		});
+  describe('by name', function () {
 
-		it('is not called if error does not match', function () {
-			_try(throws(123)).catch('boolean', spy);
-			assert.isUndefined(spy.firstCall);
-		});
+    it('is not called if try block does not throw', function () {
+      _try(noop).catch('string', fail);
+    });
 
-		it('is only called for the first match', function () {
-			_try(throws(null)).catch('null', spy).catch('null', spy);
-			assert.lengthOf(spy.calls, 1, 'expected one catch');
-		});
+    it('is not called if error does not match', function () {
+      _try(throws(123)).catch('boolean', fail);
+    });
 
-		it('is not case-sensitive', function () {
-			_try(throws(null)).catch('nUlL', spy);
+    it('is not called after the first match', function () {
+      _try(throws(null)).catch('null', noop).catch('null', fail);
+    });
 
-			assert.lengthOf(spy.calls, 1,
-				'expected handler to be called once');
-			assert.lengthOf(spy.firstCall, 1,
-				'expected handler to be called with one argument');
-			assert.equal(spy.firstCall[0], null,
-				'expected handler to be called with thrown error');
-		});
+    it('is not case-sensitive', function () {
+      _try(throws(null)).catch('nUlL', spy);
 
-		testCase(function (name, value, constructor) {
+      assert.lengthOf(spy.calls, 1,
+        'expected handler to be called once');
+      assert.lengthOf(spy.firstCall, 1,
+        'expected handler to be called with one argument');
+      assert.equal(spy.firstCall[0], null,
+        'expected handler to be called with thrown error');
+    });
 
-			it('is called for ' + name, function () {
-				_try(throws(value)).catch(name, spy);
-				
-				assert.lengthOf(spy.calls, 1,
-					'expected handler to be called once');
-				assert.lengthOf(spy.firstCall, 1,
-					'expected handler to be called with one argument');
-				assert.equal(spy.firstCall[0], value,
-					'expected handler to be called with thrown error');
-			});
-		});
-	});
+    allTypes.forEach(function (type) {
+      it('is called when ' + type.name + ' is thrown', function () {
+        _try(throws(type.value)).catch(type.name, spy);
+        assert.deepEqual(spy.calls, [[type.value]],
+          'expected handler to be called with thrown error');
+      });
+    });
+  });
 
-	describe('by constructor', function () {
+  describe('by constructor', function () {
 
-		it('by constructor is not called if try block does not throw',
-			function () {
-			_try(noop).catch(Object, spy);
-			assert.isUndefined(spy.firstCall);
-		});
+    it('is not called if try block does not throw', function () {
+      _try(noop).catch(Object, fail);
+    });
 
-		it('is not called if error does not match', function () {
-			_try(throws(true)).catch(Number, spy);
-			assert.isUndefined(spy.firstCall);
-		});
+    it('is not called if error does not match', function () {
+      _try(throws(true)).catch(Number, fail);
+    });
 
-		it('is only called for the first match', function () {
-			_try(throws([])).catch(Array, spy).catch(Array, spy);
-			assert.lengthOf(spy.calls, 1, 'expected one catch');
-		});
+    it('is not called after the first match', function () {
+      _try(throws([])).catch(Array, noop).catch(Array, fail);
+    });
 
-		testCase(function (name, value, constructor) {
+    specialTypes.forEach(function (type) {
+      it('is not called when ' + type.name + ' is thrown', function () {
+        _try(throws(type.value)).catch(Function, fail);
+      });
+    });
 
-			if (constructor) {
-				it('is called for ' + name, function () {
-					_try(throws(value)).catch(constructor, spy);
-					
-					assert.lengthOf(spy.calls, 1,
-						'expected handler to be called once');
-					assert.lengthOf(spy.firstCall, 1,
-						'expected handler to be called with one argument');
-					assert.equal(spy.firstCall[0], value,
-						'expected handler to be called with thrown error');
-				});
-			}
-		});
-	});
-
+    objectTypes.forEach(function (type) {
+      it('is called when ' + type.name + ' is thrown', function () {
+        _try(throws(type.value)).catch(type.ctor, spy);
+        assert.deepEqual(spy.calls, [[type.value]],
+          'expected handler to be called with thrown error');
+      });
+    });
+  });
 });
