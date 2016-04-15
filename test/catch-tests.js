@@ -1,4 +1,4 @@
-'use strict'; 
+'use strict';
 describe('catch', function () {
   var spy, assert = chai.assert;
 
@@ -34,11 +34,14 @@ describe('catch', function () {
     spy.calls = [];
   });
 
-  it('is chainable', function () {
+  it('chains from try', function () {
     assert.isFunction(_try().catch,
       'expected to chain catch from empty try');
     assert.isFunction(_try(noop).catch,
-      'expected to chain catch from non-emtpy try');
+      'expected to chain catch from non-empty try');
+  });
+
+  it('chains recursively', function () {
     assert.isFunction(_try().catch().catch,
       'expected to chain catch from empty catch');
     assert.isFunction(_try().catch(noop).catch,
@@ -49,6 +52,8 @@ describe('catch', function () {
       'expected to chain catch from catch by name');
     assert.isFunction(_try().catch(Boolean, noop).catch,
       'expected to chain catch from catch by constructor');
+    assert.isFunction(_try().catch.call({}).catch,
+      'expected to chain catch from catch with modified context');
   });
 
   describe('indiscriminately', function () {
