@@ -16,7 +16,7 @@
   },
   "author": "Chris Watson",
   "license": "BSD",
-  "readmeFilename": "README.md",
+  "readmeFilename": "readme.md",
   "devDependencies": {
     "chai": "^3.5.0",
     "jshint": "^2.9.1",
