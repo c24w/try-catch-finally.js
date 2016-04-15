@@ -8,7 +8,10 @@
     "url": "git@github.com:c24w/try-catch-finally.js.git"
   },
   "scripts": {
-    "test": "mocha test && node_modules/.bin/karma start"
+    "test": "npm run test-node && npm run test-browser",
+    "test-node": "node_modules/.bin/mocha test",
+    "test-browser": "node_modules/.bin/karma start --browsers PhantomJS",
+    "watch": "node_modules/.bin/karma start --single-run false & node_modules/.bin/mocha test -w"
   },
   "author": "Chris Watson",
   "license": "BSD",
@@ -22,6 +25,8 @@
     "karma-ie-launcher": "^0.2.0",
     "karma-mocha": "^0.2.2",
     "karma-opera-launcher": "^0.3.0",
-    "mocha": "^2.4.5"
+    "karma-phantomjs-launcher": "^1.0.0",
+    "mocha": "^2.4.5",
+    "phantomjs-prebuilt": "^2.1.7"
   }
 }

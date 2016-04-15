@@ -55,10 +55,16 @@ module.exports = function(config) {
     autoWatch: true,
 
 
+    customLaunchers: {
+      Chrome_Squashed: {
+        base: 'Chrome',
+        flags: ['--window-size=1,1', '--window-position=-0,0' ]
+      }
+    },
+
     // start these browsers
     // available browser launchers: https://npmjs.org/browse/keyword/karma-launcher
-    browsers: ['Chrome', 'Firefox'],
-
+    browsers: ['Chrome_Squashed', 'Firefox'],
 
     // Continuous Integration mode
     // if true, Karma captures browsers, runs the tests and exits
