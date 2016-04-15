@@ -8,9 +8,10 @@
     "url": "git@github.com:c24w/try-catch-finally.js.git"
   },
   "scripts": {
-    "test": "npm run test-node && npm run test-browser",
+    "test": "npm run test-node && npm run test-phantomjs",
     "test-node": "node_modules/.bin/mocha test",
-    "test-browser": "node_modules/.bin/karma start --browsers PhantomJS",
+    "test-phantomjs": "node_modules/.bin/karma start --browsers PhantomJS",
+    "test-browsers": "node_modules/.bin/karma start",
     "watch": "node_modules/.bin/karma start --single-run false & node_modules/.bin/mocha test -w"
   },
   "author": "Chris Watson",
