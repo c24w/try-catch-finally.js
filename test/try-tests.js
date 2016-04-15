@@ -1,15 +1,12 @@
+'use strict';
 describe('try', function () {
-	'use strict';
-	var assert = chai.assert;
+  var assert = chai.assert;
 
-	it('exists', function () {
-		assert.isFunction(_try);
-	});
+  it('is a function', function () {
+    assert.isFunction(_try);
+  });
 
-	it('calls the try block', function () {
-		var fnCalled = false;
-		_try(function () { fnCalled = true; });
-		assert.isTrue(fnCalled);
-	});
-
+  it('calls the try block', function (done) {
+    _try(done);
+  });
 });
