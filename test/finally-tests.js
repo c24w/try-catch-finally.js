@@ -1,47 +1,60 @@
+'use strict';
 describe('finally', function () {
-	'use strict';
-	var assert = chai.assert;
-	function throws(throwable) {
-		return function willThrow() {
-			throw throwable;
-		};
-	}
-	function noop() {}
+  var assert = chai.assert;
 
-	it('is chainable once', function () {
-		assert.isFunction(_try().finally,
-			'expected to chain from empty try');
-		assert.isFunction(_try(noop).finally,
-			'expected to chain from non-empty try');
-		assert.isFunction(_try(noop).catch(noop).finally,
-			'expected to chain from indiscriminate catch');
-		assert.isFunction(_try(noop).catch(123, noop).finally,
-			'expected to chain from catch by value');
-		assert.isFunction(_try(noop).catch('boolean', noop).finally,
-			'expected to chain from catch by name');
-		assert.isFunction(_try(noop).catch(Array, noop).finally,
-			'expected to chain from catch by constructor');
-		assert.isUndefined(_try().finally(),
-			'expected to terminate after try');
-		assert.isFunction(_try().catch().finally,
-			'expected to chain from catch');
-		assert.isUndefined(_try().catch().finally(),
-			'expected to terminate after catch');
-	});
-	
-	it('calls the finally block', function () {
-		var called = false;
-		_try().finally(function () { called = true; });
-		assert.isTrue(called);
-	});
-	
-	it('re-throws any uncaught error from the try block', function () {
-		var throwFn = throws(new Error('blah'));
-		assert.throws(_try(throwFn).finally, Error, 'blah');
-	});
+  function throws(throwable) {
+    return function throwThing() { throw throwable; };
+  }
 
-	it('does not throw if no error was thrown in the try block', function () {
-		assert.doesNotThrow(_try(noop).finally);
-	});
+  function noop() {}
 
+  it('chains from try', function () {
+    assert.isFunction(_try().finally,
+      'expected to chain from empty try');
+    assert.isFunction(_try(noop).finally,
+      'expected to chain from non-empty try');
+  });
+
+  it('chains from catch', function () {
+    assert.isFunction(_try().catch().finally,
+      'expected to chain from non-empty catch');
+    assert.isFunction(_try(noop).catch(noop).finally,
+      'expected to chain from indiscriminate catch');
+    assert.isFunction(_try(noop).catch(123, noop).finally,
+      'expected to chain from catch by value');
+    assert.isFunction(_try(noop).catch('boolean', noop).finally,
+      'expected to chain from catch by name');
+    assert.isFunction(_try(noop).catch(Array, noop).finally,
+      'expected to chain from catch by constructor');
+    assert.isFunction(_try().catch().finally,
+      'expected to chain from catch');
+    assert.isFunction(_try().catch.call({}).finally,
+      'expected to chain catch from catch with modified context');
+  });
+
+  it('terminates the chain', function () {
+    assert.isUndefined(_try().finally(),
+      'expected to terminate after try');
+    assert.isUndefined(_try().catch().finally(),
+      'expected to terminate after catch');
+  });
+
+  it('calls the finally block', function (done) {
+    _try().finally(done);
+  });
+
+  it('re-throws any uncaught error', function () {
+    var throwFn = throws(new Error('blah'));
+    var tcf = _try(throwFn).catch(Number, noop).finally;
+    assert.throws(tcf, Error, 'blah');
+  });
+
+  it('does not re-throw if no error was thrown', function () {
+    assert.doesNotThrow(_try(noop).finally);
+  });
+
+  it('does not re-throw if error was handled', function () {
+    var throwFn = throws(new Error('blah'));
+    assert.doesNotThrow(_try(throwFn).catch(noop).finally);
+  });
 });
