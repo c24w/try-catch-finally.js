@@ -3,18 +3,20 @@
   "version": "1.0.0",
   "description": "",
   "main": "try-catch-finally.js",
-  "main_min": "try-catch-finally.min.js",
   "repository": {
     "type": "git",
     "url": "git@github.com:c24w/try-catch-finally.js.git"
   },
   "scripts": {
-    "test": "npm run test-node && npm run test-phantomjs",
     "test-node": "node_modules/.bin/mocha test",
     "test-phantomjs": "node_modules/.bin/karma start --browsers PhantomJS",
+    "test": "npm run test-node && npm run test-phantomjs",
+    "test-min": "./minify.sh && MINIFIED=y npm test",
+
     "test-browsers": "node_modules/.bin/karma start",
-    "watch": "node_modules/.bin/karma start --single-run false & node_modules/.bin/mocha test -w",
-    "minify": "./minify.sh"
+    "test-browsers-min": "./minify.sh && MINIFIED=y npm run test-browsers",
+
+    "watch": "node_modules/.bin/karma start --single-run false & node_modules/.bin/mocha test -w"
   },
   "author": "Chris Watson",
   "license": "BSD",

@@ -1,7 +1,9 @@
+'use strict';
+
 // Karma configuration
 // Generated on Thu Apr 14 2016 12:24:18 GMT+0100 (BST)
+module.exports = function (config) {
 
-module.exports = function(config) {
   config.set({
 
     // base path that will be used to resolve all patterns (eg. files, exclude)
@@ -15,7 +17,7 @@ module.exports = function(config) {
 
     // list of files / patterns to load in the browser
     files: [
-      'try-catch-finally.js',
+      require('./main-path'),
       'node_modules/chai/chai.js',
       'test/*-tests.js'
     ],
@@ -73,5 +75,5 @@ module.exports = function(config) {
     // Concurrency level
     // how many browser should be started simultaneous
     concurrency: Infinity
-  })
-}
+  });
+};

@@ -3,7 +3,7 @@ var assign = require('lodash.assign');
 
 // Simulate browser globals for running tests in node
 global.chai = require('chai');
-global._try = require('../try-catch-finally');
+global._try = require(require('../main-path'));
 
 // Patch mocha colours
 // https://github.com/mochajs/mocha/issues/1200
