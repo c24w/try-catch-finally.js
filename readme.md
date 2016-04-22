@@ -1,7 +1,10 @@
 `try-catch-finally.js`
 ======================
 
-[![Travis CI](https://img.shields.io/travis/c24w/try-catch-finally.js.svg?style=flat-square&label=tests)](https://travis-ci.org/c24w/try-catch-finally.js 'Travis CI')
+[![Travis CI](https://img.shields.io/travis/c24w/try-catch-finally.js.svg?style=flat-square)](https://travis-ci.org/c24w/try-catch-finally.js 'Travis CI')
+[![David](https://img.shields.io/david/c24w/try-catch-finally.js.svg?style=flat-square)](https://david-dm.org/c24w/try-catch-finally.js 'David')
+
+[![npm](https://nodei.co/npm/try-catch-finally.png?compact=true)](https://www.npmjs.com/package/try-catch-finally 'npm')
 
 **See the [wiki](../../wiki) for more details.**
 
