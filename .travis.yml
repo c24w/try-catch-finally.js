@@ -3,7 +3,14 @@ node_js:
 - '5'
 - '4'
 - '0.12'
+env:
+  global:
+    # GH_TOKEN=xxx
+  - secure: fPH8vFr+1uSuFj2B0m/BOeXJQS25zKWrfzscHB4AYHAduHjQE/cO0M4Z9p2K16JnnL7700LPMs5DXAOd0qqTeFIDkn1I6VZI6uUTUnFpa48trtPEUVAQZkIe+TQwvOHVn1au1qUoL4TkenuvvltlfYYOZ63SPYZUaS0XD9jCM2U=
+    # EMAIL=xxx
+  - secure: QoPDPcuWHSS9u12cg8T5JmBNNrnNwnkMZBXYMaw3rQjyOiqOLe/bA5bDBg8/NyiqnOF5ik6zEGKqn2CSK22TYPbycCzmlMwAOKNfTWK+nFwek53QXI+CUH9OpAIU9Xm/03Fv80kLhZ/kobP59NsX+qFGTMZaqeiA1hTdEElYsGs=
 script:
-  - npm test
-  - minify.sh
-  - npm run test-min
+- npm test
+- minify.sh
+- npm run test-min
+- commit-minified.sh
