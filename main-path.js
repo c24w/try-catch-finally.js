@@ -9,5 +9,6 @@ var mainPath = path.join(__dirname, mainFile);
 if (require.main === module) { // Called directly
   process.stdout.write(mainPath);
 } else { // Required
+  console.log('Using module path:', mainPath);
   module.exports = mainPath;
 }
