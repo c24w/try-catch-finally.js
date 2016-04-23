@@ -1,9 +1,9 @@
 'use strict';
 var assign = require('lodash.assign');
 
-// Simulate browser globals for running tests in node
+// Make globals available for tests by attaching node modules to node global
 global.chai = require('chai');
-global._try = require(require('../main-path'));
+global._try = require(require('./main-path'));
 
 // Patch mocha colours
 // https://github.com/mochajs/mocha/issues/1200

@@ -1,1 +1,1 @@
---require test/node-test-bootstrap
+--require test-node-bootstrap
