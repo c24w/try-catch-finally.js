@@ -12,5 +12,5 @@ env:
 script:
 - npm test
 - minify.sh
-- npm run test-min
+- MINIFIED=y npm test
 - commit-minified.sh
