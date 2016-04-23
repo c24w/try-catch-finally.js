@@ -1,16 +1,16 @@
 (function umd(root, factory) {
   'use strict';
-    if (typeof define === 'function' && define.amd) {
-        // AMD. Register as an anonymous module.
-        define([], factory);
-    } else if (typeof module === 'object' && module.exports) {
-        // Node. Does not work with strict CommonJS, but
-        // only CommonJS-like environments that support module.exports,
-        // like Node.
-        module.exports = factory();
-    } else {
-        // Browser globals (root is window)
-        root.try = root._try = factory();
+  if (typeof define === 'function' && define.amd) {
+    // AMD. Register as an anonymous module.
+    define([], factory);
+  } else if (typeof module === 'object' && module.exports) {
+    // Node. Does not work with strict CommonJS, but
+    // only CommonJS-like environments that support module.exports,
+    // like Node.
+    module.exports = factory();
+  } else {
+    // Browser globals (root is window)
+    root.try = root._try = factory();
   }
 }(this, (function tryCatchFinallyFactory(getBoxed) {
   'use strict';
@@ -42,7 +42,7 @@
     function caughtErrorIs(expectedErr) {
       return state.error === expectedErr
         || hasName(state.error, expectedErr)
-        || instanceOf(state.error, expectedErr);
+          || instanceOf(state.error, expectedErr);
     }
 
     try {
@@ -55,11 +55,11 @@
     var chain = {
       catch: function _catch(expectedErr, catchBlock) {
         /*
-          there is a catchBlock
-          and an error was thrown
-          and either it's an indiscriminate catch
-          or the error matches the expected error
-        */
+           there is a catchBlock
+           and an error was thrown
+           and either it's an indiscriminate catch
+           or the error matches the expected error
+           */
         var callHandler = arguments.length > 0
           && isUnhandledError()
           && (catchBlock === undefined
