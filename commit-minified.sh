@@ -13,4 +13,4 @@ git diff --cached --quiet --exit-code "$MIN_FILE" &&\
 MSG=$(git log -1 --pretty="Build $MIN_FILE @%h%n%n- %B")
 git commit -m "$MSG"
 # -q and output redirects prevent leaking the token!
-git push -q "https://$GH_TOKEN@github.com/c24w/try-catch-finally.js.git" master > /dev/null 2>&1
+git push -q "https://$GH_TOKEN@github.com/c24w/try-catch-finally.js.git" master > /dev/null 2>&1 || (echo 'Push failed' && exit 1)
