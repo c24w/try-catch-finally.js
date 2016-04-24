@@ -8,7 +8,7 @@
     "url": "git@github.com:c24w/try-catch-finally.js.git"
   },
   "scripts": {
-    "test-node": "node_modules/.bin/istanbul test node_modules/.bin/_mocha test -i \"$(./main-path.js)\"",
+    "test-node": "node_modules/.bin/istanbul test --report lcovonly node_modules/.bin/_mocha test -i \"$(./main-path.js)\"",
     "test-phantomjs": "node_modules/.bin/karma start --browsers PhantomJS",
     "test": "npm run test-node && npm run test-phantomjs && AMD=y npm run test-phantomjs",
     "test-browsers": "node_modules/.bin/karma start",
@@ -20,6 +20,7 @@
   "devDependencies": {
     "almond": "^0.3.2",
     "chai": "^3.5.0",
+    "coveralls": "^2.11.9",
     "eslint": "^2.8.0",
     "istanbul": "^0.4.3",
     "karma": "^0.13.22",
