@@ -10,7 +10,7 @@ env:
     # EMAIL=xxx
   - secure: QoPDPcuWHSS9u12cg8T5JmBNNrnNwnkMZBXYMaw3rQjyOiqOLe/bA5bDBg8/NyiqnOF5ik6zEGKqn2CSK22TYPbycCzmlMwAOKNfTWK+nFwek53QXI+CUH9OpAIU9Xm/03Fv80kLhZ/kobP59NsX+qFGTMZaqeiA1hTdEElYsGs=
 script:
-- npm test
+- npm_config_coverage=y npm test
 - minify.sh
 - MINIFIED=y npm test
 - commit-minified.sh

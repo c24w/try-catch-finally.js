@@ -8,11 +8,11 @@
     "url": "git@github.com:c24w/try-catch-finally.js.git"
   },
   "scripts": {
-    "test-node": "node_modules/.bin/mocha test",
+    "test-node": "node_modules/.bin/istanbul test node_modules/.bin/_mocha test -i \"$(./main-path.js)\"",
     "test-phantomjs": "node_modules/.bin/karma start --browsers PhantomJS",
     "test": "npm run test-node && npm run test-phantomjs && AMD=y npm run test-phantomjs",
     "test-browsers": "node_modules/.bin/karma start",
-    "watch": "node_modules/.bin/karma start --single-run false & node_modules/.bin/mocha test -w"
+    "watch": "node_modules/.bin/karma start --single-run false & node_modules/.bin/_mocha test -w"
   },
   "author": "Chris Watson",
   "license": "BSD",
@@ -21,6 +21,7 @@
     "almond": "^0.3.2",
     "chai": "^3.5.0",
     "eslint": "^2.8.0",
+    "istanbul": "^0.4.3",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^0.2.3",
     "karma-firefox-launcher": "~0.1.0",

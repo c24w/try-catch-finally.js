@@ -1,8 +1,10 @@
 (function umd(root, factory) {
   'use strict';
+  /* istanbul ignore if */
   if (typeof define === 'function' && define.amd) {
     // AMD. Register as an anonymous module.
     define('try-catch-finally', [], factory);
+    /* istanbul ignore else */
   } else if (typeof module === 'object' && module.exports) {
     // Node. Does not work with strict CommonJS, but
     // only CommonJS-like environments that support module.exports,
