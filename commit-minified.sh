@@ -2,7 +2,7 @@
 set -eo pipefail
 git checkout master # Get out of detached head state
 git fetch origin master # Get latest
-git diff --quiet --exit-code origin/master ||\
+git diff --quiet --exit-code HEAD..origin/master ||\
   (echo 'Master changed since build start' && exit 1)
 
 MIN_FILE=$(MINIFIED=y ./main-path.js short)
