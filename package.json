@@ -15,7 +15,7 @@
     "watch": "node_modules/.bin/karma start --single-run false & node_modules/.bin/_mocha test -w"
   },
   "author": "Chris Watson",
-  "license": "BSD",
+  "license": "ISC",
   "readmeFilename": "readme.md",
   "devDependencies": {
     "almond": "^0.3.2",
