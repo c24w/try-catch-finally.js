@@ -8,7 +8,7 @@ describe('catch', function () {
     { name: 'boolean', value: true, ctor: Boolean },
     { name: 'array', value: [], ctor: Array },
     { name: 'object', value: {}, ctor: Object },
-    { name: 'Error', value: new Error(), ctor: Error }
+    { name: 'Error', value: new Error('bosh'), ctor: Error }
   ];
 
   var specialTypes = [
@@ -54,6 +54,12 @@ describe('catch', function () {
       'expected to chain catch from catch by constructor');
     assert.isFunction(_try().catch.call({}).catch,
       'expected to chain catch from catch with modified context');
+  });
+
+  it('ignores errors thrown in the catch block', function () {
+    var throwInCatch = _try(throws(123))
+      .catch.bind(null, throws(new Error('zing')));
+    assert.throws(throwInCatch, Error, 'zing');
   });
 
   describe('indiscriminately', function () {

@@ -32,6 +32,12 @@ describe('finally', function () {
       'expected to chain catch from catch with modified context');
   });
 
+  it('ignores errors thrown in the finally block', function () {
+    var throwInFinally = _try(noop)
+      .finally.bind(null, throws(new Error('zing')));
+    assert.throws(throwInFinally, Error, 'zing');
+  });
+
   it('terminates the chain', function () {
     assert.isUndefined(_try().finally(),
       'expected to terminate after try');
