@@ -2,6 +2,7 @@
 ======================
 
 [![Travis CI](https://img.shields.io/travis/c24w/try-catch-finally.js.svg?style=flat-square)](https://travis-ci.org/c24w/try-catch-finally.js 'Travis CI')
+[![Coveralls](https://img.shields.io/coveralls/c24w/try-catch-finally.js.svg?style=flat-square)](https://coveralls.io/github/c24w/try-catch-finally.js 'Coveralls')
 [![David](https://img.shields.io/david/c24w/try-catch-finally.js.svg?style=flat-square)](https://david-dm.org/c24w/try-catch-finally.js 'David')
 
 [![npm](https://nodei.co/npm/try-catch-finally.png?compact=true)](https://www.npmjs.com/package/try-catch-finally 'npm')
