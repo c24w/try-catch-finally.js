@@ -1,3 +1,4 @@
+// try-catch-finally.js | (c) Chris Watson | http://j.mp/t-c-f
 (function umd(root, factory) {
   'use strict';
   /* istanbul ignore if */
