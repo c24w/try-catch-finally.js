@@ -33,6 +33,10 @@
   }
 
   return function _try(tryBlock) {
+    // try-catch-finally.js
+    // (c) Chris Watson
+    // http://j.mp/t-c-f
+
     // Store error in an object so we can use 'in', which will always
     // return true if a property has been set on the object, even if it
     // was set to 'undefined'.
