@@ -6,6 +6,33 @@
 
 ---
 
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+## Contents
+
+- [Installation](#installation)
+  - [Browser](#browser)
+  - [AMD](#amd)
+  - [Node](#node)
+- [Usage](#usage)
+  - [API](#api)
+    - [_try ( _tryBlock_ )](#_try--_tryblock_-)
+    - [.catch ( [ _error_, ] _handleError_ )](#catch---_error_--_handleerror_-)
+    - [.finally ( _finallyBlock_ )](#finally--_finallyblock_-)
+  - [Examples](#examples)
+    - [Catch anything](#catch-anything)
+    - [Catch-by-value](#catch-by-value)
+    - [Catch-by-name](#catch-by-name)
+    - [Catch-by-type](#catch-by-type)
+- [Caveats](#caveats)
+  - [Catch-by-name may not work](#catch-by-name-may-not-work)
+  - [Catch-by-type won't work across frames/processes](#catch-by-type-wont-work-across-framesprocesses)
+  - [Errors are consumed](#errors-are-consumed)
+    - [Use an indiscriminate catch block](#use-an-indiscriminate-catch-block)
+    - [Use a finally block](#use-a-finally-block)
+
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+
 ## Installation
 
 ### Browser
@@ -105,7 +132,7 @@ _try(function () {
 ```
 Error type matches similarly to `instanceof`, with the bonus that it works for literal primitives (`'hello'`, `123`, etc).
 
-## Warnings
+## Caveats
 
 ### Catch-by-name may not work
 It's not always possible to get the name of an object in JavaScript, such as for objects created using non-native constructors:
@@ -137,11 +164,11 @@ It's best to use the catch-by-type style in those cases.
 ### Catch-by-type won't work across frames/processes
 This quirk exists in the native `instanceof`, which fails across browser frames and node processes when the instance's constructor is different one passed to `instanceof`. It's best to use the catch-by-name in those cases.
 
-## Errors are consumed
+### Errors are consumed
 
 Any error thrown synchronously in the try block is consumed by this library.  There are two ways to ensure errors which aren't caught/handled by any `catch` don't disappear:
 
-### Use an indiscriminate catch block
+#### Use an indiscriminate catch block
 ```javascript
 _try(function () {
   throw new Error('boom');
@@ -153,7 +180,7 @@ _try(function () {
   // Handle all other errors
 });
 ```
-### Use a finally block
+#### Use a finally block
 This will cause any unhandled error to be re-thrown:
 ```javascript
 _try(function () {

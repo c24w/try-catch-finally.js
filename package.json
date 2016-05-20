@@ -13,7 +13,8 @@
     "test-phantomjs": "karma start --browsers PhantomJS",
     "test-browsers": "karma start",
     "watch": "karma start --single-run false & _mocha test -w",
-    "preversion": "npm test && ./minify.sh && git add $(MINIFIED=y ./main-path.js short)"
+    "preversion": "npm test && ./minify.sh && git add $(MINIFIED=y ./main-path.js short)",
+    "add-contents": "doctoc --title '## Contents' readme.md"
   },
   "author": "Chris Watson",
   "license": "ISC",
@@ -22,6 +23,7 @@
     "almond": "^0.3.2",
     "chai": "^3.5.0",
     "coveralls": "^2.11.9",
+    "doctoc": "^1.0.0",
     "eslint": "^2.8.0",
     "istanbul": "^0.4.3",
     "karma": "^0.13.22",
