@@ -1,3 +1,4 @@
+[![Stories in Ready](https://badge.waffle.io/c24w/try-catch-finally.js.png?label=ready&title=Ready)](https://waffle.io/c24w/try-catch-finally.js)
 # `try-catch-finally.js`
 [![Travis CI](https://img.shields.io/travis/c24w/try-catch-finally.js.svg?style=flat-square)](https://travis-ci.org/c24w/try-catch-finally.js 'Build')
 [![Coveralls](https://img.shields.io/coveralls/c24w/try-catch-finally.js.svg?style=flat-square)](https://coveralls.io/github/c24w/try-catch-finally.js 'Coverage')
