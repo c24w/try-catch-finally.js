@@ -12,7 +12,8 @@
     "test-node": "istanbul test --report lcovonly _mocha test",
     "test-phantomjs": "karma start --browsers PhantomJS",
     "test-browsers": "karma start",
-    "watch": "karma start --single-run false & _mocha test -w"
+    "watch": "karma start --single-run false & _mocha test -w",
+    "preversion": "npm test && ./minify.sh && git add $(MINIFIED=y ./main-path.js short)"
   },
   "author": "Chris Watson",
   "license": "ISC",
