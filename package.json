@@ -9,7 +9,7 @@
   },
   "scripts": {
     "test": "npm run test-node && npm run test-phantomjs && AMD=y npm run test-phantomjs",
-    "test-node": "istanbul test --report lcovonly _mocha test",
+    "test-node": "istanbul test --report lcovonly -i \"$(./main-path.js)\" _mocha test",
     "test-phantomjs": "karma start --browsers PhantomJS",
     "test-browsers": "karma start",
     "watch": "karma start --single-run false & _mocha test -w",
