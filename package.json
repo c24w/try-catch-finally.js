@@ -8,11 +8,11 @@
     "url": "git@github.com:c24w/try-catch-finally.js.git"
   },
   "scripts": {
-    "test-node": "node_modules/.bin/istanbul test --report lcovonly node_modules/.bin/_mocha test -i \"$(./main-path.js)\"",
-    "test-phantomjs": "node_modules/.bin/karma start --browsers PhantomJS",
     "test": "npm run test-node && npm run test-phantomjs && AMD=y npm run test-phantomjs",
-    "test-browsers": "node_modules/.bin/karma start",
-    "watch": "node_modules/.bin/karma start --single-run false & node_modules/.bin/_mocha test -w"
+    "test-node": "istanbul test --report lcovonly _mocha test",
+    "test-phantomjs": "karma start --browsers PhantomJS",
+    "test-browsers": "karma start",
+    "watch": "karma start --single-run false & _mocha test -w"
   },
   "author": "Chris Watson",
   "license": "ISC",
