@@ -1,2 +1,2 @@
-*/**
-try-catch-finally*.js
+*
+!try-catch-finally*.js
