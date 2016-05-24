@@ -17,20 +17,11 @@ A very small library for more flexible error catching in JavaScript.
   - [Node](#node)
 - [Usage](#usage)
   - [API](#api)
-    - [_try ( _tryBlock_ )](#_try--_tryblock_-)
-    - [.catch ( [ _error_, ] _handleError_ )](#catch---_error_--_handleerror_-)
-    - [.finally ( _finallyBlock_ )](#finally--_finallyblock_-)
   - [Examples](#examples)
-    - [Catch anything](#catch-anything)
-    - [Catch-by-value](#catch-by-value)
-    - [Catch-by-name](#catch-by-name)
-    - [Catch-by-type](#catch-by-type)
 - [Caveats](#caveats)
   - [Catch-by-name may not work](#catch-by-name-may-not-work)
   - [Catch-by-type won't work across frames/processes](#catch-by-type-wont-work-across-framesprocesses)
   - [Errors are consumed](#errors-are-consumed)
-    - [Use an indiscriminate catch block](#use-an-indiscriminate-catch-block)
-    - [Use a finally block](#use-a-finally-block)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 

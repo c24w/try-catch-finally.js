@@ -14,7 +14,7 @@
     "test-browsers": "karma start",
     "watch": "karma start --single-run false & _mocha test -w",
     "preversion": "npm test && ./minify.sh && git add $(MINIFIED=y ./main-path.js short)",
-    "add-contents": "doctoc --title '## Contents' readme.md"
+    "build-contents": "doctoc --maxlevel 3 --title '## Contents' readme.md"
   },
   "author": "Chris Watson",
   "license": "ISC",
