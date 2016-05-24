@@ -80,7 +80,6 @@ _try(function () {
   console.log('Caught', e);
 });
 ```
-Error value matches by strict equality (`===`).
 
 #### Catch-by-value
 ```javascript
@@ -154,10 +153,9 @@ Those catch blocks won't execute. The best this library can do is find out that:
 It's best to use the catch-by-type style in those cases.
 
 ### Catch-by-type won't work across frames/processes
-This quirk exists in the native `instanceof`, which fails across browser frames and node processes when the instance's constructor is different one passed to `instanceof`. It's best to use the catch-by-name in those cases.
+This quirk exists in the native `instanceof` (which fails across browser frames and node processes) when the instance's constructor differs to the one passed to `instanceof`. It's best to use the catch-by-name in those cases.
 
 ### Errors are consumed
-
 Any error thrown synchronously in the try block is consumed by this library.  There are two ways to ensure errors which aren't caught/handled by any `catch` don't disappear:
 
 #### Use an indiscriminate catch block
