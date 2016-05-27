@@ -22,6 +22,7 @@ A very small library for more flexible error catching in JavaScript.
   - [Catch-by-name may not work](#catch-by-name-may-not-work)
   - [Catch-by-type won't work across frames/processes](#catch-by-type-wont-work-across-framesprocesses)
   - [Errors are consumed](#errors-are-consumed)
+- [Tests](#tests)
 
 <!-- END doctoc generated TOC please keep comment here to allow auto update -->
 
@@ -183,3 +184,13 @@ _try(function () {
   // Error is re-thrown after finally block
 });
 ```
+
+## Tests
+The following tests are continually run in TravisCI:
+
+|            | Node (v0.12, v4, v5) | PhantomJS (global) | PhantomJS (AMD) |
+|:----------:|:--------------------:|:------------------:|:---------------:|
+| unminified |           ✓          |          ✓         |        ✓        |
+|  minified  |           ✓          |          ✓         |        ✓        |
+
+The tests can be run in any browsers supported by Karma. See the npm scripts and travis configuration for more details.
