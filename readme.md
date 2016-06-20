@@ -75,7 +75,7 @@ console.log(typeof _try); // -> function
 #### Catch anything
 ```javascript
 _try(function () {
-  throw new Eroror('boom');
+  throw new Error('boom');
 })
 .catch(function (e) {
   console.log('Caught', e);
@@ -135,7 +135,7 @@ _try(function () {
   throw new CustomError();
 })
 .catch('CustomError', function (e) {
-  console.log('Caught CustomError: ' + e);
+  console.log('Caught', e); 
 });
 ```
 Or for some native objects which use inheritance:
@@ -144,7 +144,7 @@ _try(function () {
   throw new TypeError();
 })
 .catch('TypeError', function (e) {
-  console.log('Caught TypeError: ' + e);
+  console.log('Caught', e);
 });
 ```
 Those catch blocks won't execute. The best this library can do is find out that:
@@ -165,25 +165,25 @@ _try(function () {
   throw new Error('boom');
 })
 .catch(String, function (e) {
-  // Catch doesn't apply
+  console.log('Caught String', e);
 })
 .catch(function (e) {
-  // Handle all other errors
+  console.log('Caught other', e);
 });
 ```
+The first catch block won't execute and the second ensures other errors don't go unhandled.
+
 #### Use a finally block
-This will cause any unhandled error to be re-thrown:
 ```javascript
 _try(function () {
   throw new Error('boom');
 })
 .catch(String, function (e) {
-  // Catch doesn't apply
+  console.log('Caught', e);
 })
-.finally(function () {
-  // Error is re-thrown after finally block
-});
+.finally();
 ```
+That catch block won't execute and the finally call ensures any caught error is re-thrown.
 
 ## Tests
 The following tests are continually run in TravisCI:
