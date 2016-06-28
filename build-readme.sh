@@ -11,7 +11,7 @@ fi
 function template {
   NAME=$1; VALUE=$2
   echo "Templating '$NAME' as '$VALUE'"
-  sed -i "s/\(<!--$NAME-->\).*\?\(<!--$NAME-->\)/\1$VALUE\2/" readme.md
+  sed -i "s/\(\[\]($NAME)\).*\?\(\[\]($NAME)\)/\1$VALUE\2/" readme.md
 }
 
 template 'size' "$MIN_SIZE"
