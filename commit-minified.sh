@@ -14,6 +14,9 @@ git add "$MIN_FILE"
 git diff --cached --quiet --exit-code "$MIN_FILE" &&\
   echo "$MIN_FILE unchanged" && exit 0
 
+./build-readme.sh
+git add readme.md
+
 UGLIFY="($(node_modules/.bin/uglifyjs --version))"
 MSG=$(git log -1 --pretty="Build $MIN_FILE @%h%n%n- %B%n$UGLIFY")
 git commit -m "$MSG"
