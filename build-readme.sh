@@ -2,12 +2,11 @@ MIN_SIZE=$(du --apparent-size -h "$(MINIFIED=y ./main-path.js)" | cut -f 1)
 
 DIGITS_PATTERN='^[0-9]+$'
 if [[ "$MIN_SIZE" =~ $DIGITS_PATTERN ]]; then
-  echo hello
   # Size is bytes so is missing units
   MIN_SIZE="$MIN_SIZE byte"
 fi
 
-# Replace <!--abc--><!--abc--> with <!--abc-->xyz<!--abc-->
+# Replace [](key)optionalValue[](key) with [](key)newValue[](key)
 function template {
   NAME=$1; VALUE=$2
   echo "Templating '$NAME' as '$VALUE'"
