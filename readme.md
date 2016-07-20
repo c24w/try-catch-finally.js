@@ -190,7 +190,7 @@ The following tests are continually run in TravisCI:
 
 |            | Node (v0.12, v4, v5) | PhantomJS (global) | PhantomJS (AMD) |
 |:----------:|:--------------------:|:------------------:|:---------------:|
-| unminified |           ✓          |          ✓         |        ✓        |
-|  minified  |           ✓          |          ✓         |        ✓        |
+| unminified |          ☑️          |          ☑️         |       ☑️        |
+|  minified  |          ☑️          |          ☑️         |       ☑️        |
 
 The tests can be run in any browsers supported by Karma. See the npm scripts and travis configuration for more details.
