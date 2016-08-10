@@ -17,3 +17,4 @@ script:
 - MINIFIED=y npm test
 - ./commit-minified.sh
 - COVERALLS_SERVICE_NAME=travis-ci COVERALLS_REPO_TOKEN=$COVERALLS_TOKEN cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
+- ./build-pages.sh

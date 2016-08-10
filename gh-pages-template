@@ -1,0 +1,14 @@
+<html>
+  <head>
+    <style>
+      body {
+        margin: 50px 10% 50px 10%;
+        min-width: 400px;
+      }
+    </style>
+    <link rel="stylesheet" href="github-markdown.css">
+  </head>
+  <body class="markdown-body">
+    {{MARKDOWN}}
+  </body>
+</html>
