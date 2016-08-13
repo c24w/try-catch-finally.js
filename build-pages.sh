@@ -8,17 +8,19 @@ function version {
   echo "$1 v$VERSION"
 }
 
-npm i -q marked github-markdown-css
+npm i -q github-markdown-css
 
 # Convert markdown to HTML and inject into index template
-node_modules/.bin/marked readme.md --gfm --tables -o readme.html
+curl -X POST https://api.github.com/markdown/raw -s\
+  -H 'Content-Type: text/x-markdown'\
+  -d "$(cat readme.md)"\
+  -o readme.html
 sed -e '/{{MARKDOWN}}/{r readme.html' -e 'd}' gh-pages-template > index.html
 
 # Build commit message
 MASTER_SHA=$(git log -1 --pretty='%h')
-MARKED=$(version marked)
 GH_MD_CSS=$(version github-markdown-css)
-MSG=$(git log -1 --pretty="Build documentation @$MASTER_SHA%n%n($MARKED)%n($GH_MD_CSS)")
+MSG=$(git log -1 --pretty="Build documentation @$MASTER_SHA%n%n($GH_MD_CSS)")
 
 # Seemingly impossible to just checkout the gh-pages branch with the way travis
 # clones the build branch, so clone it instead
