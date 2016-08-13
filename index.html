@@ -1,5 +1,6 @@
 <html>
   <head>
+    <meta charset="UTF-8">
     <style>
       body {
         margin: 50px 10% 50px 10%;
@@ -10,194 +11,278 @@
   </head>
   <body class="markdown-body">
     <a href="https://github.com/c24w/try-catch-finally.js"><img style="position: absolute; top: 0; right: 0; border: 0;" src="https://camo.githubusercontent.com/52760788cde945287fbb584134c4cbc2bc36f904/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f77686974655f6666666666662e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_white_ffffff.png"></a>
-<h1 id="-try-catch-finally-js-"><code>try-catch-finally.js</code></h1>
-<p><a href="https://travis-ci.org/c24w/try-catch-finally.js" title="Build"><img src="https://img.shields.io/travis/c24w/try-catch-finally.js.svg?style=flat-square" alt="Travis CI"></a>
-<a href="https://coveralls.io/github/c24w/try-catch-finally.js" title="Coverage"><img src="https://img.shields.io/coveralls/c24w/try-catch-finally.js.svg?style=flat-square" alt="Coveralls"></a>
-<a href="https://david-dm.org/c24w/try-catch-finally.js" title="Dependencies"><img src="https://img.shields.io/david/c24w/try-catch-finally.js.svg?style=flat-square" alt="David"></a>
-<a href="https://www.npmjs.com/package/try-catch-finally" title="npm"><img src="https://img.shields.io/npm/v/try-catch-finally.svg?style=flat-square" alt="npm"></a></p>
+<h1>
+<a id="user-content-try-catch-finallyjs" class="anchor" href="#try-catch-finallyjs" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a><code>try-catch-finally.js</code>
+</h1>
+
+<p><a href="https://travis-ci.org/c24w/try-catch-finally.js" title="Build"><img src="https://camo.githubusercontent.com/2189a1d4fec0b1c46a43d829ba33fce1c7b33eb0/68747470733a2f2f696d672e736869656c64732e696f2f7472617669732f633234772f7472792d63617463682d66696e616c6c792e6a732e7376673f7374796c653d666c61742d737175617265" alt="Travis CI" data-canonical-src="https://img.shields.io/travis/c24w/try-catch-finally.js.svg?style=flat-square" style="max-width:100%;"></a>
+<a href="https://coveralls.io/github/c24w/try-catch-finally.js" title="Coverage"><img src="https://camo.githubusercontent.com/b0036f1616f8ff6130495f3e35b15113601e4c62/68747470733a2f2f696d672e736869656c64732e696f2f636f766572616c6c732f633234772f7472792d63617463682d66696e616c6c792e6a732e7376673f7374796c653d666c61742d737175617265" alt="Coveralls" data-canonical-src="https://img.shields.io/coveralls/c24w/try-catch-finally.js.svg?style=flat-square" style="max-width:100%;"></a>
+<a href="https://david-dm.org/c24w/try-catch-finally.js" title="Dependencies"><img src="https://camo.githubusercontent.com/c2f4f80315f5bce9b8e24da3541ba4f89f32ee06/68747470733a2f2f696d672e736869656c64732e696f2f64617669642f633234772f7472792d63617463682d66696e616c6c792e6a732e7376673f7374796c653d666c61742d737175617265" alt="David" data-canonical-src="https://img.shields.io/david/c24w/try-catch-finally.js.svg?style=flat-square" style="max-width:100%;"></a>
+<a href="https://www.npmjs.com/package/try-catch-finally" title="npm"><img src="https://camo.githubusercontent.com/cce37b62c70bf26d23f30bdde8b4a359d85eae47/68747470733a2f2f696d672e736869656c64732e696f2f6e706d2f762f7472792d63617463682d66696e616c6c792e7376673f7374796c653d666c61742d737175617265" alt="npm" data-canonical-src="https://img.shields.io/npm/v/try-catch-finally.svg?style=flat-square" style="max-width:100%;"></a></p>
+
 <p>A <a href="size"></a>923 byte<a href="size"></a> library for more flexible error catching in JavaScript.</p>
-<!-- START doctoc generated TOC please keep comment here to allow auto update -->
-<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
-<h2 id="contents">Contents</h2>
+
+
+
+
+
+<h2>
+<a id="user-content-contents" class="anchor" href="#contents" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Contents</h2>
+
 <ul>
-<li><a href="#installation">Installation</a><ul>
+<li>
+<a href="#installation">Installation</a>
+
+<ul>
 <li><a href="#browser">Browser</a></li>
 <li><a href="#amd">AMD</a></li>
 <li><a href="#node">Node</a></li>
 </ul>
 </li>
-<li><a href="#usage">Usage</a><ul>
+<li>
+<a href="#usage">Usage</a>
+
+<ul>
 <li><a href="#api">API</a></li>
 <li><a href="#examples">Examples</a></li>
 </ul>
 </li>
-<li><a href="#caveats">Caveats</a><ul>
+<li>
+<a href="#caveats">Caveats</a>
+
+<ul>
 <li><a href="#catch-by-name-may-not-work">Catch-by-name may not work</a></li>
-<li><a href="#catch-by-type-wont-work-across-framesprocesses">Catch-by-type won&#39;t work across frames/processes</a></li>
+<li><a href="#catch-by-type-wont-work-across-framesprocesses">Catch-by-type won't work across frames/processes</a></li>
 <li><a href="#errors-are-consumed">Errors are consumed</a></li>
 </ul>
 </li>
 <li><a href="#tests">Tests</a></li>
 </ul>
-<!-- END doctoc generated TOC please keep comment here to allow auto update -->
-<h2 id="installation">Installation</h2>
-<h3 id="browser">Browser</h3>
-<pre><code class="lang-html">&lt;script src=&quot;try-catch-finally.js&quot;&gt;&lt;/script&gt;
-</code></pre>
-<pre><code class="lang-javascript">console.log(typeof window.try) // -&gt; function
-console.log(typeof window._try) // -&gt; function
-</code></pre>
-<h3 id="amd">AMD</h3>
-<pre><code class="lang-javascript">define([&#39;try-catch-finally&#39;], function (_try) {
-  console.log(typeof _try); // -&gt; function
-});
-</code></pre>
-<h3 id="node">Node</h3>
-<pre><code class="lang-shell">npm install --save try-catch-finally
-</code></pre>
-<pre><code class="lang-javascript">var _try = require(&#39;try-catch-finally&#39;);
-console.log(typeof _try); // -&gt; function
-</code></pre>
-<h2 id="usage">Usage</h2>
-<h3 id="api">API</h3>
-<h4 id="-_try-_tryblock_-">_try ( <em>tryBlock</em> )</h4>
+
+
+
+<h2>
+<a id="user-content-installation" class="anchor" href="#installation" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Installation</h2>
+
+<h3>
+<a id="user-content-browser" class="anchor" href="#browser" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Browser</h3>
+
+<div class="highlight highlight-text-html-basic"><pre>&lt;<span class="pl-ent">script</span> <span class="pl-e">src</span>=<span class="pl-s"><span class="pl-pds">"</span>try-catch-finally.js<span class="pl-pds">"</span></span>&gt;&lt;/<span class="pl-ent">script</span>&gt;</pre></div>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-k">typeof</span> <span class="pl-c1">window</span>.<span class="pl-smi">try</span>) <span class="pl-c">// -&gt; function</span>
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-k">typeof</span> <span class="pl-c1">window</span>.<span class="pl-smi">_try</span>) <span class="pl-c">// -&gt; function</span></pre></div>
+
+<h3>
+<a id="user-content-amd" class="anchor" href="#amd" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>AMD</h3>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">define</span>([<span class="pl-s"><span class="pl-pds">'</span>try-catch-finally<span class="pl-pds">'</span></span>], <span class="pl-k">function</span> (<span class="pl-smi">_try</span>) {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-k">typeof</span> _try); <span class="pl-c">// -&gt; function</span>
+});</pre></div>
+
+<h3>
+<a id="user-content-node" class="anchor" href="#node" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Node</h3>
+
+<div class="highlight highlight-source-shell"><pre>npm install --save try-catch-finally</pre></div>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">var</span> _try <span class="pl-k">=</span> <span class="pl-c1">require</span>(<span class="pl-s"><span class="pl-pds">'</span>try-catch-finally<span class="pl-pds">'</span></span>);
+<span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-k">typeof</span> _try); <span class="pl-c">// -&gt; function</span></pre></div>
+
+<h2>
+<a id="user-content-usage" class="anchor" href="#usage" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Usage</h2>
+
+<h3>
+<a id="user-content-api" class="anchor" href="#api" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>API</h3>
+
+<h4>
+<a id="user-content-_try--tryblock-" class="anchor" href="#_try--tryblock-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>_try ( <em>tryBlock</em> )</h4>
+
 <ul>
-<li><em><strong>tryBlock</strong></em><code>&lt;function&gt;</code> - code which may throw errors</li>
+<li>
+<em><strong>tryBlock</strong></em><code>&lt;function&gt;</code> - code which may throw errors</li>
 </ul>
-<h4 id="-catch-_error_-_handleerror_-">.catch ( [ <em>error</em>, ] <em>handleError</em> )</h4>
+
+<h4>
+<a id="user-content-catch---error--handleerror-" class="anchor" href="#catch---error--handleerror-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>.catch ( [ <em>error</em>, ] <em>handleError</em> )</h4>
+
 <ul>
-<li><em><strong>error</strong></em> <code>&lt;any&gt;</code> - (optional) error to catch</li>
-<li><em><strong>handleError</strong></em> <code>&lt;function&gt;</code> - handle errors which correspond to <em><strong>error</strong></em> (if defined); else handle any error</li>
+<li>
+<em><strong>error</strong></em> <code>&lt;any&gt;</code> - (optional) error to catch</li>
+<li>
+<em><strong>handleError</strong></em> <code>&lt;function&gt;</code> - handle errors which correspond to <em><strong>error</strong></em> (if defined); else handle any error</li>
 </ul>
-<h4 id="-finally-_finallyblock_-">.finally ( <em>finallyBlock</em> )</h4>
+
+<h4>
+<a id="user-content-finally--finallyblock-" class="anchor" href="#finally--finallyblock-" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>.finally ( <em>finallyBlock</em> )</h4>
+
 <ul>
-<li><em><strong>finallyBlock</strong></em> <code>&lt;function&gt;</code> - code which will always exectue</li>
+<li>
+<em><strong>finallyBlock</strong></em> <code>&lt;function&gt;</code> - code which will always exectue</li>
 </ul>
-<h3 id="examples">Examples</h3>
-<h4 id="catch-anything">Catch anything</h4>
-<pre><code class="lang-javascript">_try(function () {
-  throw new Error(&#39;boom&#39;);
+
+<h3>
+<a id="user-content-examples" class="anchor" href="#examples" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Examples</h3>
+
+<h4>
+<a id="user-content-catch-anything" class="anchor" href="#catch-anything" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Catch anything</h4>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">_try</span>(<span class="pl-k">function</span> () {
+  <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-en">Error</span>(<span class="pl-s"><span class="pl-pds">'</span>boom<span class="pl-pds">'</span></span>);
 })
-.catch(function (e) {
-  console.log(&#39;Caught&#39;, e);
-});
-</code></pre>
-<h4 id="catch-by-value">Catch-by-value</h4>
-<pre><code class="lang-javascript">_try(function () {
-  throw 12345;
+.<span class="pl-en">catch</span>(<span class="pl-k">function</span> (<span class="pl-smi">e</span>) {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>Caught<span class="pl-pds">'</span></span>, e);
+});</pre></div>
+
+<h4>
+<a id="user-content-catch-by-value" class="anchor" href="#catch-by-value" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Catch-by-value</h4>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">_try</span>(<span class="pl-k">function</span> () {
+  <span class="pl-k">throw</span> <span class="pl-c1">12345</span>;
 })
-.catch(12345, function (e) {
-  console.log(&#39;Caught&#39;, e);
-});
-</code></pre>
+.<span class="pl-en">catch</span>(<span class="pl-c1">12345</span>, <span class="pl-k">function</span> (<span class="pl-smi">e</span>) {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>Caught<span class="pl-pds">'</span></span>, e);
+});</pre></div>
+
 <p>Error value matches by strict equality (<code>===</code>).</p>
-<h4 id="catch-by-name">Catch-by-name</h4>
-<pre><code class="lang-javascript">_try(function () {
-  throw { error: &#39;boom&#39; };
+
+<h4>
+<a id="user-content-catch-by-name" class="anchor" href="#catch-by-name" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Catch-by-name</h4>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">_try</span>(<span class="pl-k">function</span> () {
+  <span class="pl-k">throw</span> { error<span class="pl-k">:</span> <span class="pl-s"><span class="pl-pds">'</span>boom<span class="pl-pds">'</span></span> };
 })
-.catch(&#39;object&#39;, function (e) {
-  console.log(&#39;Caught&#39;, e);
-});
-</code></pre>
+.<span class="pl-en">catch</span>(<span class="pl-s"><span class="pl-pds">'</span>object<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">e</span>) {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>Caught<span class="pl-pds">'</span></span>, e);
+});</pre></div>
+
 <p>Error name matches similarly to <code>typeof</code>, with the bonus that it:</p>
+
 <ul>
 <li>is case-insensitive</li>
 <li>works for boxed primitives (e.g. <code>new String()</code>)</li>
 </ul>
-<h4 id="catch-by-type">Catch-by-type</h4>
-<pre><code class="lang-javascript">_try(function () {
-  throw &#39;boom&#39;;
+
+<h4>
+<a id="user-content-catch-by-type" class="anchor" href="#catch-by-type" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Catch-by-type</h4>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">_try</span>(<span class="pl-k">function</span> () {
+  <span class="pl-k">throw</span> <span class="pl-s"><span class="pl-pds">'</span>boom<span class="pl-pds">'</span></span>;
 })
-.catch(Object, function (e) {
-  console.log(&#39;Caught&#39;, e);
+.<span class="pl-en">catch</span>(<span class="pl-c1">Object</span>, <span class="pl-k">function</span> (<span class="pl-smi">e</span>) {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>Caught<span class="pl-pds">'</span></span>, e);
 });
 
-_try(function () {
-  throw new TypeError(&#39;boom&#39;);
+<span class="pl-en">_try</span>(<span class="pl-k">function</span> () {
+  <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-en">TypeError</span>(<span class="pl-s"><span class="pl-pds">'</span>boom<span class="pl-pds">'</span></span>);
 })
-.catch(Error, function (e) {
-  console.log(&#39;Caught&#39;, e);
-});
-</code></pre>
-<p>Error type matches similarly to <code>instanceof</code>, with the bonus that it works for literal primitives (<code>&#39;hello&#39;</code>, <code>123</code>, etc).</p>
-<h2 id="caveats">Caveats</h2>
-<h3 id="catch-by-name-may-not-work">Catch-by-name may not work</h3>
-<p>It&#39;s not always possible to get the name of an object in JavaScript, such as for objects created using non-native constructors:</p>
-<pre><code class="lang-javascript">function CustomError() {}
+.<span class="pl-en">catch</span>(Error, <span class="pl-k">function</span> (<span class="pl-smi">e</span>) {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>Caught<span class="pl-pds">'</span></span>, e);
+});</pre></div>
 
-_try(function () {
-  throw new CustomError();
+<p>Error type matches similarly to <code>instanceof</code>, with the bonus that it works for literal primitives (<code>'hello'</code>, <code>123</code>, etc).</p>
+
+<h2>
+<a id="user-content-caveats" class="anchor" href="#caveats" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Caveats</h2>
+
+<h3>
+<a id="user-content-catch-by-name-may-not-work" class="anchor" href="#catch-by-name-may-not-work" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Catch-by-name may not work</h3>
+
+<p>It's not always possible to get the name of an object in JavaScript, such as for objects created using non-native constructors:</p>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-k">function</span> <span class="pl-en">CustomError</span>() {}
+
+<span class="pl-en">_try</span>(<span class="pl-k">function</span> () {
+  <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-en">CustomError</span>();
 })
-.catch(&#39;CustomError&#39;, function (e) {
-  console.log(&#39;Caught&#39;, e);
-});
-</code></pre>
+.<span class="pl-en">catch</span>(<span class="pl-s"><span class="pl-pds">'</span>CustomError<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">e</span>) {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>Caught<span class="pl-pds">'</span></span>, e);
+});</pre></div>
+
 <p>Or for some native objects which use inheritance:</p>
-<pre><code class="lang-javascript">_try(function () {
-  throw new TypeError();
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">_try</span>(<span class="pl-k">function</span> () {
+  <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-en">TypeError</span>();
 })
-.catch(&#39;TypeError&#39;, function (e) {
-  console.log(&#39;Caught&#39;, e);
-});
-</code></pre>
-<p>Those catch blocks won&#39;t execute. The best this library can do is find out that:</p>
+.<span class="pl-en">catch</span>(<span class="pl-s"><span class="pl-pds">'</span>TypeError<span class="pl-pds">'</span></span>, <span class="pl-k">function</span> (<span class="pl-smi">e</span>) {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>Caught<span class="pl-pds">'</span></span>, e);
+});</pre></div>
+
+<p>Those catch blocks won't execute. The best this library can do is find out that:</p>
+
 <ul>
 <li>the <code>new CustomError()</code> is some kind of <code>object</code>, but not specifically a <code>CustomError</code> by name</li>
 <li>the <code>new TypeError()</code> is some kind of <code>Error</code>, but not specifically a <code>TypeError</code> by name</li>
 </ul>
-<p>It&#39;s best to use the catch-by-type style in those cases.</p>
-<h3 id="catch-by-type-won-t-work-across-frames-processes">Catch-by-type won&#39;t work across frames/processes</h3>
-<p>This quirk exists in the native <code>instanceof</code> (which fails across browser frames and node processes) when the instance&#39;s constructor differs to the one passed to <code>instanceof</code>. It&#39;s best to use the catch-by-name in those cases.</p>
-<h3 id="errors-are-consumed">Errors are consumed</h3>
-<p>Any error thrown synchronously in the try block is consumed by this library.  There are two ways to ensure errors which aren&#39;t caught/handled by any <code>catch</code> don&#39;t disappear:</p>
-<h4 id="use-an-indiscriminate-catch-block">Use an indiscriminate catch block</h4>
-<pre><code class="lang-javascript">_try(function () {
-  throw new Error(&#39;boom&#39;);
+
+<p>It's best to use the catch-by-type style in those cases.</p>
+
+<h3>
+<a id="user-content-catch-by-type-wont-work-across-framesprocesses" class="anchor" href="#catch-by-type-wont-work-across-framesprocesses" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Catch-by-type won't work across frames/processes</h3>
+
+<p>This quirk exists in the native <code>instanceof</code> (which fails across browser frames and node processes) when the instance's constructor differs to the one passed to <code>instanceof</code>. It's best to use the catch-by-name in those cases.</p>
+
+<h3>
+<a id="user-content-errors-are-consumed" class="anchor" href="#errors-are-consumed" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Errors are consumed</h3>
+
+<p>Any error thrown synchronously in the try block is consumed by this library.  There are two ways to ensure errors which aren't caught/handled by any <code>catch</code> don't disappear:</p>
+
+<h4>
+<a id="user-content-use-an-indiscriminate-catch-block" class="anchor" href="#use-an-indiscriminate-catch-block" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use an indiscriminate catch block</h4>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">_try</span>(<span class="pl-k">function</span> () {
+  <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-en">Error</span>(<span class="pl-s"><span class="pl-pds">'</span>boom<span class="pl-pds">'</span></span>);
 })
-.catch(String, function (e) {
-  console.log(&#39;Caught String&#39;, e);
+.<span class="pl-en">catch</span>(<span class="pl-c1">String</span>, <span class="pl-k">function</span> (<span class="pl-smi">e</span>) {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>Caught String<span class="pl-pds">'</span></span>, e);
 })
-.catch(function (e) {
-  console.log(&#39;Caught other&#39;, e);
-});
-</code></pre>
-<p>The first catch block won&#39;t execute and the second ensures other errors don&#39;t go unhandled.</p>
-<h4 id="use-a-finally-block">Use a finally block</h4>
-<pre><code class="lang-javascript">_try(function () {
-  throw new Error(&#39;boom&#39;);
+.<span class="pl-en">catch</span>(<span class="pl-k">function</span> (<span class="pl-smi">e</span>) {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>Caught other<span class="pl-pds">'</span></span>, e);
+});</pre></div>
+
+<p>The first catch block won't execute and the second ensures other errors don't go unhandled.</p>
+
+<h4>
+<a id="user-content-use-a-finally-block" class="anchor" href="#use-a-finally-block" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Use a finally block</h4>
+
+<div class="highlight highlight-source-js"><pre><span class="pl-en">_try</span>(<span class="pl-k">function</span> () {
+  <span class="pl-k">throw</span> <span class="pl-k">new</span> <span class="pl-en">Error</span>(<span class="pl-s"><span class="pl-pds">'</span>boom<span class="pl-pds">'</span></span>);
 })
-.catch(String, function (e) {
-  console.log(&#39;Caught&#39;, e);
+.<span class="pl-en">catch</span>(<span class="pl-c1">String</span>, <span class="pl-k">function</span> (<span class="pl-smi">e</span>) {
+  <span class="pl-en">console</span>.<span class="pl-c1">log</span>(<span class="pl-s"><span class="pl-pds">'</span>Caught<span class="pl-pds">'</span></span>, e);
 })
-.finally();
-</code></pre>
-<p>That catch block won&#39;t execute and the finally call ensures any caught error is re-thrown.</p>
-<h2 id="tests">Tests</h2>
+.<span class="pl-en">finally</span>();</pre></div>
+
+<p>That catch block won't execute and the finally call ensures any caught error is re-thrown.</p>
+
+<h2>
+<a id="user-content-tests" class="anchor" href="#tests" aria-hidden="true"><span aria-hidden="true" class="octicon octicon-link"></span></a>Tests</h2>
+
 <p>The following tests are continually run in TravisCI:</p>
+
 <table>
 <thead>
 <tr>
-<th style="text-align:center"></th>
-<th style="text-align:center">Node (v0.12, v4, v5)</th>
-<th style="text-align:center">PhantomJS (global)</th>
-<th style="text-align:center">PhantomJS (AMD)</th>
+<th align="center"></th>
+<th align="center">Node (v0.12, v4, v5)</th>
+<th align="center">PhantomJS (global)</th>
+<th align="center">PhantomJS (AMD)</th>
 </tr>
 </thead>
 <tbody>
 <tr>
-<td style="text-align:center">unminified</td>
-<td style="text-align:center">&#9745;</td>
-<td style="text-align:center">&#9745;</td>
-<td style="text-align:center">&#9745;</td>
+<td align="center">unminified</td>
+<td align="center">☑</td>
+<td align="center">☑</td>
+<td align="center">☑</td>
 </tr>
 <tr>
-<td style="text-align:center">minified</td>
-<td style="text-align:center">&#9745;</td>
-<td style="text-align:center">&#9745;</td>
-<td style="text-align:center">&#9745;</td>
+<td align="center">minified</td>
+<td align="center">☑</td>
+<td align="center">☑</td>
+<td align="center">☑</td>
 </tr>
 </tbody>
 </table>
+
 <p>The tests can be run in any browsers supported by Karma. See the npm scripts and travis configuration for more details.</p>
   </body>
 </html>
