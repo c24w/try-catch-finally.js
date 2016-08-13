@@ -1,4 +1,4 @@
-// try-catch-finally.js | (c) Chris Watson | http://j.mp/t-c-f
+// try-catch-finally.js | (c) Chris Watson | http://git.io/tcf
 (function umd(root, factory) {
   'use strict';
   /* istanbul ignore if */
@@ -35,7 +35,7 @@
   return function _try(tryBlock) {
     // try-catch-finally.js
     // (c) Chris Watson
-    // http://j.mp/t-c-f
+    // http://git.io/tcf
 
     // Store error in an object so we can use 'in', which will always
     // return true if a property has been set on the object, even if it
