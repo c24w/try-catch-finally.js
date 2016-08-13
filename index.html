@@ -1,0 +1,202 @@
+<html>
+  <head>
+    <style>
+      body {
+        margin: 50px 10% 50px 10%;
+        min-width: 400px;
+      }
+    </style>
+    <link rel="stylesheet" href="github-markdown.css">
+  </head>
+  <body class="markdown-body">
+<h1 id="-try-catch-finally-js-"><code>try-catch-finally.js</code></h1>
+<p><a href="https://travis-ci.org/c24w/try-catch-finally.js" title="Build"><img src="https://img.shields.io/travis/c24w/try-catch-finally.js.svg?style=flat-square" alt="Travis CI"></a>
+<a href="https://coveralls.io/github/c24w/try-catch-finally.js" title="Coverage"><img src="https://img.shields.io/coveralls/c24w/try-catch-finally.js.svg?style=flat-square" alt="Coveralls"></a>
+<a href="https://david-dm.org/c24w/try-catch-finally.js" title="Dependencies"><img src="https://img.shields.io/david/c24w/try-catch-finally.js.svg?style=flat-square" alt="David"></a>
+<a href="https://www.npmjs.com/package/try-catch-finally" title="npm"><img src="https://img.shields.io/npm/v/try-catch-finally.svg?style=flat-square" alt="npm"></a></p>
+<p>A <a href="size"></a>923 byte<a href="size"></a> library for more flexible error catching in JavaScript.</p>
+<!-- START doctoc generated TOC please keep comment here to allow auto update -->
+<!-- DON'T EDIT THIS SECTION, INSTEAD RE-RUN doctoc TO UPDATE -->
+<h2 id="contents">Contents</h2>
+<ul>
+<li><a href="#installation">Installation</a><ul>
+<li><a href="#browser">Browser</a></li>
+<li><a href="#amd">AMD</a></li>
+<li><a href="#node">Node</a></li>
+</ul>
+</li>
+<li><a href="#usage">Usage</a><ul>
+<li><a href="#api">API</a></li>
+<li><a href="#examples">Examples</a></li>
+</ul>
+</li>
+<li><a href="#caveats">Caveats</a><ul>
+<li><a href="#catch-by-name-may-not-work">Catch-by-name may not work</a></li>
+<li><a href="#catch-by-type-wont-work-across-framesprocesses">Catch-by-type won&#39;t work across frames/processes</a></li>
+<li><a href="#errors-are-consumed">Errors are consumed</a></li>
+</ul>
+</li>
+<li><a href="#tests">Tests</a></li>
+</ul>
+<!-- END doctoc generated TOC please keep comment here to allow auto update -->
+<h2 id="installation">Installation</h2>
+<h3 id="browser">Browser</h3>
+<pre><code class="lang-html">&lt;script src=&quot;try-catch-finally.js&quot;&gt;&lt;/script&gt;
+</code></pre>
+<pre><code class="lang-javascript">console.log(typeof window.try) // -&gt; function
+console.log(typeof window._try) // -&gt; function
+</code></pre>
+<h3 id="amd">AMD</h3>
+<pre><code class="lang-javascript">define([&#39;try-catch-finally&#39;], function (_try) {
+  console.log(typeof _try); // -&gt; function
+});
+</code></pre>
+<h3 id="node">Node</h3>
+<pre><code class="lang-shell">npm install --save try-catch-finally
+</code></pre>
+<pre><code class="lang-javascript">var _try = require(&#39;try-catch-finally&#39;);
+console.log(typeof _try); // -&gt; function
+</code></pre>
+<h2 id="usage">Usage</h2>
+<h3 id="api">API</h3>
+<h4 id="-_try-_tryblock_-">_try ( <em>tryBlock</em> )</h4>
+<ul>
+<li><em><strong>tryBlock</strong></em><code>&lt;function&gt;</code> - code which may throw errors</li>
+</ul>
+<h4 id="-catch-_error_-_handleerror_-">.catch ( [ <em>error</em>, ] <em>handleError</em> )</h4>
+<ul>
+<li><em><strong>error</strong></em> <code>&lt;any&gt;</code> - (optional) error to catch</li>
+<li><em><strong>handleError</strong></em> <code>&lt;function&gt;</code> - handle errors which correspond to <em><strong>error</strong></em> (if defined); else handle any error</li>
+</ul>
+<h4 id="-finally-_finallyblock_-">.finally ( <em>finallyBlock</em> )</h4>
+<ul>
+<li><em><strong>finallyBlock</strong></em> <code>&lt;function&gt;</code> - code which will always exectue</li>
+</ul>
+<h3 id="examples">Examples</h3>
+<h4 id="catch-anything">Catch anything</h4>
+<pre><code class="lang-javascript">_try(function () {
+  throw new Error(&#39;boom&#39;);
+})
+.catch(function (e) {
+  console.log(&#39;Caught&#39;, e);
+});
+</code></pre>
+<h4 id="catch-by-value">Catch-by-value</h4>
+<pre><code class="lang-javascript">_try(function () {
+  throw 12345;
+})
+.catch(12345, function (e) {
+  console.log(&#39;Caught&#39;, e);
+});
+</code></pre>
+<p>Error value matches by strict equality (<code>===</code>).</p>
+<h4 id="catch-by-name">Catch-by-name</h4>
+<pre><code class="lang-javascript">_try(function () {
+  throw { error: &#39;boom&#39; };
+})
+.catch(&#39;object&#39;, function (e) {
+  console.log(&#39;Caught&#39;, e);
+});
+</code></pre>
+<p>Error name matches similarly to <code>typeof</code>, with the bonus that it:</p>
+<ul>
+<li>is case-insensitive</li>
+<li>works for boxed primitives (e.g. <code>new String()</code>)</li>
+</ul>
+<h4 id="catch-by-type">Catch-by-type</h4>
+<pre><code class="lang-javascript">_try(function () {
+  throw &#39;boom&#39;;
+})
+.catch(Object, function (e) {
+  console.log(&#39;Caught&#39;, e);
+});
+
+_try(function () {
+  throw new TypeError(&#39;boom&#39;);
+})
+.catch(Error, function (e) {
+  console.log(&#39;Caught&#39;, e);
+});
+</code></pre>
+<p>Error type matches similarly to <code>instanceof</code>, with the bonus that it works for literal primitives (<code>&#39;hello&#39;</code>, <code>123</code>, etc).</p>
+<h2 id="caveats">Caveats</h2>
+<h3 id="catch-by-name-may-not-work">Catch-by-name may not work</h3>
+<p>It&#39;s not always possible to get the name of an object in JavaScript, such as for objects created using non-native constructors:</p>
+<pre><code class="lang-javascript">function CustomError() {}
+
+_try(function () {
+  throw new CustomError();
+})
+.catch(&#39;CustomError&#39;, function (e) {
+  console.log(&#39;Caught&#39;, e);
+});
+</code></pre>
+<p>Or for some native objects which use inheritance:</p>
+<pre><code class="lang-javascript">_try(function () {
+  throw new TypeError();
+})
+.catch(&#39;TypeError&#39;, function (e) {
+  console.log(&#39;Caught&#39;, e);
+});
+</code></pre>
+<p>Those catch blocks won&#39;t execute. The best this library can do is find out that:</p>
+<ul>
+<li>the <code>new CustomError()</code> is some kind of <code>object</code>, but not specifically a <code>CustomError</code> by name</li>
+<li>the <code>new TypeError()</code> is some kind of <code>Error</code>, but not specifically a <code>TypeError</code> by name</li>
+</ul>
+<p>It&#39;s best to use the catch-by-type style in those cases.</p>
+<h3 id="catch-by-type-won-t-work-across-frames-processes">Catch-by-type won&#39;t work across frames/processes</h3>
+<p>This quirk exists in the native <code>instanceof</code> (which fails across browser frames and node processes) when the instance&#39;s constructor differs to the one passed to <code>instanceof</code>. It&#39;s best to use the catch-by-name in those cases.</p>
+<h3 id="errors-are-consumed">Errors are consumed</h3>
+<p>Any error thrown synchronously in the try block is consumed by this library.  There are two ways to ensure errors which aren&#39;t caught/handled by any <code>catch</code> don&#39;t disappear:</p>
+<h4 id="use-an-indiscriminate-catch-block">Use an indiscriminate catch block</h4>
+<pre><code class="lang-javascript">_try(function () {
+  throw new Error(&#39;boom&#39;);
+})
+.catch(String, function (e) {
+  console.log(&#39;Caught String&#39;, e);
+})
+.catch(function (e) {
+  console.log(&#39;Caught other&#39;, e);
+});
+</code></pre>
+<p>The first catch block won&#39;t execute and the second ensures other errors don&#39;t go unhandled.</p>
+<h4 id="use-a-finally-block">Use a finally block</h4>
+<pre><code class="lang-javascript">_try(function () {
+  throw new Error(&#39;boom&#39;);
+})
+.catch(String, function (e) {
+  console.log(&#39;Caught&#39;, e);
+})
+.finally();
+</code></pre>
+<p>That catch block won&#39;t execute and the finally call ensures any caught error is re-thrown.</p>
+<h2 id="tests">Tests</h2>
+<p>The following tests are continually run in TravisCI:</p>
+<table>
+<thead>
+<tr>
+<th style="text-align:center"></th>
+<th style="text-align:center">Node (v0.12, v4, v5)</th>
+<th style="text-align:center">PhantomJS (global)</th>
+<th style="text-align:center">PhantomJS (AMD)</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td style="text-align:center">unminified</td>
+<td style="text-align:center">&#9745;</td>
+<td style="text-align:center">&#9745;</td>
+<td style="text-align:center">&#9745;</td>
+</tr>
+<tr>
+<td style="text-align:center">minified</td>
+<td style="text-align:center">&#9745;</td>
+<td style="text-align:center">&#9745;</td>
+<td style="text-align:center">&#9745;</td>
+</tr>
+</tbody>
+</table>
+<p>The tests can be run in any browsers supported by Karma. See the npm scripts and travis configuration for more details.</p>
+  </body>
+</html>
