@@ -11,9 +11,9 @@ function version {
 npm i -q github-markdown-css
 
 # Convert markdown to HTML and inject into index template
-curl -X POST https://api.github.com/markdown/raw -s\
+curl https://api.github.com/repos/c24w/try-catch-finally.js/readme -s\
   -H 'Content-Type: text/x-markdown'\
-  -d "$(cat readme.md)"\
+  -H 'Accept: application/vnd.github.VERSION.html'\
   -o readme.html
 sed -e '/{{MARKDOWN}}/{r readme.html' -e 'd}' gh-pages-template > index.html
 
