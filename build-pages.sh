@@ -3,7 +3,7 @@ set -eo pipefail
 
 function die { echo "$2" && exit $1; }
 
-function version {
+function getVersion {
   VERSION=$(node -e "console.log(require('$1/package.json').version);")
   echo "$1 v$VERSION"
 }
@@ -13,13 +13,13 @@ npm i -q github-markdown-css
 # Convert markdown to HTML and inject into index template
 curl https://$GH_TOKEN@api.github.com/repos/c24w/try-catch-finally.js/readme -s\
   -H 'Content-Type: text/x-markdown'\
-  -H 'Accept: application/vnd.github.VERSION.html'\
+  -H 'Accept: application/vnd.github.html'\
   -o readme.html
 sed -e '/{{MARKDOWN}}/{r readme.html' -e 'd}' gh-pages-template.html > index.html
 
 # Build commit message
 MASTER_SHA=$(git log -1 --pretty='%h')
-GH_MD_CSS=$(version github-markdown-css)
+GH_MD_CSS=$(getVersion github-markdown-css)
 MSG=$(git log -1 --pretty="Build documentation @$MASTER_SHA%n%n($GH_MD_CSS)")
 
 # Seemingly impossible to just checkout the gh-pages branch with the way travis
