@@ -15,7 +15,7 @@ curl https://$GH_TOKEN@api.github.com/repos/c24w/try-catch-finally.js/readme -s\
   -H 'Content-Type: text/x-markdown'\
   -H 'Accept: application/vnd.github.VERSION.html'\
   -o readme.html
-sed -e '/{{MARKDOWN}}/{r readme.html' -e 'd}' gh-pages-template > index.html
+sed -e '/{{MARKDOWN}}/{r readme.html' -e 'd}' gh-pages-template.html > index.html
 
 # Build commit message
 MASTER_SHA=$(git log -1 --pretty='%h')
