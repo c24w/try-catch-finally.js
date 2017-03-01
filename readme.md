@@ -61,7 +61,7 @@ console.log(typeof _try); // -> function
 ### API
 
 #### \_try ( _tryBlock_ )
-* _**tryBlock**_`<function>` - code which may throw errors
+* _**tryBlock**_ `<function>` - code which may throw errors
 
 #### .catch ( [ _error_, ] _handleError_ )
 * _**error**_ `<any>` - (optional) error to catch
