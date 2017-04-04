@@ -4,6 +4,7 @@
 [![Coveralls](https://img.shields.io/coveralls/c24w/try-catch-finally.js.svg?style=flat-square)](https://coveralls.io/github/c24w/try-catch-finally.js 'Coverage')
 [![David](https://img.shields.io/david/c24w/try-catch-finally.js.svg?style=flat-square)](https://david-dm.org/c24w/try-catch-finally.js 'Dependencies')
 [![npm](https://img.shields.io/npm/v/try-catch-finally.svg?style=flat-square)](https://www.npmjs.com/package/try-catch-finally 'npm')
+[![GitHub stars](https://img.shields.io/github/stars/c24w/try-catch-finally.js.svg?style=flat-square&label=Star)](https://github.com/c24w/try-catch-finally.js/stargazers)
 
 A [](size)887 byte[](size) library for more flexible error catching in JavaScript.
 
