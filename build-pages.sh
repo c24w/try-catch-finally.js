@@ -15,6 +15,7 @@ curl https://$GH_TOKEN@api.github.com/repos/c24w/try-catch-finally.js/readme -s\
   -H 'Content-Type: text/x-markdown'\
   -H 'Accept: application/vnd.github.html'\
   -o readme.html
+sed -i 's/user-content-//' readme.html # Fix fragment links
 sed -e '/{{MARKDOWN}}/{r readme.html' -e 'd}' gh-pages-template.html > index.html
 
 # Build commit message
