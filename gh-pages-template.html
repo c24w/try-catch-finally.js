@@ -6,11 +6,23 @@
         margin: 50px 10% 50px 10%;
         min-width: 400px;
       }
+      body > a img {
+        position: absolute;
+        top: 0;
+        right: 0;
+        border: 0;
+        width: 149px;
+        height: 149px;
+      }
     </style>
     <link rel="stylesheet" href="github-markdown.css">
   </head>
-  <body class="markdown-body">
-    <a href="https://github.com/c24w/try-catch-finally.js"><img style="position:absolute;top:0;right:0;border:0;width:149px;height:149px;" src="http://aral.github.com/fork-me-on-github-retina-ribbons/right-cerulean@2x.png" alt="Fork me on GitHub"></a>
-    {{MARKDOWN}}
+  <body>
+    <a href="//github.com/c24w/try-catch-finally.js">
+      <img src="//aral.github.com/fork-me-on-github-retina-ribbons/right-cerulean@2x.png" alt="Fork me on GitHub">
+    </a>
+    <div class="markdown-body">
+      {{MARKDOWN}}
+    </div>
   </body>
 </html>
