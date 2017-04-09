@@ -1,7 +1,7 @@
 {
   "name": "try-catch-finally",
   "version": "2.0.2",
-  "description": "",
+  "description": "A very small library for more flexible error catching in JavaScript.",
   "main": "try-catch-finally.js",
   "repository": {
     "type": "git",
