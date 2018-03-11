@@ -1,7 +1,8 @@
 #!/usr/bin/env bash
+set -eo pipefail
+
 function die { echo "$2" && exit $1; }
 
-set -eo pipefail
 git checkout master # Get out of detached head state
 git fetch origin master # Get latest
 git diff --quiet --exit-code HEAD..origin/master ||\
