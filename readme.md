@@ -189,9 +189,9 @@ That catch block won't execute and the finally call ensures any caught error is 
 ## Tests
 The following tests are continually run in TravisCI:
 
-|            | Node (v0.12, v4, v6) | PhantomJS (global) | PhantomJS (AMD) |
-|:----------:|:--------------------:|:------------------:|:---------------:|
-| unminified |       &#9745;        |       &#9745;      |      &#9745;    |
-|  minified  |       &#9745;        |       &#9745;      |      &#9745;    |
+|            | Node (v0.12, v4, v6) | Chrome Headless (global) | Chrome Headless (AMD) |
+|:----------:|:--------------------:|:------------------------:|:---------------------:|
+| unminified |       &#9745;        |          &#9745;         |         &#9745;       |
+|  minified  |       &#9745;        |          &#9745;         |         &#9745;       |
 
 The tests can be run in any browsers supported by Karma. See the npm scripts and travis configuration for more details.
