@@ -23,6 +23,8 @@ script:
 - COVERALLS_SERVICE_NAME=travis-ci COVERALLS_REPO_TOKEN=$COVERALLS_TOKEN cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
 - ./build-docs.sh
 deploy:
+  edge:
+    branch: v1.8.47
   provider: pages
   name: 'Travis CI'
   github-token: $GH_TOKEN
