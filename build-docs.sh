@@ -5,6 +5,8 @@ function die { echo "$2" && exit $1; }
 
 mkdir -p docs
 
+echo 'try-catch-finally.js.org' > docs/CNAME
+
 # Convert markdown to HTML and inject into index template
 curl https://$GH_TOKEN@api.github.com/repos/c24w/try-catch-finally.js/readme -s\
   -H 'Content-Type: text/x-markdown'\
