@@ -11,7 +11,7 @@ git diff --quiet --exit-code HEAD..origin/master ||\
 MIN_FILE=$(MINIFIED=y ./main-path.js short)
 
 git config user.name 'Travis CI'
-git config user.email $EMAIL > /dev/null 2>&1
+git config user.email deploy@travis-ci.org
 
 git add "$MIN_FILE"
 git diff --cached --quiet --exit-code "$MIN_FILE" &&\
