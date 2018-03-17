@@ -21,6 +21,9 @@ git add readme.md
 UGLIFY="($(node_modules/.bin/uglifyjs --version))"
 MSG=$(git log -1 --pretty="Build $MIN_FILE @%h%n%n- %B%n$UGLIFY")
 git commit -m "$MSG"
+
+npm version patch
+
 # -q and output redirects prevent leaking the token!
 AUTHED_ORIGIN=https://$GH_TOKEN@github.com/c24w/try-catch-finally.js.git
-git push -q "$AUTHED_ORIGIN" master > /dev/null 2>&1 || die 1 'Push failed'
+git push --follow-tags -q "$AUTHED_ORIGIN" master > /dev/null 2>&1 || die 1 'Push failed'
