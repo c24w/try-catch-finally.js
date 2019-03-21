@@ -1,8 +1,6 @@
 #!/usr/bin/env bash
 set -eo pipefail
 
-function die { echo "$2" && exit $1; }
-
 mkdir -p docs
 
 echo 'try-catch-finally.js.org' > docs/CNAME
