@@ -22,6 +22,8 @@ cache:
 
 jobs:
   include:
+    - stage: test
+      script: skip # Go away stupid default magic stage
     - stage: purge artifacts
       node_js: "10"
       before_script: rm -rf ~/artifacts/*
