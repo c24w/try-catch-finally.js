@@ -21,7 +21,7 @@ jobs:
     - name: Test with coverage
       run: |
         npm_config_coverage=y npm test
-        cat ~/artifacts/lcov.info | ./node_modules/.bin/coveralls
+        cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
       if: startsWith(matrix.node-version, 10)
       env:
         COVERALLS_SERVICE_NAME: GitHub Actions
