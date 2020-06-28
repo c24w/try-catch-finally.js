@@ -15,14 +15,21 @@ jobs:
       with:
         node-version: ${{matrix.node-version}}
     - run: npm install
-    - name: Test
-      run: npm test
-      if: '!startsWith(matrix.node-version, 10)'
-    - name: Test with coverage
-      run: |
-        npm_config_coverage=y npm test
-        cat ./coverage/lcov.info | ./node_modules/.bin/coveralls
-      if: startsWith(matrix.node-version, 10)
-      env:
-        COVERALLS_SERVICE_NAME: GitHub Actions
-        COVERALLS_REPO_TOKEN: ${{secrets.COVERALLS_TOKEN}}
+    - name: Test With Coverage
+      run: npm_config_coverage=y npm test
+    - name: Submit Coverage
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{secrets.github_token}}
+        flag-name: Node.js ${{matrix.node-version}}
+        parallel: true
+
+  finish:
+    needs: test
+    runs-on: ubuntu-latest
+    steps:
+    - name: Finish Coverage
+      uses: coverallsapp/github-action@master
+      with:
+        github-token: ${{secrets.github_token}}
+        parallel-finished: true
