@@ -8,12 +8,13 @@
     "url": "git@github.com:c24w/try-catch-finally.js.git"
   },
   "scripts": {
-    "test": "npm run test-node && npm run test-chrome-headless && AMD=y npm run test-chrome-headless",
+    "test": "npm -s run test-node && npm -s run test-chrome-headless && AMD=y npm -s run test-chrome-headless",
     "test-node": "istanbul test --report lcovonly -i \"$(./main-path.js)\" _mocha test",
     "test-chrome-headless": "karma start --browsers ChromeHeadlessNoSandbox",
     "test-browsers": "karma start",
     "watch": "karma start --single-run false & _mocha test -w",
-    "preversion": "npm test && ./minify.sh && git add $(MINIFIED=y ./main-path.js short)",
+    "preversion": "npm -s test && ./minify.sh && git add $(MINIFIED=y ./main-path.js short)",
+
     "build-contents": "doctoc --maxlevel 3 --title '## Contents' readme.md"
   },
   "author": "Chris Watson",
